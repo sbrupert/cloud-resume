@@ -1,4 +1,5 @@
 flask
 gunicorn
+python-json-logger
 google-cloud-firestore
 google.auth

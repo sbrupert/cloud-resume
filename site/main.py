@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 import os
 import sys
 import logging
+from pythonjsonlogger import jsonlogger
 
 
 
@@ -16,8 +17,15 @@ counter_cache = None
 
 # Configure logging
 LOGLEVEL = os.environ.get('LOGLEVEL', 'INFO').upper()
-logging.basicConfig(level=LOGLEVEL, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger()
+logHandler = logging.StreamHandler()
+formatter = jsonlogger.JsonFormatter(
+    fmt="%(asctime)s %(name)s %(levelname)s %(message)s",
+    rename_fields={"asctime": "timestamp", "levelname": "level"}
+)
+logHandler.setFormatter(formatter)
+logger = logging.getLogger('cloud-resume')
+logger.addHandler(logHandler)
+logger.setLevel(LOGLEVEL)
 
 # Check if we are running in an emulator environment
 if os.getenv('FIRESTORE_EMULATOR_HOST'):
@@ -138,4 +146,4 @@ def index():
 
 if __name__ == '__main__':
     init_db()
-    app.run(host='0.0.0.0', port=8087, debug=False)
+    app.run(host='0.0.0.0', port=8080, debug=False)
