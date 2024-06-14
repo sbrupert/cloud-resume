@@ -42,6 +42,24 @@ resource "google_firestore_database" "database" {
   type        = "FIRESTORE_NATIVE"
 }
 
+# IAM Related Resources
+data "google_iam_policy" "webserver_db_access" {
+  binding {
+    role = "roles/datastore.user"
+    members = [resource.google_service_account.webserver_sa.email]
+  }
+}
+
+resource "google_service_account" "webserver_sa" {
+  account_id = "webserver"
+  description = "Service account for webservers."
+}
+
+resource "google_service_account_iam_policy" "webserver_db_iam" {
+  service_account_id = google_service_account.webserver_sa.name
+  policy_data = data.google_iam_policy.webserver_db_access.policy_data
+}
+
 # VPC Related Resources
 resource "google_compute_network" "webserver_vpc" {
   name                    = "webserver-vpc"
