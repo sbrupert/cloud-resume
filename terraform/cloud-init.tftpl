@@ -1,0 +1,12 @@
+#cloud-config
+
+users:
+  - name: ansible
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    lock_passwd: true
+    ssh_authorized_keys:
+      %{ for key in ssh_pub_keys }
+      - ${key}
+      %{ endfor }
