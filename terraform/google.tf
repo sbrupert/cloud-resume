@@ -32,6 +32,10 @@ resource "google_compute_instance" "web01" {
   metadata = {
     user-data = templatefile("${path.module}/cloud-init.tftpl", {ssh_pub_keys = var.ssh_pub_keys})
   }
+  service_account {
+    email = google_service_account.webserver_sa.email
+    scopes = ["cloud-platform"]
+  }
 }
 
 # Firestore Related Resources
