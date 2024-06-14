@@ -29,6 +29,6 @@ variable "google_cloud_region" {
 }
 
 variable "ssh_pub_keys" {
-  type = list
+  type = list(string)
   sensitive = true
 }
