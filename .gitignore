@@ -4,4 +4,6 @@
 *.backup
 .terraform/
 .terraform.lock.hcl
+terraform.tfvars
+
 __pycache__
