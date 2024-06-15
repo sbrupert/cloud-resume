@@ -49,21 +49,15 @@ resource "google_firestore_database" "database" {
 }
 
 # IAM Related Resources
-data "google_iam_policy" "webserver_db_access" {
-  binding {
-    role = "roles/datastore.user"
-    members = [resource.google_service_account.webserver_sa.email]
-  }
-}
-
 resource "google_service_account" "webserver_sa" {
   account_id = "webserver"
   description = "Service account for webservers."
 }
 
-resource "google_service_account_iam_policy" "webserver_db_iam" {
-  service_account_id = google_service_account.webserver_sa.name
-  policy_data = data.google_iam_policy.webserver_db_access.policy_data
+resource "google_project_iam_member" "webserver_db_access" {
+  project = var.google_cloud_project
+  role    = "roles/datastore.user"
+  member  = "serviceAccount:${google_service_account.webserver_sa.email}"
 }
 
 # VPC Related Resources
