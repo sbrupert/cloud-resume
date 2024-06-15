@@ -1,0 +1,45 @@
+---
+- name: Remove conflicting packages
+  yum:
+    name:
+      - buildah
+      - podman
+    state: absent
+
+- name: Add Docker stable repository
+  yum_repository:
+    name: docker-ce
+    description: Docker Stable CentOS
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+    state: present
+
+- name: Add Docker repo GPG key
+  rpm_key:
+    state: present
+    key: https://download.docker.com/linux/centos/gpg
+
+- name: Install Docker
+  yum:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: latest
+  notify:
+    - Start & enable Docker
+
+- name: Add Docker network interface to the public firewall zone  # By default, docker0 is not added to any zone.
+  firewalld:
+    zone: public
+    interface: docker0
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Enable masquerading in the public zone.  # This is required to allow container dns to work.
+  firewalld:
+    zone: public
+    masquerade: enable
+    permanent: yes
+    immediate: yes
+    state: enabled

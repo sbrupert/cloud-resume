@@ -1,0 +1,19 @@
+---
+- name: Install Docker for RHEL
+  become: yes
+  import_tasks: redhat.yaml
+  when: ansible_facts['os_family']|lower == 'redhat'
+
+- name: Install Docker for Debian
+  become: yes
+  import_tasks: debian.yaml
+  when: ansible_facts['os_family']|lower == 'debian'
+
+- name: Add ansible user to docker group
+  user:
+    name: ansible
+    groups:
+      - docker
+    state: present
+    append: yes
+  become: yes

@@ -1,0 +1,61 @@
+---
+- name: Install required packages for Caddy
+  apt:
+    name:
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+    update-cache: true
+    state: present
+
+- name: Create caddy user  
+  user:
+    name: caddy
+    comment: "Caddy web server"
+    home: "/home/caddy"
+    shell: "/usr/sbin/nologin"
+    system: yes
+    state: present
+
+- name: Install Caddy binary
+  get_url:
+    url: "{{ caddy_binary_url }}"
+    dest: "{{ caddy_binary_dest }}"
+    mode: "0755"
+  notify: restart caddy
+
+- name: Create Caddy config directory
+  file:
+    path: /etc/caddy
+    state: directory
+    owner: caddy
+    group: caddy
+    mode: "0750"
+
+- name: Configure Caddy service
+  template:
+    src: "caddy.service.j2"
+    dest: "/etc/systemd/system/caddy.service"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: reload systemd
+
+- name: Configure Caddy
+  template: 
+    src: caddyfile.j2
+    dest: /etc/caddy/Caddyfile
+    owner: caddy
+    group: caddy
+    mode: '0640'
+    backup: true
+  notify: restart caddy
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Start Caddy
+  systemd:
+    name: caddy
+    state: started
+    enabled: true

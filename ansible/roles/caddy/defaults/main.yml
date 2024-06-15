@@ -1,0 +1,3 @@
+---
+caddy_binary_url: "https://caddyserver.com/api/download?os=linux&arch=amd64&p=github.com%2Fcaddy-dns%2Fcloudflare&idempotency=88907043568537"
+caddy_binary_dest: /usr/local/bin/caddy
