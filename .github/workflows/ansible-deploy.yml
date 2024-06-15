@@ -15,11 +15,11 @@ jobs:
         uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: playbook.yaml
-          directory: ./ansible
+          directory: ${{ github.workspace }}/ansible
           # Optional, SSH private key
           key: ${{secrets.SSH_PRIVATE_KEY}}
           # vault_password: ${{secrets.VAULT_PASSWORD}}
-          requirements: ./ansible/galaxy-requirements.yml
+          requirements: galaxy-requirements.yml
           options: |
-            --inventory ./ansible/inventory.gcp.yaml
+            --inventory inventory.gcp.yaml
             --check
