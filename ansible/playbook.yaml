@@ -1,0 +1,71 @@
+---
+- name: Configure Cloud Resume
+  hosts: webserver
+  vars:
+    ansible_user: ansible
+    webserver_subdomain: "{{ lookup('ansible.builtin.env'), 'TF_VAR_webserver_subdomain'}}"
+    webserver_domain: "{{ lookup('ansible.builtin.env'), 'TF_VAR_webserver_domain' }}"
+    webserver_fqdn: "{{ webserver_subdomain }}.{{ webserver_domain }}"
+    webserver_port: 8080
+    webserver_image: ghcr.io/sbrupert/cloud-resume
+    letsencrypt_staging: true
+
+  handlers:
+    - name: restart fail2ban
+      ansible.builtin.service:
+        name: fail2ban
+        state: restarted
+
+  tasks:
+    - name: Configure Fail2Ban
+      block:
+        - name: Install Fail2Ban
+          ansible.builtin.apt:
+            name: fail2ban
+            state: present
+            update_cache: yes
+
+        - name: Create Fail2Ban jail for SSH
+          ansible.builtin.copy:
+            dest: /etc/fail2ban/jail.local
+            owner: root
+            group: root
+            mode: 0644
+            content: |
+              [sshd]
+              enabled = true
+              maxretry = 3
+              findtime = 300
+              bantime = 3600
+              ignoreip = 127.0.0.1
+          notify: restart fail2ban
+        
+        - name: Enable and start the Fail2Ban service
+          ansible.builtin.service:
+            name: fail2ban
+            state: started
+            enabled: yes
+      become: true
+      tags: fail2ban
+
+    - name: Install Docker
+      import_role:
+        name: docker
+      tags: docker
+      become: yes
+
+    - name: Setup Website
+      block:
+        - name: Start container
+          community.docker.docker_container:
+            name: cloud-resume
+            image: "{{ webserver_image }}"
+            state: started
+            restart_policy: "always"
+            published_ports: "{{ webserver_port }}"
+
+        - name: Configure Caddy
+          import_role:
+            name: caddy
+          tags: caddy
+          become: yes
