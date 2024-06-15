@@ -22,3 +22,4 @@ jobs:
           requirements: ./ansible/galaxy-requirements.yml
           options: |
             --inventory ./ansible/inventory.gcp.yaml
+            --check
