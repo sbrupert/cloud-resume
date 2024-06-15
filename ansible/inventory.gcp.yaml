@@ -1,0 +1,14 @@
+plugin: "google.cloud.gcp_compute"
+
+auth_kind: serviceaccount
+
+hostnames:
+  - name
+
+keyed_groups:
+  - key: labels.instance_function
+    separator: ''
+
+compose:
+  # Set an inventory parameter to use the Public IP address to connect to the host
+  ansible_host: networkInterfaces[0].accessConfigs[0].natIP
