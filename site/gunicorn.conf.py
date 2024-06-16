@@ -23,4 +23,4 @@ logHandler.setFormatter(formatter)
 gunicorn_logger = logging.getLogger('gunicorn.error')
 gunicorn_logger.addHandler(logHandler)
 gunicorn_logger.setLevel(LOGLEVEL)
-access_log_format = '{"client_ip": "%(h)s", "request_time": "%(t)s", "method": "%(m)s", "path": "%(U)s", "status": "%(s)s", "bytes": "%(B)s", "referrer": "%(f)s", "user_agent": "%(a)s"}'
+access_log_format = '{"network.client.ip": "%({x-forwarded-for}i)s","network.client.fallback_ip": "%(h)s" ,"http.request_time": "%(t)s", "http.method": "%(m)s", "http.url_details.path": "%(U)s", "http.status_code": "%(s)s", "network.bytes_written": "%(B)s", "http.referrer": "%(f)s", "http.user_agent": "%(a)s"}'
