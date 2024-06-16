@@ -25,6 +25,5 @@ jobs:
           requirements: galaxy-requirements.yaml
           options: |
             --inventory inventory.gcp.yaml
-            --check
         env:
           GCP_SERVICE_ACCOUNT_CONTENTS: ${{secrets.GCP_SERVICE_ACCOUNT_CONTENTS}}
