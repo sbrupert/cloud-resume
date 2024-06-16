@@ -14,15 +14,18 @@ jobs:
       - name: Install required packages/modules
         run: pip install -r ./ansible/requirements.txt
 
-      - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2.8.0
-        with:
-          playbook: playbook.yaml
-          directory: ./ansible
-          # Optional, SSH private key
-          key: ${{secrets.SSH_PRIVATE_KEY}}
-          # vault_password: ${{secrets.VAULT_PASSWORD}}
-          requirements: galaxy-requirements.yaml
-          options: |
-            --inventory inventory.gcp.yaml
-            --check
+      - name: Test ansible inventory
+        run: ansible-galaxy install -r ./ansible/galaxy-requirements.yaml && ansible-inventory -i ./ansible/inventory.gcp.yaml --graph
+
+      # - name: Run playbook
+      #   uses: dawidd6/action-ansible-playbook@v2.8.0
+      #   with:
+      #     playbook: playbook.yaml
+      #     directory: ./ansible
+      #     # Optional, SSH private key
+      #     key: ${{secrets.SSH_PRIVATE_KEY}}
+      #     # vault_password: ${{secrets.VAULT_PASSWORD}}
+      #     requirements: galaxy-requirements.yaml
+      #     options: |
+      #       --inventory inventory.gcp.yaml
+      #       --check
