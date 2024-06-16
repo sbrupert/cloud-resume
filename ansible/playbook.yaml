@@ -60,10 +60,11 @@
             image: "{{ webserver_image }}"
             state: started
             restart_policy: "always"
-            published_ports: 8080:"{{ webserver_port }}"
+            published_ports: "8080:{{ webserver_port }}"
 
         - name: Configure Caddy
           import_role:
             name: caddy
           tags: caddy
           become: yes
+      tags: app
