@@ -1,3 +1,4 @@
 # Requirements for our ansible playbooks/modules
 ansible-core
+requests
 google-auth
