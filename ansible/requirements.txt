@@ -1,0 +1,3 @@
+# Requirements for our ansible playbooks/modules
+ansible-core
+google-auth
