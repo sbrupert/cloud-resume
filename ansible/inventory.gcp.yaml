@@ -2,6 +2,9 @@ plugin: "google.cloud.gcp_compute"
 
 auth_kind: serviceaccount
 
+projects:
+  - "cloud-resume-425420"
+
 hostnames:
   - name
 
