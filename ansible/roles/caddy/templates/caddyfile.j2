@@ -7,11 +7,7 @@
 # sure your domain's A/AAAA DNS records are properly pointed to
 # this machine's public IP, then replace ":80" below with your
 # domain name.
-{% if letsencrypt_staging == true %}
-tls {
-        ca https://acme-staging-v02.api.letsencrypt.org/directory
-}
-{% endif %}
+
 
 :80 {
         reverse_proxy localhost:{{ webserver_port}}
@@ -19,6 +15,11 @@ tls {
 
 {{ webserver_fqdn }}:443 {
         reverse_proxy localhost:{{ webserver_port}}
+        {% if letsencrypt_staging == true %}
+        tls {
+                ca https://acme-staging-v02.api.letsencrypt.org/directory
+        }
+        {% endif %}
 }
 
 # Refer to the Caddy docs for more information:
