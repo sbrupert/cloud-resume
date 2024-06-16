@@ -11,8 +11,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install ansible
-        run: pip install ansible-core
+      - name: Install required packages/modules
+        run: pip install -r ./ansible/requirements.txt
 
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2.8.0
