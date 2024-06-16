@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <title>Steven Rupert - System Administrator</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <nav class="bg-white shadow sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div>
+                    <a class="text-xl font-bold text-gray-800" href="#">Steven Rupert</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a class="text-gray-800 hover:text-gray-600" href="#summary">Summary</a>
+                    <a class="text-gray-800 hover:text-gray-600" href="#experience">Experience</a>
+                    <a class="text-gray-800 hover:text-gray-600" href="#skills">Skills</a>
+                    <a class="text-gray-800 hover:text-gray-600" href="#education">Education</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-gray-200 py-12">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold">Steven Rupert</h1>
+            <p class="text-lg">Experienced System Administrator</p>
+            <p class="mt-4 text-blue-600 font-semibold"><b>You are visitor number: {{ counter }}</b></p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <section id="summary" class="mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-4">Summary</h2>
+                <p class="mb-4">Experienced System Administrator with 4 years of hands-on experience working with Ansible, Terraform, vSphere, Packer, Windows Active Directory, Windows Server, Linux (Ubuntu and RedHat), and AWS. Proven ability to manage resources in AWS and VMWare vSphere using Terraform. Extensive experience using Packer to create OS templates, reducing the time needed to create new virtual machines. Comfortable working with Linux systems, including OS installs, network configuration, and performance monitoring.</p>
+                <h3 class="text-xl font-semibold mb-2">Technologies</h3>
+                <ul class="list-disc list-inside">
+                    <li>Ansible</li>
+                    <li>Terraform</li>
+                    <li>vSphere</li>
+                    <li>Packer</li>
+                    <li>Windows Active Directory</li>
+                    <li>Windows Server</li>
+                    <li>Linux (Ubuntu and RedHat)</li>
+                    <li>AWS</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="experience" class="mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-4">Work Experience</h2>
+                <h3 class="text-xl font-semibold mb-2">System Administrator</h3>
+                <p class="font-semibold">Kajeet, Inc. [2020-2023]</p>
+                <ul class="list-disc list-inside">
+                    <li>Managed various AWS resources using Terraform, including RDS Clusters, Route53 records, S3 buckets, and IAM Roles + Policies.</li>
+                    <li>Worked with vSphere in a production environment containing 25 hosts and 200 virtual machines, utilizing vSphere Distributed Switches.</li>
+                    <li>Used Packer to create OS templates, reducing the time needed to create new virtual machines and implemented a CI/CD pipeline to keep templates up-to-date.</li>
+                    <li>Maintained and updated Linux systems, including OS installs, network configuration, and performance monitoring.</li>
+                    <li>Worked with AWS in a production environment, managing resources in multiple AWS accounts and ensuring consistency and compliance with security policies.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="skills" class="mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-4">Skills</h2>
+                <ul class="list-disc list-inside">
+                    <li>Experience managing infrastructure as code using Terraform.</li>
+                    <li>Knowledge of vSphere and its core features (Networking, Storage, Host/Cluster setup).</li>
+                    <li>Proficient in using Packer to create OS templates.</li>
+                    <li>Familiar with Windows Active Directory and Windows Server.</li>
+                    <li>Strong background in Linux administration, including OS installs, network configuration, and performance monitoring.</li>
+                    <li>Experience working with AWS in a production environment.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="education" class="mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-4">Education</h2>
+                <p><strong>University of Maryland Global Campus, Largo, MD - Bachelors | Computer Networks & Cybersecurity</strong></p>
+                <p>Spring 2019 - Fall 2020</p>
+                <p><strong>College of Southern Maryland, La Plata, MD - Associate of Applied Science | Information Services Technology</strong></p>
+                <p>Fall 2016 - Fall 2018</p>
+                <p>Received A+ Skills Technician letter of recognition.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white shadow text-center py-6">
+        <div class="container mx-auto">
+            <p class="text-gray-600">© 2024 Steven Rupert</p>
+        </div>
+    </footer>
+
+    <!-- Tailwind CSS JavaScript (Optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.0/alpine.min.js"></script>
+</body>
+</html>
