@@ -3,9 +3,7 @@
   hosts: webserver
   vars:
     ansible_user: ansible
-    webserver_subdomain: "{{ lookup('ansible.builtin.env'), 'TF_VAR_webserver_subdomain'}}"
-    webserver_domain: "{{ lookup('ansible.builtin.env'), 'TF_VAR_webserver_domain' }}"
-    webserver_fqdn: "{{ webserver_subdomain }}.{{ webserver_domain }}"
+    webserver_fqdn: "resume.sbrtech.xyz"
     webserver_port: 8080
     webserver_image: ghcr.io/sbrupert/cloud-resume
     letsencrypt_staging: true
