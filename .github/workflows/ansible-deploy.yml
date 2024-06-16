@@ -8,18 +8,21 @@ jobs:
   run-ansible-playbook:
     runs-on: ubuntu-latest
     steps:
-      # - name: Install ansible
-      #   run: pip install ansible-core
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install ansible
+        run: pip install ansible-core
 
       - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
+        uses: dawidd6/action-ansible-playbook@v2.8.0
         with:
           playbook: playbook.yaml
-          directory: ansible
+          directory: ./ansible
           # Optional, SSH private key
           key: ${{secrets.SSH_PRIVATE_KEY}}
           # vault_password: ${{secrets.VAULT_PASSWORD}}
-          requirements: galaxy-requirements.yml
+          requirements: galaxy-requirements.yaml
           options: |
             --inventory inventory.gcp.yaml
             --check
