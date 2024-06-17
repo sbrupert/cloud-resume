@@ -21,7 +21,7 @@ jobs:
           directory: ./ansible
           # Optional, SSH private key
           key: ${{secrets.SSH_PRIVATE_KEY}}
-          # vault_password: ${{secrets.VAULT_PASSWORD}}
+          vault_password: ${{secrets.VAULT_PASSWORD}}
           requirements: galaxy-requirements.yaml
           options: |
             --inventory inventory.gcp.yaml
