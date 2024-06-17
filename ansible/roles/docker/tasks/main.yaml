@@ -17,3 +17,4 @@
     state: present
     append: yes
   become: yes
+  notify: refresh ssh session

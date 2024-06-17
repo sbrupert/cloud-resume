@@ -5,3 +5,6 @@
     state: started
     enabled: true
   become: yes
+
+- name: refresh ssh session
+  meta: reset_connection
