@@ -12,7 +12,6 @@ resource "google_compute_instance" "web01" {
   labels = {
     instance_function = "webserver"
     env = "cloud-resume-prod"
-    service = "resume-website"
   }
   boot_disk {
     auto_delete = true
