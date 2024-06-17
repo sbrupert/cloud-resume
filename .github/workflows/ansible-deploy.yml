@@ -3,6 +3,10 @@ name: Deploy with Ansible
 
 on:
   workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Ansible tags to limit task execution.'
+        required: false
 
 jobs:
   run-ansible-playbook:
@@ -24,6 +28,6 @@ jobs:
           vault_password: ${{secrets.VAULT_PASSWORD}}
           requirements: galaxy-requirements.yaml
           options: |
-            --inventory inventory.gcp.yaml
+            --inventory inventory.gcp.yaml -t ${{ github.event.inputs.tags }}
         env:
           GCP_SERVICE_ACCOUNT_CONTENTS: ${{secrets.GCP_SERVICE_ACCOUNT_CONTENTS}}
