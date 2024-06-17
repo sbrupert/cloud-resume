@@ -61,6 +61,9 @@
             state: started
             restart_policy: "always"
             published_ports: "8080:{{ webserver_port }}"
+            labels:
+              DD_ENV: cloud-resume-prod
+              DD_SERVICE: cloud-resume
 
         - name: Configure Caddy
           import_role:
