@@ -1,0 +1,41 @@
+# Datadog Role Variables
+datadog_api_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          65333032646530386338653736643034663061633734646431396438626438613366316432643766
+          6631626633623064646532653561343531343837303865610a383462626363326431356338646161
+          30366232313366626665353831333864393931623962346132363437363962616232613265373035
+          3836373962613764310a373833396435353836653932616662346262656264343637343863353461
+          64303038643330663964313361316662323331316632353666663539336261663933613934666466
+          3065343261356265633433356235643538366134383236656333
+
+datadog_config:
+  apm_config:
+    enabled: true
+  logs_enabled: true
+  logs_config:
+    container_collect_all: true
+  process_config:
+    enabled: "true"
+  listeners:
+    - name: docker
+  config_providers:
+    - name: docker
+      polling: true
+  
+network_config:
+  enabled: true
+
+datadog_additional_groups: docker
+# Datadog APM Config for Auto APM with Docker
+datadog_apm_instrumentation_enabled: docker
+datadog_apm_instrumentation_libraries: ["python"]
+datadog_apm_instrumentation_docker_config:
+  log_level: info
+  output_paths:
+    - stderr
+  config_sources: BASIC
+
+datadog_checks:
+  docker:
+    instances:
+      - url: "unix://var/run/docker.sock"
