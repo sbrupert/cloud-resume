@@ -66,10 +66,12 @@
             image: "{{ webserver_image }}"
             state: started
             restart_policy: "always"
+            pull: "always"
             published_ports: "8080:{{ webserver_port }}"
             labels:
               DD_ENV: cloud-resume-prod
               DD_SERVICE: resume-website
+          tags: deploy
 
         - name: Configure Caddy
           import_role:
