@@ -23,6 +23,9 @@ jobs:
         with:
           playbook: playbook.yaml
           directory: ./ansible
+          configuration: |
+            [defaults]
+            timeout = 60
           # Optional, SSH private key
           key: ${{secrets.SSH_PRIVATE_KEY}}
           vault_password: ${{secrets.VAULT_PASSWORD}}
