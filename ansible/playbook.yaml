@@ -52,6 +52,12 @@
       tags: docker
       become: yes
 
+    - name: Configure Datadog
+      import_role:
+        name: datadog.datadog
+      tags: datadog
+      become: yes
+
     - name: Setup Website
       block:
         - name: Start container
