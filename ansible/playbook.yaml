@@ -63,7 +63,7 @@
             published_ports: "8080:{{ webserver_port }}"
             labels:
               DD_ENV: cloud-resume-prod
-              DD_SERVICE: cloud-resume
+              DD_SERVICE: resume-website
 
         - name: Configure Caddy
           import_role:
