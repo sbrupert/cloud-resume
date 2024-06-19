@@ -27,6 +27,42 @@ logger = logging.getLogger('cloud-resume')
 logger.addHandler(logHandler)
 logger.setLevel(LOGLEVEL)
 
+webserver_logger = logging.getLogger('webserver')
+webserver_logger.addHandler(logHandler)
+webserver_logger.setLevel(LOGLEVEL)
+
+app.logger = webserver_logger
+
+class RequestLoggerMiddleware:
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        request_start_time = datetime.now(timezone.utc)
+
+        def log_response(status, headers, exc_info=None):
+            content_length = next((value for name, value in headers if name.lower() == 'content-length'), '0')
+            log_data = {
+                "network.client.ip": request.headers.get('X-Forwarded-For', request.remote_addr),
+                "network.client.ip_fallback": request.remote_addr,
+                "http.request_time": request_start_time.strftime('%Y-%m-%d %H:%M:%S,%f')[:-3],
+                "http.method": request.method,
+                "http.url_details.path": request.path,
+                "http.status_code": status.split(' ')[0],
+                "network.bytes_written": content_length,
+                "http.referrer": request.referrer,
+                "http.user_agent": request.user_agent.string,
+                "source": "access_log"
+            }
+            # Directly log the dictionary without converting it to a JSON string
+            app.logger.info(log_data)
+            return start_response(status, headers, exc_info)
+
+        return self.app(environ, log_response)
+
+# Apply the middleware
+app.wsgi_app = RequestLoggerMiddleware(app.wsgi_app)
+
 # Check if we are running in an emulator environment
 if os.getenv('FIRESTORE_EMULATOR_HOST'):
     db = firestore.Client()
