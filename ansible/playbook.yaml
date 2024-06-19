@@ -54,7 +54,7 @@
 
     - name: Configure Datadog
       import_role:
-        name: datadog.datadog
+        name: datadog.dd.agent
       tags: datadog
       become: yes
 
