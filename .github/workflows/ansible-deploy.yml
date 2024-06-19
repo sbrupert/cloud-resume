@@ -27,7 +27,6 @@ jobs:
           configuration: |
             [defaults]
             timeout = 300
-          # Optional, SSH private key
           key: ${{secrets.SSH_PRIVATE_KEY}}
           vault_password: ${{secrets.VAULT_PASSWORD}}
           requirements: galaxy-requirements.yaml
