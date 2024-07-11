@@ -69,8 +69,8 @@
             pull: "always"
             published_ports: "8080:{{ webserver_port }}"
             labels:
-              DD_ENV: cloud-resume-prod
-              DD_SERVICE: resume-website
+              com.datadoghq.tags.env: cloud-resume-prod
+              com.datadoghq.tags.service: resume-website
           tags: deploy
 
         - name: Configure Caddy
