@@ -17,6 +17,6 @@ GCP was selected over AWS due to their generous [free tier](https://cloud.google
 ### Why Cloudflare?
 Cloudflare hosts the domain where our website will be reachable. Cloudflare does not charge "usage" fees for DNS-related items such as record queries, hosted zones, etc.
 
-By using Cloudflare to host our domain, we can utilize their [proxy feature](https://developers.cloudflare.com/fundamentals/concepts/how-cloudflare-works/#how-cloudflare-works-as-a-reverse-proxy). This provides us with caching and DDoS protection.
+By using Cloudflare to host our domain, we can utilize their [proxy feature](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records/). This provides us with caching and DDoS protection.
 
 Caching can help us make the most of our e2-micro instance by reducing the load from visitor traffic, outbound data transfer fees, and more.
