@@ -22,5 +22,6 @@
         msg: "Reboot initiated by Ansible for updates."
         reboot_timeout: 600
       when: reboot_required_file.stat.exists
+      become: yes
 
 
