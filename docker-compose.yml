@@ -1,0 +1,26 @@
+# This compose file will spin up the cloud-resume app without the need 
+# for a real firestore database or installing the gcloud-cli on your machine.
+services:
+  app:
+    build: .
+    platform: linux/amd64
+    environment:
+      - FIRESTORE_EMULATOR_HOST=firestore-emulator:8080
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+    command: gunicorn main:app --reload
+    depends_on:
+      - firestore-emulator
+
+  firestore-emulator:
+    # Image source: https://github.com/ridedott/firestore-emulator-docker/blob/master/Dockerfile
+    image: ghcr.io/ridedott/firestore-emulator:latest
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
