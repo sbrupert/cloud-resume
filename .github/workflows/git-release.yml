@@ -1,0 +1,30 @@
+name: git-release
+on:
+  workflow_call:
+    secrets:
+      github-token:
+        required: true
+    outputs:
+      semver: ${{ steps.semver.outputs.value }}
+
+jobs:
+  release:
+    name: "Extract semver from release branch name"
+    runs-on: ubuntu-latest
+    outputs:
+      semver: ${{ steps.semver.outputs.value }}
+    steps:
+      - name: Extract semver from release branch name
+        shell: bash
+        id: semver
+        run: |
+          export SEMVER=`echo "${{ github.event.head_commit.message }}" | grep -i "release-" | cut -d '-' -f 2 | head -n 1`
+          echo "value=$SEMVER" >> $GITHUB_OUTPUT
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.github-token }}"
+          automatic_release_tag: "${{ steps.semver.outputs.value }}"
+          prerelease: false
+          draft: false
+          title: "Release ${{ steps.semver.outputs.value }}"
