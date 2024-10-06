@@ -8,6 +8,8 @@ on:
 jobs:
   git-release:
     uses: ./.github/workflows/git-release.yml
+    permissions:
+      contents: write
   
   build-docker-image:
     uses: ./.github/workflows/build-container.yml
