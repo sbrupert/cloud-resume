@@ -2,7 +2,8 @@ name: git-release
 on:
   workflow_call:
     outputs:
-      semver: ${{ steps.semver.outputs.value }}
+      semver: 
+        value: ${{ steps.semver.outputs.value }}
 
 jobs:
   release:
