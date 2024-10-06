@@ -11,6 +11,11 @@ jobs:
   
   build-docker-image:
     uses: ./.github/workflows/build-container.yml
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
     needs: [git-release]
     with:
       IMAGE_VERSION: ${{ needs.git-release.outputs.semver }}
