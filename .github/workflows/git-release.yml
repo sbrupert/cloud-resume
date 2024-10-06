@@ -1,9 +1,6 @@
 name: git-release
 on:
   workflow_call:
-    secrets:
-      github-token:
-        required: true
     outputs:
       semver: ${{ steps.semver.outputs.value }}
 
@@ -23,7 +20,7 @@ jobs:
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          repo_token: "${{ secrets.github-token }}"
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "${{ steps.semver.outputs.value }}"
           prerelease: false
           draft: false
