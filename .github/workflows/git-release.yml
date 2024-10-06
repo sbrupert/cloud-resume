@@ -3,7 +3,7 @@ on:
   workflow_call:
     outputs:
       semver: 
-        value: ${{ steps.semver.outputs.value }}
+        value: ${{ jobs.release.outputs.semver }}
 
 jobs:
   release:
