@@ -1,5 +1,7 @@
 name: git-release
 on:
+  workflow_dispatch:
+    
   workflow_call:
     outputs:
       semver: 
@@ -19,10 +21,10 @@ jobs:
           export SEMVER=`echo "${{ github.event.workflow_run.head_commit.message }}" | grep -i "release-" | cut -d '-' -f 2 | head -n 1`
           echo "value=$SEMVER" >> $GITHUB_OUTPUT
 
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ steps.semver.outputs.value }}"
-          prerelease: false
-          draft: false
-          title: "Release ${{ steps.semver.outputs.value }}"
+      # - uses: "marvinpinto/action-automatic-releases@latest"
+      #   with:
+      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+      #     automatic_release_tag: "${{ steps.semver.outputs.value }}"
+      #     prerelease: false
+      #     draft: false
+      #     title: "Release ${{ steps.semver.outputs.value }}"
