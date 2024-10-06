@@ -16,7 +16,7 @@ jobs:
         shell: bash
         id: semver
         run: |
-          export SEMVER=`echo "${{ github.event.head_commit.message }}" | grep -i "release-" | cut -d '-' -f 2 | head -n 1`
+          export SEMVER=`echo "${{ github.event.workflow_run.head_commit.message }}" | grep -i "release-" | cut -d '-' -f 2 | head -n 1`
           echo "value=$SEMVER" >> $GITHUB_OUTPUT
 
       - uses: "marvinpinto/action-automatic-releases@latest"
