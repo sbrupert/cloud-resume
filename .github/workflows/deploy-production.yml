@@ -7,10 +7,10 @@ on:
   
 jobs:
   git-release:
-    uses: .github/workflows/git-release.yml
+    uses: ./.github/workflows/git-release.yml
   
   build-docker-image:
-    uses: .github/workflows/build-container.yml
+    uses: ./.github/workflows/build-container.yml
     needs: [git-release]
     with:
       IMAGE_VERSION: ${{ needs.git-release.outputs.semver }}
