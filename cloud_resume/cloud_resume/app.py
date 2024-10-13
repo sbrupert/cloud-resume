@@ -17,7 +17,8 @@ def index():
         return render_template('index.html', counter=counter)
     except Exception as e:
         logger.error(f"Error while incrementing counter: {e}")
-        return "An error occurred", 500
+        counter = "Unavailable"
+        return render_template('index.html', counter=counter)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=False)
