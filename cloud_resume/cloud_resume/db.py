@@ -13,30 +13,30 @@ counter_cache = None
 # Configure logging
 logger = configure_logging("database_client")
 
-db = None
+_db = None
 
 def get_firestore_client():
-    global db
-    if db is  None:
+    global _db
+    if _db is  None:
         try:
             # Check if we are running in an emulator environment
             if os.getenv('FIRESTORE_EMULATOR_HOST'):
-                db = firestore.Client()
+                _db = firestore.Client()
                 logger.warning("Detected Firestore Emualtor! Connecting to DB at: " + os.getenv('FIRESTORE_EMULATOR_HOST'))
             else:
                 # Initialize Firestore client with default credentials for production
                 logger.info("Connecting to Firestore DB")
                 credentials, project = google.auth.default()
-                db = firestore.Client(credentials=credentials, project=project)
+                _db = firestore.Client(credentials=credentials, project=project)
         except Exception as e:
             logger.error(f"Error connecting to firestore database: {e}")
-    return db
+    return _db
 
 def init_db():
     global counter_cache
     try:
-        db = get_firestore_client()
-        counter_doc_ref = db.collection('counters').document('visitor_count')
+        _db = get_firestore_client()
+        counter_doc_ref = _db.collection('counters').document('visitor_count')
         counter_doc = counter_doc_ref.get()
         if not counter_doc.exists:
             logger.info("Initializing counter in database.")
@@ -72,8 +72,8 @@ def cache_ip():
         else:
             logger.debug(f"IP {client_ip} not found in cache. Checking database.")
 
-        db = get_firestore_client()
-        ip_doc_ref = db.collection('visitor_ips').document(client_ip)
+        _db = get_firestore_client()
+        ip_doc_ref = _db.collection('visitor_ips').document(client_ip)
         ip_doc = ip_doc_ref.get()
 
         if ip_doc.exists:
@@ -98,8 +98,8 @@ def cache_ip():
 
 def increment_counter():
     global counter_cache
-    db = get_firestore_client()
-    counter_doc_ref = db.collection('counters').document('visitor_count')
+    _db = get_firestore_client()
+    counter_doc_ref = _db.collection('counters').document('visitor_count')
 
     try:
         cache_result = cache_ip()
