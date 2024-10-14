@@ -15,7 +15,7 @@ logger = configure_logging("database_client")
 
 db = None
 
-def connect_to_firestore():
+def get_firestore_client():
     global db
     if db is  None:
         try:
@@ -35,7 +35,7 @@ def connect_to_firestore():
 def init_db():
     global counter_cache
     try:
-        db = connect_to_firestore()
+        db = get_firestore_client()
         counter_doc_ref = db.collection('counters').document('visitor_count')
         counter_doc = counter_doc_ref.get()
         if not counter_doc.exists:
@@ -72,7 +72,7 @@ def cache_ip():
         else:
             logger.debug(f"IP {client_ip} not found in cache. Checking database.")
 
-        db = connect_to_firestore()
+        db = get_firestore_client()
         ip_doc_ref = db.collection('visitor_ips').document(client_ip)
         ip_doc = ip_doc_ref.get()
 
@@ -98,7 +98,7 @@ def cache_ip():
 
 def increment_counter():
     global counter_cache
-    db = connect_to_firestore()
+    db = get_firestore_client()
     counter_doc_ref = db.collection('counters').document('visitor_count')
 
     try:
