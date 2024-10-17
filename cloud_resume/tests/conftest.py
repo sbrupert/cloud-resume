@@ -60,8 +60,9 @@ def setup_firestore_database(setup_firestore_emulator, monkeymodule):
         monkeymodule (fixture): Module scoped monkeypatch fixture.
 
     Yields:
-        database_client (object): The initialized Firestore database client.
-        visitor_count (int): The visitor count injected into the database.
+        tuple: A tuple containing:
+            - database_client (object): The initialized Firestore database client.
+            - visitor_count (int): The visitor count injected into the database.
     """
     firestore_port = setup_firestore_emulator
     monkeymodule.setenv('FIRESTORE_EMULATOR_HOST', f'localhost:{firestore_port}')
