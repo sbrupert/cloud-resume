@@ -73,6 +73,10 @@ class FirestoreClient():
         except Exception as e:
             logger.error(f"Error updating counter document! {e}")
 
+    # def get_visitor_ip(self, ip_address:str ):
+
+
+
 _db = None  
 
 def get_firestore_client():
