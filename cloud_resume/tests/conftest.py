@@ -76,9 +76,9 @@ def setup_firestore_database(setup_firestore_emulator, monkeymodule):
     
     # Add visitor ip with timestamp to the test database.
     current_time = datetime.now(timezone.utc)
-    visitor_ips = [
-        {'ip': '192.168.1.5', 'timestamp': current_time},
-    ]
-    for i in visitor_ips:
-        database.collection('visitor_ips').document(i['ip']).set({'timestamp': i['timestamp']})
-    yield database_client, visitor_count
+    visitor_ips = {
+        '192.168.1.5': {'timestamp': current_time}
+    }
+    for key, value in visitor_ips.items():
+        database.collection('visitor_ips').document(key).set({'timestamp': value['timestamp']})
+    yield database_client, visitor_count, visitor_ips
