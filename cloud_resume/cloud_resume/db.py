@@ -37,14 +37,26 @@ class FirestoreClient():
                 return None
         return self._db
     
-    def get_visitor_count(self):
-        counter_doc_ref = self._db.collection('counters').document('visitor_count')
-        counter_doc = counter_doc_ref.get()
-        if counter_doc.exists:
-            visitor_count = counter_doc.to_dict().get('count')
-            return visitor_count
-        else:
-            logger.error("Counter document does not exist!")
+    def get_visitor_count(self) -> int:
+        """
+        Retrieves the current visitor count from Firestore.
+
+        Parameters:
+            self (FirestoreClient) - The instance of the FirestoreClient class.
+
+        Returns:
+            visitor_count (int) - The current visitor count in Firestore.
+        """
+        try:
+            counter_doc_ref = self._db.collection('counters').document('visitor_count')
+            counter_doc = counter_doc_ref.get()
+            if counter_doc.exists:
+                visitor_count = counter_doc.to_dict().get('count')
+                return visitor_count
+            else:
+                logger.error("Counter document does not exist!")
+        except Exception as e:
+            logger.error(f"Error retrieving visitor count from Firestore database: {e}")
 
     def update_visitor_count(self, count:int):
         """
