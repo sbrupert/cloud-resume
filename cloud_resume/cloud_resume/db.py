@@ -48,10 +48,10 @@ class FirestoreClient():
             visitor_count (int) - The current visitor count in Firestore.
         """
         try:
-            counter_doc_ref = self._db.collection('counters').document('visitor_count')
-            counter_doc = counter_doc_ref.get()
-            if counter_doc.exists:
-                visitor_count = counter_doc.to_dict().get('count')
+            doc_ref = self._db.collection('counters').document('visitor_count')
+            doc = doc_ref.get()
+            if doc.exists:
+                visitor_count = doc.to_dict().get('count')
                 return visitor_count
             else:
                 logger.error("Counter document does not exist!")
@@ -67,11 +67,15 @@ class FirestoreClient():
             count (int): The new value for the visitor counter field.
         
         """
-        counter_doc_ref = self._db.collection('counters').document('visitor_count')
+        doc_ref = self._db.collection('counters').document('visitor_count')
         try:
-            counter_doc_ref.update({'count': count})
+            doc_ref.update({'count': count})
         except Exception as e:
             logger.error(f"Error updating counter document! {e}")
+
+    # def get_visitor_ip(self, ip_address:str ):
+
+
 
 _db = None  
 
