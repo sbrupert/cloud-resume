@@ -46,6 +46,20 @@ class FirestoreClient():
         else:
             logger.error("Counter document does not exist!")
 
+    def update_visitor_count(self, count:int):
+        """
+        Updates the visitor_count document in Firestore.
+
+        Parameters:
+            self (FirestoreClient): The instance of the FirestoreClient class.
+            count (int): The new value for the visitor counter field.
+        
+        """
+        counter_doc_ref = self._db.collection('counters').document('visitor_count')
+        try:
+            counter_doc_ref.update({'count': count})
+        except Exception as e:
+            logger.error(f"Error updating counter document! {e}")
 
 _db = None  
 

@@ -29,3 +29,18 @@ def test_FirestoreClient_get_visitor_count(setup_firestore_database):
     visitor_count = database.get_visitor_count()
     logger.info(f'Retrieved visitor count: {visitor_count}')
     assert visitor_count == database_visitor_count
+
+def test_FirestoreClient_update_visitor_count(setup_firestore_database):
+    """
+    Test the FirestoreClient's update_visitor_count() method.
+
+    This test checks if the update_visitor_count() method correctly updates the 
+    visitor count in the Firestore emulator. It sets a new visitor count, and then
+    retrieves the value directly from the Firestore database to check if it matches
+    the updated value. The test passes if the stored value matches the expected one.
+    """
+    database = setup_firestore_database[0]
+    visitor_count = 243
+    logger.info(f'Setting new visitor count {visitor_count}')
+    database.update_visitor_count(visitor_count)
+    assert visitor_count == database._db.collection('counters').document('visitor_count').get().to_dict().get('count')
