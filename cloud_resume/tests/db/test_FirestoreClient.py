@@ -1,5 +1,6 @@
 from cloud_resume.db import FirestoreClient
 from cloud_resume.logger import configure_logging
+from datetime import datetime, timezone
 
 logger = configure_logging(__name__)
 
@@ -74,3 +75,25 @@ def test_FirestoreClient_get_visitor_ip_notfound(setup_firestore_database):
 
     assert visitor_doc[0] == False
     assert visitor_doc[1] is None
+
+def test_FirestoreClient_update_visitor_ip(setup_firestore_database):
+    """
+    Test the FirestoreClient's update_visitor_ip() method.
+
+    This test will check if we are able to successfully add a new IP address to Firestore with a timestamp.
+    If the method returns True, and we can retrieve the newly created ip address document with the correct timestamp, then the test passes.
+    """
+    database = setup_firestore_database[0]
+    visitor_ip = "255.255.255.255"
+    visitor_timestamp = datetime.now(timezone.utc)
+
+    logger.info(f'Attemping to add visitor ip {visitor_ip} with timestamp to firestore database.')
+    method_success = database.update_visitor_ip(visitor_ip, visitor_timestamp)
+
+    # Try to retrieve the new ip address document from Firestore.
+    logger.info(f"Retrieving new ip {visitor_ip} from firestore.")
+    doc = database._db.collection('visitor_ips').document(visitor_ip).get()
+
+    assert method_success == True, "The method did not return True to indicate successful execution."
+    assert visitor_ip == doc.id, f"The ip address retrieved from Firestore is {doc.id}, and should be {visitor_ip}."
+    assert visitor_timestamp == doc.to_dict()['timestamp'], f"Timestamp mismatch: Expected {visitor_timestamp}, got {doc.to_dict()['timestamp']}"

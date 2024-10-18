@@ -97,6 +97,31 @@ class FirestoreClient():
                 return False, None
         except Exception as e:
             logger.error(f"Error retrieving visitor ip address from Firestore database! {e}")
+        
+    def update_visitor_ip(self, ip_address:str, timestamp:datetime) -> bool:
+        """
+        Updates the "visitor_ips" collection in Firestore with a document named after
+        `ip_address` parameter. The document will be created with the "timestamp" field set to the 
+        `timestamp` parameter.
+
+        Note: This method will also create the document if it doesn't already exist. You may use this 
+            method to update just the timestamp of an existing 
+
+        Parameters:
+            self (FirestoreClient): The instance of the FirestoreClient class.
+            ip_address (str): The IP address of the visitor.
+            timestamp (str): Timestamp of visit.
+
+        Returns:
+            bool: Whether the method completed successfully or not.
+        """
+        try:
+            doc_ref = self._db.collection('visitor_ips').document(ip_address)
+            doc_ref.set({'timestamp': timestamp})
+            return True
+        except Exception as e:
+            logger.error(f"Error adding or updating visitor ip {ip_address} in Firestore! {e}")
+            return False
 
 
 _db = None  
