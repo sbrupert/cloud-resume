@@ -26,7 +26,7 @@ def test_FirestoreClient_get_visitor_count(setup_firestore_database):
     retrieve the visitor count from the firestore emulator. If the method returns
     the same value as the one injected into the emulator, then the test passes.
     """
-    database, database_visitor_count = setup_firestore_database
+    database, database_visitor_count, _ = setup_firestore_database
     visitor_count = database.get_visitor_count()
     logger.info(f'Retrieved visitor count: {visitor_count}')
     assert visitor_count == database_visitor_count
