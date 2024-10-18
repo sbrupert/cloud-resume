@@ -73,8 +73,30 @@ class FirestoreClient():
         except Exception as e:
             logger.error(f"Error updating counter document! {e}")
 
-    # def get_visitor_ip(self, ip_address:str ):
+    def get_visitor_ip(self, ip_address:str):
+        """
+        Retrieves the visitor document from Firestore based on IP address.
 
+        Parameters:
+            self (FirestoreClient): The instance of the FirestoreClient class.
+            ip_address (str): The IP address of the visitor.
+
+        Returns:
+            tuple: A tuple containing:
+                - bool: 'Whether visitor IP address exists in Firestore'
+                - dict: 'The documents data if it exists, otherwise None.'
+        """
+        try:
+            doc_ref = self._db.collection('visitor_ips').document(ip_address)
+            doc = doc_ref.get()
+            if doc.exists:
+                content = doc.to_dict()
+                return True, content
+            else:
+                logger.warning(f"Visitor document does not exist for ip {ip_address}!")
+                return False, None
+        except Exception as e:
+            logger.error(f"Error retrieving visitor ip address from Firestore database! {e}")
 
 
 _db = None  

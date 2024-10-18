@@ -44,3 +44,33 @@ def test_FirestoreClient_update_visitor_count(setup_firestore_database):
     logger.info(f'Setting new visitor count {visitor_count}')
     database.update_visitor_count(visitor_count)
     assert visitor_count == database._db.collection('counters').document('visitor_count').get().to_dict().get('count')
+
+def test_FirestoreClient_get_visitor_ip(setup_firestore_database):
+    """
+    Tests FirestoreClient get_visitor_ip() method.
+    
+    This test checks to see if the get_visitor_ip() method is able to
+    retrieve the visitor's ip address from the firestore emulator. If the method is able to 
+    retrieve the injected IP address and the "timestamp" field in the document, then the test passes.
+    """
+    database, database_visitor_count, database_visitor_ips = setup_firestore_database
+    visitor_ip = list(database_visitor_ips)[0]
+    logger.info(f'Retrieving visitor ip {visitor_ip}')
+    visitor_doc = database.get_visitor_ip(visitor_ip)
+
+    assert visitor_doc[0] == True
+    assert visitor_doc[1]['timestamp'] is not None
+
+def test_FirestoreClient_get_visitor_ip_notfound(setup_firestore_database):
+    """
+    Tests FirestoreClient get_visitor_ip() method when IP address is not found in the emulator.
+    
+    This test checks if the get_visitor_ip() method correctly returns False and an empty document for a non-existent IP address.
+    """
+    database, database_visitor_count, database_visitor_ips = setup_firestore_database
+    visitor_ip = "255.255.255.255"
+    logger.info(f'Retrieving visitor ip {visitor_ip}')
+    visitor_doc = database.get_visitor_ip(visitor_ip)
+
+    assert visitor_doc[0] == False
+    assert visitor_doc[1] is None
