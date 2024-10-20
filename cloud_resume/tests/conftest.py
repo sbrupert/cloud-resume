@@ -29,7 +29,11 @@ def setup_firestore_emulator():
     Yields:
         firestore_port (int): The port number on which the Firestore emulator is running.
     """
-    docker_client = docker.from_env()
+    try:
+        docker_client = docker.from_env()
+    except docker.errors.DockerException as e:
+        pytest.exit(f"Could not connect to Docker daemon. Is Docker running? Exception: {e}", returncode=1)
+
     container = docker_client.containers.run("ghcr.io/ridedott/firestore-emulator:latest", detach=True, publish_all_ports=True)
     while container.status != "running":
         logger.info("Waiting for firestore emulator to start")
