@@ -210,8 +210,7 @@ def cache_ip():
 
 def increment_counter():
     global counter_cache
-    _db = get_firestore_client()
-    counter_doc_ref = _db.collection('counters').document('visitor_count')
+    global database
 
     try:
         cache_result = cache_ip()
@@ -220,27 +219,29 @@ def increment_counter():
                 logger.debug(f"Using cached counter value: {counter_cache}")
                 return counter_cache
             else:
-                counter_doc = counter_doc_ref.get()
-                if counter_doc.exists:
-                    counter_cache = counter_doc.to_dict().get('count')
+                visitor_count = database.get_visitor_count()
+                if visitor_count is not None:
+                    counter_cache = visitor_count
                     logger.info(f"Counter value retrieved from Firestore: {counter_cache}")
                     return counter_cache
                 else:
-                    logger.error("Counter document does not exist.")
-                    return "Counter document does not exist."
-
-        counter_doc = counter_doc_ref.get()
-        if counter_doc.exists:
-            count = counter_doc.to_dict().get('count', 0) + 1
-            counter_doc_ref.update({'count': count})
-            counter_cache = count
-            logger.debug(f"Counter incremented to: {count}")
-            return count
+                    database.update_visitor_count(1)
+                    counter_cache = 1
+                    logger.debug("Counter document created with initial value 1.")
+                    return 1
         else:
-            counter_doc_ref.set({'count': 1})
-            counter_cache = 1
-            logger.debug("Counter document created with initial value 1.")
-            return 1
+            visitor_count = database.get_visitor_count()
+            if visitor_count is not None:
+                count = visitor_count + 1
+                database.update_visitor_count(count)
+                counter_cache = count
+                logger.debug(f"Counter incremented to: {count}")
+                return count
+            else:
+                database.update_visitor_count(1)
+                counter_cache = 1
+                logger.debug("Counter document created with initial value 1.")
+                return 1
     except Exception as e:
         logger.error(f"An error occurred while incrementing the counter: {e}")
         return "An error occurred while incrementing the counter."
