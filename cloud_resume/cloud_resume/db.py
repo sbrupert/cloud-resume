@@ -124,7 +124,9 @@ class FirestoreClient():
             return False
 
 
-_db = None  
+_db = None
+
+database = FirestoreClient()
 
 def get_firestore_client():
     global _db
@@ -168,6 +170,7 @@ def get_client_ip():
     return ip
 
 def cache_ip():
+    global database
     client_ip = get_client_ip()
     current_time = datetime.now(timezone.utc)
 
@@ -183,29 +186,27 @@ def cache_ip():
         else:
             logger.debug(f"IP {client_ip} not found in cache. Checking database.")
 
-        _db = get_firestore_client()
-        ip_doc_ref = _db.collection('visitor_ips').document(client_ip)
-        ip_doc = ip_doc_ref.get()
+        db_ip = database.get_visitor_ip(client_ip)
 
-        if ip_doc.exists:
-            db_timestamp = ip_doc.to_dict().get('timestamp')
+        if db_ip[0] == True:
+            db_timestamp = db_ip[1]['timestamp']
             if db_timestamp >= (current_time - timedelta(days=1)):
                 ip_cache[client_ip] = db_timestamp
                 logger.debug(f"IP {client_ip} found in database and not expired.")
                 return True
             else:
                 ip_cache[client_ip] = current_time
-                ip_doc_ref.set({'timestamp': current_time})
+                database.update_visitor_ip(client_ip, current_time)
                 logger.info(f"IP {client_ip} found in database but expired. Updating timestamp.")
                 return False
         else:
             ip_cache[client_ip] = current_time
-            ip_doc_ref.set({'timestamp': current_time})
+            database.update_visitor_ip(client_ip, current_time)
             logger.info(f"IP {client_ip} not found in database. Adding new entry.")
             return False
     except Exception as e:
         logger.error(f"An error occurred while caching the IP: {e}")
-        sys.exit(1) # Don't proceed further if we run into an exception.
+
 
 def increment_counter():
     global counter_cache
