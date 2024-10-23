@@ -45,7 +45,7 @@ class FirestoreClient():
             self (FirestoreClient) - The instance of the FirestoreClient class.
 
         Returns:
-            visitor_count (int) - The current visitor count in Firestore.
+            visitor_count (int) - The current visitor count in Firestore or None if the document doesn't exist.
         """
         try:
             doc_ref = self._db.collection('counters').document('visitor_count')
@@ -55,6 +55,7 @@ class FirestoreClient():
                 return visitor_count
             else:
                 logger.error("Counter document does not exist!")
+                return None
         except Exception as e:
             logger.error(f"Error retrieving visitor count from Firestore database: {e}")
 

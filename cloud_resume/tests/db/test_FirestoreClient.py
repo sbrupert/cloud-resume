@@ -31,6 +31,25 @@ def test_FirestoreClient_get_visitor_count(setup_firestore_database):
     logger.info(f'Retrieved visitor count: {visitor_count}')
     assert visitor_count == database_visitor_count
 
+def test_FirestoreClient_get_visitor_count_None(setup_firestore_emulator, monkeymodule):
+    """
+    Tests FirestoreClient get_visitor_count() method.
+    
+    This test checks to see if the get_visitor_count() method is able to
+    retrieve the visitor count from the firestore emulator. If the method returns
+    the same value as the one injected into the emulator, then the test passes.
+    """
+    firestore_port = setup_firestore_emulator
+    monkeymodule.setenv('FIRESTORE_EMULATOR_HOST', f'localhost:{firestore_port}')
+    database_client = FirestoreClient()
+    database = database_client
+    database._db.collection('counters').document('visitor_count').delete()
+
+    visitor_count = database.get_visitor_count()
+    logger.info(f'Retrieved visitor count: {visitor_count}')
+    assert visitor_count == None
+    
+
 def test_FirestoreClient_update_visitor_count(setup_firestore_database):
     """
     Test the FirestoreClient's update_visitor_count() method.
