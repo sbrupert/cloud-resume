@@ -125,8 +125,6 @@ class FirestoreClient():
             return False
 
 
-_db = None
-
 database = FirestoreClient()
 
 def get_firestore_client():
@@ -146,21 +144,6 @@ def get_firestore_client():
             logger.error(f"Error connecting to firestore database: {e}")
     return _db
 
-def init_db():
-    global counter_cache
-    try:
-        _db = get_firestore_client()
-        counter_doc_ref = _db.collection('counters').document('visitor_count')
-        counter_doc = counter_doc_ref.get()
-        if not counter_doc.exists:
-            logger.info("Initializing counter in database.")
-            counter_doc_ref.set({'count': 0})
-            counter_cache = 0
-        else:
-            counter_cache = counter_doc.to_dict().get('count', 0)
-            logger.debug(f"Counter retrieved from database: {counter_cache}")
-    except Exception as e:
-        logger.error(f"Error initializing database: {e}")
 
 def get_client_ip():
     if request.headers.get('X-Forwarded-For'):
