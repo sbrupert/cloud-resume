@@ -127,24 +127,6 @@ class FirestoreClient():
 
 database = FirestoreClient()
 
-def get_firestore_client():
-    global _db
-    if _db is  None:
-        try:
-            # Check if we are running in an emulator environment
-            if os.getenv('FIRESTORE_EMULATOR_HOST'):
-                _db = firestore.Client()
-                logger.warning("Detected Firestore Emualtor! Connecting to DB at: " + os.getenv('FIRESTORE_EMULATOR_HOST'))
-            else:
-                # Initialize Firestore client with default credentials for production
-                logger.info("Connecting to Firestore DB")
-                credentials, project = google.auth.default()
-                _db = firestore.Client(credentials=credentials, project=project)
-        except Exception as e:
-            logger.error(f"Error connecting to firestore database: {e}")
-    return _db
-
-
 def get_client_ip():
     if request.headers.get('X-Forwarded-For'):
         ip = request.headers['X-Forwarded-For'].split(',')[0].strip()
