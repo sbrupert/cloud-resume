@@ -18,7 +18,7 @@ def monkeymodule():
     with pytest.MonkeyPatch.context() as monkeypatch:
         yield monkeypatch
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def setup_firestore_emulator():
     """
     Sets up a Firestore emulator using Docker and returns the port on which it is running.
@@ -51,7 +51,7 @@ def setup_firestore_emulator():
     container.kill()
     container.remove()
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def setup_firestore_database(setup_firestore_emulator, monkeymodule):
     """
     Sets up a Firestore database with test data.
