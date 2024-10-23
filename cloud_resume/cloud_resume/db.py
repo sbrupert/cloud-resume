@@ -70,7 +70,7 @@ class FirestoreClient():
         """
         doc_ref = self._db.collection('counters').document('visitor_count')
         try:
-            doc_ref.update({'count': count})
+            doc_ref.set({'count': count})
         except Exception as e:
             logger.error(f"Error updating counter document! {e}")
 
