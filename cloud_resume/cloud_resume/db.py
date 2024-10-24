@@ -20,6 +20,24 @@ class FirestoreClient():
         self._db = None
     
     def connect_to_firestore(self):
+        """
+        Establishes a connection to a Firestore database.
+
+        If the environment variable `FIRESTORE_EMULATOR_HOST` is set, the client connects to the Firestore emulator
+        at the specified address (usually used for local development and testing). Otherwise, the client connects
+        to the Firestore database in the default Google Cloud Project, using the application's Google Cloud credentials.
+
+        Once the connection is successfully established, it is stored in `self._db` for reuse across methods.
+
+        ## Environment Variables:
+            FIRESTORE_EMULATOR_HOST (str): The host address of the Firestore Emulator (e.g., 'localhost:8080').
+
+        Returns:
+            firestore.Client: A Firestore client instance representing the connection to the Firestore database.
+
+        Raises:
+            Exception: If there is an error during the connection process.
+        """
         if self._db is None:
             try:
                 # Check if we are running in an emulator environment
