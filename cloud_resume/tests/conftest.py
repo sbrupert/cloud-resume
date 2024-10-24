@@ -71,6 +71,7 @@ def setup_firestore_database(setup_firestore_emulator, monkeymodule):
     firestore_port = setup_firestore_emulator
     monkeymodule.setenv('FIRESTORE_EMULATOR_HOST', f'localhost:{firestore_port}')
     database_client = FirestoreClient()
+    database_client.connect_to_firestore()
     database = database_client._db
 
     logger.info("Injecting test data into the database.")
