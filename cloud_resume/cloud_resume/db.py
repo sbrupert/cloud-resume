@@ -18,7 +18,6 @@ class FirestoreClient():
 
     def __init__(self):
         self._db = None
-        self._db = self.connect_to_firestore()
     
     def connect_to_firestore(self):
         if self._db is None:
@@ -48,6 +47,7 @@ class FirestoreClient():
             visitor_count (int) - The current visitor count in Firestore or None if the document doesn't exist.
         """
         try:
+            self.connect_to_firestore()
             doc_ref = self._db.collection('counters').document('visitor_count')
             doc = doc_ref.get()
             if doc.exists:
@@ -68,8 +68,9 @@ class FirestoreClient():
             count (int): The new value for the visitor counter field.
         
         """
-        doc_ref = self._db.collection('counters').document('visitor_count')
         try:
+            self.connect_to_firestore()
+            doc_ref = self._db.collection('counters').document('visitor_count')
             doc_ref.set({'count': count})
         except Exception as e:
             logger.error(f"Error updating counter document! {e}")
@@ -88,6 +89,7 @@ class FirestoreClient():
                 - dict: 'The documents data if it exists, otherwise None.'
         """
         try:
+            self.connect_to_firestore()
             doc_ref = self._db.collection('visitor_ips').document(ip_address)
             doc = doc_ref.get()
             if doc.exists:
@@ -117,6 +119,7 @@ class FirestoreClient():
             bool: Whether the method completed successfully or not.
         """
         try:
+            self.connect_to_firestore()
             doc_ref = self._db.collection('visitor_ips').document(ip_address)
             doc_ref.set({'timestamp': timestamp})
             return True
