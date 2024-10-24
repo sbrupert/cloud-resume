@@ -1,9 +1,7 @@
 name: Run Code Tests
 on:
   workflow_call:
-  workflow_dispatch:
-  pull_request:
-    
+  workflow_dispatch:    
     
 jobs:
   test-code:
