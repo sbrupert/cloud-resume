@@ -16,6 +16,7 @@ def test_FirestoreClient_connection(setup_firestore_emulator,monkeypatch):
     firestore_port = setup_firestore_emulator
     monkeypatch.setenv('FIRESTORE_EMULATOR_HOST', f'localhost:{firestore_port}')
     database = FirestoreClient()
+    database.connect_to_firestore()
     assert database._db is not None
 
 def test_FirestoreClient_get_visitor_count(setup_firestore_database):
@@ -41,8 +42,8 @@ def test_FirestoreClient_get_visitor_count_None(setup_firestore_emulator, monkey
     """
     firestore_port = setup_firestore_emulator
     monkeymodule.setenv('FIRESTORE_EMULATOR_HOST', f'localhost:{firestore_port}')
-    database_client = FirestoreClient()
-    database = database_client
+    database = FirestoreClient()
+    database.connect_to_firestore()
     database._db.collection('counters').document('visitor_count').delete()
 
     visitor_count = database.get_visitor_count()
