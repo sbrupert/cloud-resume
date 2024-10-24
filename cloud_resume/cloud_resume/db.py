@@ -131,6 +131,16 @@ class FirestoreClient():
 database = FirestoreClient()
 
 def get_client_ip():
+    """
+    Retrieves the client's IP address from the request.
+
+    If the 'X-Forwarded-For' header is present (commonly used when the client is 
+    behind a proxy or load balancer), the first IP in the list will be returned.
+    Otherwise, the direct client IP from the request is returned.
+
+    Returns:
+        str: The client's IP address.
+    """
     if request.headers.get('X-Forwarded-For'):
         ip = request.headers['X-Forwarded-For'].split(',')[0].strip()
     else:
