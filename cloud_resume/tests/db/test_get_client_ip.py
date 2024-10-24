@@ -30,6 +30,15 @@ def app():
 
 
 def test_get_client_ip(app,x_forwarded_for,remote_addr,expected_ip):
+    """
+    Test the get_client_ip() function.
+
+    This test checks to see if the get_client_ip() function returns the correct IP address based on the availability of the X-Forwarded-For header
+    or the request Remote Address (request.remote_addr).
+
+    This test runs different scenarios to ensure the correct IP is returned for each scenario. Please see the pytest parameterization section above
+    for all the tested scenarios and their expexted results.
+    """
     _headers = {}
     _environ_base = {}
 
