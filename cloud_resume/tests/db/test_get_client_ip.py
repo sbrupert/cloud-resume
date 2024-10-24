@@ -26,7 +26,7 @@ def app():
     
     # Test for all missing values. TO-DO: this should probably be an exception test.
     (None, None, None)
-])
+], ids=["x_forward_missing", "x_forward_default", "x_forward_precedence", "multiple_x_forward", "all_missing" ])
 
 
 def test_get_client_ip(app,x_forwarded_for,remote_addr,expected_ip):
