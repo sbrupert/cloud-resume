@@ -70,15 +70,14 @@ def setup_firestore_database(setup_firestore_emulator, monkeymodule):
     """
     firestore_port = setup_firestore_emulator
     monkeymodule.setenv('FIRESTORE_EMULATOR_HOST', f'localhost:{firestore_port}')
-    database_client = FirestoreClient()
-    database_client.connect_to_firestore()
-    database = database_client._db
+    database = FirestoreClient()
+    database.connect_to_firestore()
 
     logger.info("Injecting test data into the database.")
     
     # Add in count data to the test database.
     visitor_count = 127
-    database.collection('counters').document('visitor_count').set({'count': visitor_count})
+    database._db.collection('counters').document('visitor_count').set({'count': visitor_count})
     
     # Add visitor ip with timestamp to the test database.
     current_time = datetime.now(timezone.utc)
@@ -86,5 +85,5 @@ def setup_firestore_database(setup_firestore_emulator, monkeymodule):
         '192.168.1.5': {'timestamp': current_time}
     }
     for key, value in visitor_ips.items():
-        database.collection('visitor_ips').document(key).set({'timestamp': value['timestamp']})
-    yield database_client, visitor_count, visitor_ips
+        database._db.collection('visitor_ips').document(key).set({'timestamp': value['timestamp']})
+    yield database, visitor_count, visitor_ips
