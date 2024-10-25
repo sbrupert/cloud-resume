@@ -167,6 +167,19 @@ def get_client_ip():
     return ip
 
 def cache_ip():
+    """
+    Checks and caches the visitor's IP address locally and in the database.
+
+    This function first checks if the visitor's IP is stored in the local cache. If the IP is found 
+    and was cached less than 24 hours ago, it is considered valid (not expired), and the function 
+    returns `True`. If it has expired or isn't found locally, the function checks the Firestore 
+    database. If found in Firestore and not expired, the cache is updated with the database timestamp. 
+    If expired, the Firestore entry and the local cache are updated with the current timestamp.
+
+    Returns:
+        bool: True if the visitor's IP is found in the cache or database and is not expired; 
+              False if the IP is expired or not found.
+    """
     global database
     client_ip = get_client_ip()
     current_time = datetime.now(timezone.utc)
