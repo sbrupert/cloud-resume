@@ -76,6 +76,7 @@ class FirestoreClient():
                 return None
         except Exception as e:
             logger.error(f"Error retrieving visitor count from Firestore database: {e}")
+            raise e
 
     def update_visitor_count(self, count:int):
         """
@@ -92,6 +93,7 @@ class FirestoreClient():
             doc_ref.set({'count': count})
         except Exception as e:
             logger.error(f"Error updating counter document! {e}")
+            raise e
 
     def get_visitor_ip(self, ip_address:str):
         """
@@ -118,6 +120,7 @@ class FirestoreClient():
                 return False, None
         except Exception as e:
             logger.error(f"Error retrieving visitor ip address from Firestore database! {e}")
+            raise e
         
     def update_visitor_ip(self, ip_address:str, timestamp:datetime) -> bool:
         """
