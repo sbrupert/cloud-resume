@@ -219,6 +219,17 @@ def cache_ip():
 
 
 def increment_counter():
+    """
+    Increments the visitor count in Firestore and caches the result.
+
+    This function first checks if the visitor's IP is stored in the local cache. If it has expired 
+    or isn't found locally, the function checks the Firestore database. The counter document will be 
+    updated with the new value. If a cached value exists, it is returned instead of updating the DB.
+
+    Returns:
+        int: The incremented visitor count.
+        str: "Unavailable" if the counter was not available in the cache or Firestore.
+    """
     global counter_cache
     global database
 
@@ -254,4 +265,4 @@ def increment_counter():
                 return 1
     except Exception as e:
         logger.error(f"An error occurred while incrementing the counter: {e}")
-        return "An error occurred while incrementing the counter."
+        return "Unavailable"
