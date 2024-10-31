@@ -33,7 +33,7 @@ def test_get_client_ip(app,x_forwarded_for,remote_addr,expected_ip):
     or the request Remote Address (request.remote_addr).
 
     This test runs different scenarios to ensure the correct IP is returned for each scenario. Please see the pytest parameterization section above
-    for all the tested scenarios and their expexted results.
+    for all the tested scenarios and their expected results.
     """
     _headers = {}
     _environ_base = {}
