@@ -12,22 +12,18 @@ def app():
     yield app
 
 @pytest.mark.parametrize("x_forwarded_for, remote_addr, expected_ip", [
-    # Make sure remote_addr is used when X-Forwarded-For is missing
-    (None, '127.0.0.1', '127.0.0.1'),
-    
-    # Use X-Forwarded-For by default    
-    ('127.0.0.1', None, '127.0.0.1'),
-    
-    # X-Forwarded-For takes precedence over remote_addr
-    ('127.0.0.1', '127.0.0.2', '127.0.0.1'),
-    
-    # Test for multiple X-Forwarded-For values, should use the first one. (Proxies append their IP to X-Forwarded-For.)
-    ('127.0.0.1, 10.0.10.1, 192.168.1.1', None, '127.0.0.1'),
-    
-    # Test for all missing values. TO-DO: this should probably be an exception test.
-    (None, None, None)
-], ids=["x_forward_missing", "x_forward_default", "x_forward_precedence", "multiple_x_forward", "all_missing" ])
-
+    (None, '127.0.0.1', '127.0.0.1'),                          # Scenario 1: No X-Forwarded-For, use remote_addr.
+    ('127.0.0.1', None, '127.0.0.1'),                          # Scenario 2: Use X-Forwarded-For by default when present.
+    ('127.0.0.1', '127.0.0.2', '127.0.0.1'),                   # Scenario 3: X-Forwarded-For overrides remote_addr.
+    ('127.0.0.1, 10.0.10.1, 192.168.1.1', None, '127.0.0.1'),  # Scenario 4: Multiple X-Forwarded-For, use first IP.
+    (None, None, None)                                         # Scenario 5: Both missing, expect None.
+], ids=[
+    "x_forward_missing", 
+    "x_forward_default", 
+    "x_forward_precedence", 
+    "multiple_x_forward", 
+    "all_missing" 
+])
 
 def test_get_client_ip(app,x_forwarded_for,remote_addr,expected_ip):
     """
