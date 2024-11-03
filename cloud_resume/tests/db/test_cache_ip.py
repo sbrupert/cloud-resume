@@ -30,11 +30,9 @@ def test_cache_ip(mocker, monkeypatch, ip_cache_content, db_content, db_exists, 
     Generally speaking, if the timestamp of a client IP is expired in either the cache or db, the function should return False.
     Otherwise, it should return True.
     """
-    # Mock the IP retrieval functions and set up cache/db contents
     mocker.patch("cloud_resume.db.get_client_ip", return_value="192.168.1.1")
     mocker.patch.object(FirestoreClient, "get_visitor_ip", return_value=(db_exists, db_content))
     mocker.patch.object(FirestoreClient, "update_visitor_ip", return_value=True)
     monkeypatch.setattr("cloud_resume.db.ip_cache", ip_cache_content)
 
-    # Assert the result of cache_ip
     assert cache_ip() == expected_result
