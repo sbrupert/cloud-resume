@@ -14,6 +14,3 @@ app.wsgi_app = RequestLoggerMiddleware(app, app.wsgi_app)
 def index():
     counter = increment_counter()
     return render_template('index.html', counter=counter)
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=False)
