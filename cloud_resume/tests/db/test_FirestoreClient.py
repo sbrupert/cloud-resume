@@ -1,11 +1,11 @@
-from cloud_resume.db import FirestoreClient
+from cloud_resume.db import FirestoreClient, firestore
 from cloud_resume.logger import configure_logging
 from datetime import datetime, timezone
 
 logger = configure_logging(__name__)
 
 
-def test_FirestoreClient_connection(setup_firestore_emulator,monkeypatch):
+def test_FirestoreClient_connection_emulator(setup_firestore_emulator,monkeypatch):
     """
     Tests FirestoreClient connect_to_firestore() method.
     
@@ -18,6 +18,22 @@ def test_FirestoreClient_connection(setup_firestore_emulator,monkeypatch):
     database = FirestoreClient()
     database.connect_to_firestore()
     assert database._db is not None
+
+def test_FirestoreClient_connection(mocker):
+    """
+    Tests FirestoreClient connect_to_firestore() method.
+    
+    This test checks to see if the connect_to_firestore() method is able to
+    establish a connection to a mocked firestore instance. If the class var `_db`
+    is equal to the mocked firestore client's return value, then the connection was successful.
+    """
+    mocker.patch("cloud_resume.db.google.auth.default", return_value=("credentials","project"))
+    mock_firestore = mocker.patch.object(firestore, "Client", return_value="Firestore Database")
+    database = FirestoreClient()
+    database.connect_to_firestore()
+    
+    mock_firestore.assert_called_once()
+    assert database._db is mock_firestore.return_value
 
 def test_FirestoreClient_get_visitor_count(setup_firestore_database):
     """
