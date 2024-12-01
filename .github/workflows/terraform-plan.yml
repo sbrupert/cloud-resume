@@ -6,13 +6,13 @@ on:
     branches:
       - main
     paths:
-      - terraform/
+      - terraform
 
 env:
   TF_CLOUD_ORGANIZATION: "sbrtech"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
   TF_WORKSPACE: "cloud-resume"
-  CONFIG_DIRECTORY: "terraform/" ## Directory of your Terraform Configuration. Relative to the project root.
+  CONFIG_DIRECTORY: "terraform" ## Directory of your Terraform Configuration. Relative to the project root.
 
 jobs:
   terraform-cloud-speculative-run:
