@@ -18,8 +18,9 @@ jobs:
   terraform-cloud-speculative-run:
     runs-on: ubuntu-latest
     steps:
-      - run: ls -l .
       - uses: actions/checkout@v3
+
+      - run: ls -l ${{ env.CONFIG_DIRECTORY }}
 
       - uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.3.1
         id: upload
