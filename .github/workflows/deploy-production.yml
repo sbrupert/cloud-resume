@@ -6,6 +6,9 @@ on:
       - "main"
   
 jobs:
+  run-code-tests:
+    uses: ./.github/workflows/run-code-tests.yml
+
   git-release:
     uses: ./.github/workflows/git-release.yml
     permissions:
