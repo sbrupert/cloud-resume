@@ -5,8 +5,8 @@ on:
   pull_request:
     branches:
       - main
-    # paths:
-    #   - terraform
+    paths:
+      - terraform/**
 
 env:
   TF_CLOUD_ORGANIZATION: "sbrtech"
