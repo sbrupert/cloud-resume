@@ -7,4 +7,4 @@ resource "cloudflare_record" "cloud_resume" {
   proxied = false
   # Prevents the record from being created before our GCP instance. Which would cause the run to fail.
   depends_on = [ google_compute_instance.web01 ]
-} 
+}
