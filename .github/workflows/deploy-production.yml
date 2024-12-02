@@ -5,6 +5,7 @@ on:
     branches:
       - "main"
 
+concurrency: production
 
 jobs:
   run-code-tests:
