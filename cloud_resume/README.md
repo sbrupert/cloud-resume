@@ -76,8 +76,7 @@ Docker compose is the quickest way to check out the project. The docker compose 
 
 #### Requirements
 
-1. Python (<=3.12)
-2. Docker & Docker-Compose
+1. Docker & Docker-Compose
 
 In order to launch the app without using a real Firestore database, you will need to install [Docker](https://docs.docker.com/get-started/) and [Docker Compose](https://docs.docker.com/compose/).
 
