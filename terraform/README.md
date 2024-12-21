@@ -18,6 +18,16 @@ Our Terraform code will create the following resources:
 
 For more details, check out the various Terraform files in this directory!
 
+## HCP Terraform
+
+Most engineers typically store their Terraform state file in an storage bucket (S3, Google Cloud Storage Bucket, etc.) or in their CI/CD platform if it's self managed. While Google does include up to 5GB of CLoud Storage, I wanted to give Hashicorp's "HCP Terraform" a shot.
+
+HCP Terraform is a SaaS Terraform option by Hashicorp. They handle managing your state file, Terraform version, execution environment and more. For this project, I'm using them to manage my state file, execute Terraform runs, and storing my secrets.
+
+Terraform runs are integrated with Github Actions and are fully automated. Pull requests trigger a terraform plan and the output summary is even written as a comment for quick reference!
+
+![Terraform PR Comment Example](/.assets/terraform_plan_pr_comment.png)
+
 ### Why GCP?
 
 GCP was selected over AWS due to their generous [free tier](https://cloud.google.com/free?hl=en) that does not expire. The two major services we are utilizing from this are:
