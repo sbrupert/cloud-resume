@@ -4,8 +4,13 @@ on:
   push:
     branches:
       - "main"
-  
+
+concurrency: production
+
 jobs:
+  run-code-tests:
+    uses: ./.github/workflows/run-code-tests.yml
+
   git-release:
     uses: ./.github/workflows/git-release.yml
     permissions:
@@ -22,3 +27,8 @@ jobs:
     with:
       IMAGE_VERSION: ${{ needs.git-release.outputs.semver }}
 
+  terraform-apply:
+    uses: ./.github/workflows/terraform-apply.yml
+
+  ansible-deploy:
+    uses: ./.github/workflows/ansible-deploy.yml

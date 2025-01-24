@@ -1,0 +1,24 @@
+name: Run Code Tests
+on:
+  workflow_call:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - cloud_resume
+    
+    
+jobs:
+  test-code:
+    name: "Run code tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: 'cloud_resume'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - run: pip install -r cloud_resume/requirements-dev.txt
+      - run: |
+          pytest

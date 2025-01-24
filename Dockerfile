@@ -1,8 +1,16 @@
-FROM alpine
+FROM ubuntu:22.04
+
 WORKDIR /app
-COPY ./site /app/
-RUN apk add python3 py3-pip
-RUN pip install --break-system-packages -r /app/requirements.txt
+RUN apt-get update -y && apt-get install -y python3 python3-pip
+
+COPY ./cloud_resume/cloud_resume /app/cloud_resume
+COPY ./cloud_resume/requirements.txt /app/
+COPY ./cloud_resume/gunicorn.conf.py /app
+
+RUN pip install -r /app/requirements.txt
+
 EXPOSE 8080
+
+# Set Environment Variables to Configure Datadog APM Tracing
 ENV DD_LOGS_INJECTION=true DD_PROFILING_ENABLED=true DD_APPSEC_ENABLED=true DD_APPSEC_SCA_ENABLED=true
-CMD ["ddtrace-run", "gunicorn", "main:app"]
+CMD ["ddtrace-run", "gunicorn", "cloud_resume.app:app"]
