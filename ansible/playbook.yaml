@@ -63,6 +63,8 @@
             restart_policy: "always"
             pull: "always"
             published_ports: "8080:{{ webserver_port }}"
+            etc_hosts:
+              host.docker.internal: host-gateway
             labels:
               com.datadoghq.tags.env: cloud-resume-prod
               com.datadoghq.tags.service: resume-website
