@@ -7,6 +7,12 @@ on:
       GCP_SERVICE_ACCOUNT_CONTENTS:
         required: true
         description: "GCP Service Account file for ansible inventory"
+      SSH_PRIVATE_KEY:
+        required: true
+        description: "SSH key for connecting to instances"
+      VAULT_PASSWORD:
+        required: true
+        description: "Ansible vault key for decrypting secrets"
 
   workflow_dispatch:
     inputs:
@@ -35,8 +41,8 @@ jobs:
           configuration: |
             [defaults]
             timeout = 300
-          key: ${{secrets.SSH_PRIVATE_KEY}}
-          vault_password: ${{secrets.VAULT_PASSWORD}}
+          key: "${{secrets.SSH_PRIVATE_KEY}}"
+          vault_password: "${{secrets.VAULT_PASSWORD}}"
           requirements: galaxy-requirements.yaml
           options: |
             --inventory inventory.gcp.yaml ${{ github.event.inputs.tags && format('-t {}', github.event.inputs.tags) || '' }}

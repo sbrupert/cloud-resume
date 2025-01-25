@@ -36,3 +36,5 @@ jobs:
     uses: ./.github/workflows/ansible-deploy.yml
     secrets:
       GCP_SERVICE_ACCOUNT_CONTENTS: "${{secrets.GCP_SERVICE_ACCOUNT_CONTENTS}}"
+      SSH_PRIVATE_KEY: "${{secrets.SSH_PRIVATE_KEY}}"
+      VAULT_PASSWORD: "${{secrets.VAULT_PASSWORD}}"
