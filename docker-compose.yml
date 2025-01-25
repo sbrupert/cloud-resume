@@ -9,7 +9,7 @@ services:
       - "8080:8080"
     networks:
       - backend
-    command: gunicorn main:app --reload
+    command: gunicorn cloud_resume.app:app 
     depends_on:
       - firestore-emulator
 

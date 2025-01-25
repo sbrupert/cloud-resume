@@ -1,0 +1,46 @@
+# This template is pre-configured to create an applyable run in HCP Terraform.
+# If the plan phase is successful, the run will be applied for the specified workspace.
+#
+# This workflow is configured to trigger when a push against your `main` branch occurs,
+# **IF** the set paths contain files that have changed.
+#
+---
+name: HCP Terraform Apply Run
+
+on:
+  workflow_call:
+
+## RECOMMENDED: Limit apply runs job / workflow to a single concurrency group at a time.
+concurrency: production
+
+## Add shared Environment Variables across jobs here ##
+env:
+  TF_CLOUD_ORGANIZATION: "sbrtech"
+  TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+  TF_WORKSPACE: "cloud-resume"
+  CONFIG_DIRECTORY: "terraform" ## Directory of your Terraform Configuration. Relative to the project root.
+
+jobs:
+  terraform-cloud-apply-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.3.1
+        id: upload
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          directory: ${{ env.CONFIG_DIRECTORY }}
+
+      - uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.1
+        id: create-run
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+
+      - uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.3.1
+        id: apply
+        if: ${{ fromJSON(steps.create-run.outputs.payload).data.attributes.actions.IsConfirmable }}
+        with:
+          run: ${{ steps.create-run.outputs.run_id }}
+          comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"

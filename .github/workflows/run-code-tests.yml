@@ -1,0 +1,35 @@
+name: Run Code Tests
+on:
+  workflow_call:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - cloud_resume/**
+    
+    
+jobs:
+  test-code:
+    name: "Run code tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: 'cloud_resume'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install development dependencies
+        run: pip install -r cloud_resume/requirements-dev.txt
+      
+      - name: Run tests and output coverage file
+        run: |
+          pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=cloud_resume cloud_resume/tests | tee pytest-coverage.txt
+
+      - name: Create pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
