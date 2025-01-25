@@ -3,6 +3,10 @@ name: Deploy with Ansible
 
 on:
   workflow_call:
+    secrets:
+      GCP_SERVICE_ACCOUNT_CONTENTS:
+        required: true
+        description: "GCP Service Account file for ansible inventory"
 
   workflow_dispatch:
     inputs:
@@ -37,4 +41,4 @@ jobs:
           options: |
             --inventory inventory.gcp.yaml ${{ github.event.inputs.tags && format('-t {}', github.event.inputs.tags) || '' }}
         env:
-          GCP_SERVICE_ACCOUNT_CONTENTS: ${{secrets.GCP_SERVICE_ACCOUNT_CONTENTS}}
+          GCP_SERVICE_ACCOUNT_CONTENTS: "${{secrets.GCP_SERVICE_ACCOUNT_CONTENTS}}"
