@@ -34,3 +34,5 @@ jobs:
   ansible-deploy:
     needs: [terraform-apply, build-docker-image]
     uses: ./.github/workflows/ansible-deploy.yml
+    secrets:
+      GCP_SERVICE_ACCOUNT_CONTENTS: "${{secrets.GCP_SERVICE_ACCOUNT_CONTENTS}}"
