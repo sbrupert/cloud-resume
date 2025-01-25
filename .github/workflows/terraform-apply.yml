@@ -11,7 +11,7 @@ on:
   workflow_call:
 
 ## RECOMMENDED: Limit apply runs job / workflow to a single concurrency group at a time.
-concurrency: production
+concurrency: terraform-apply
 
 ## Add shared Environment Variables across jobs here ##
 env:

@@ -10,6 +10,8 @@ on:
         description: 'Ansible tags to limit task execution.'
         required: false
 
+concurrency: ansible-deploy
+
 jobs:
   run-ansible-playbook:
     runs-on: ubuntu-latest

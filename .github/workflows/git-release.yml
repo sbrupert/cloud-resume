@@ -5,6 +5,8 @@ on:
       semver: 
         value: ${{ jobs.release.outputs.semver }}
 
+concurrency: git-release
+
 jobs:
   release:
     name: "Extract semver from release branch name"
