@@ -11,6 +11,7 @@ datadog_api_key: !vault |
 datadog_config:
   apm_config:
     enabled: true
+    apm_non_local_traffic: true
   logs_enabled: true
   logs_config:
     container_collect_all: true
