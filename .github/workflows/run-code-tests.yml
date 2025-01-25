@@ -26,7 +26,7 @@ jobs:
       
       - name: Run tests and output coverage file
         run: |
-          pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=cloud_resume cloud_resume/tests tee pytest-coverage.txt
+          pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=cloud_resume cloud_resume/tests | tee pytest-coverage.txt
 
       - name: Create pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
