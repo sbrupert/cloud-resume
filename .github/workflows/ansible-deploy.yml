@@ -35,6 +35,6 @@ jobs:
           vault_password: ${{secrets.VAULT_PASSWORD}}
           requirements: galaxy-requirements.yaml
           options: |
-            --inventory inventory.gcp.yaml -t ${{ github.event.inputs.tags }}
+            --inventory inventory.gcp.yaml ${{ github.event.inputs.tags && format('-t {}', github.event.inputs.tags) || '' }}
         env:
           GCP_SERVICE_ACCOUNT_CONTENTS: ${{secrets.GCP_SERVICE_ACCOUNT_CONTENTS}}
