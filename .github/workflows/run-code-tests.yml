@@ -15,10 +15,21 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: 'cloud_resume'
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: 'pip'
-      - run: pip install -r cloud_resume/requirements-dev.txt
-      - run: |
-          pytest
+
+      - name: Install development dependencies
+        run: pip install -r cloud_resume/requirements-dev.txt
+      
+      - name: Run tests and output coverage file
+        run: |
+          pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=cloud_resume cloud_resume/tests tee pytest-coverage.txt
+
+      - name: Create pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
