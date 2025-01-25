@@ -28,7 +28,7 @@ jobs:
 
   terraform-apply:
     uses: ./.github/workflows/terraform-apply.yml
-    with:
+    secrets:
       TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
 
   ansible-deploy:
