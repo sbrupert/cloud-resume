@@ -13,6 +13,7 @@
       ansible.builtin.service:
         name: fail2ban
         state: restarted
+        become: true
 
   tasks:
     - name: Configure Fail2Ban
@@ -21,7 +22,7 @@
           ansible.builtin.apt:
             name: fail2ban
             state: present
-            update_cache: yes
+            update_cache: true
 
         - name: Create Fail2Ban jail for SSH
           ansible.builtin.copy:
@@ -42,7 +43,7 @@
           ansible.builtin.service:
             name: fail2ban
             state: started
-            enabled: yes
+            enabled: true
       become: true
       tags: fail2ban
 
@@ -50,13 +51,13 @@
       import_role:
         name: docker
       tags: docker
-      become: yes
+      become: true
 
     - name: Configure Datadog
       import_role:
         name: datadog.dd.agent
       tags: datadog
-      become: yes
+      become: true
 
     - name: Setup Website
       block:
@@ -77,5 +78,5 @@
           import_role:
             name: caddy
           tags: caddy
-          become: yes
+          become: true
       tags: app
