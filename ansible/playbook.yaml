@@ -53,12 +53,6 @@
       tags: docker
       become: true
 
-    - name: Configure Datadog
-      import_role:
-        name: datadog.dd.agent
-      tags: datadog
-      become: true
-
     - name: Setup Website
       block:
         - name: Start container
@@ -80,3 +74,9 @@
           tags: caddy
           become: true
       tags: app
+
+    - name: Configure Datadog
+      import_role:
+        name: datadog.dd.agent
+      tags: datadog
+      become: true
