@@ -3,6 +3,11 @@ name: Deploy with Ansible
 
 on:
   workflow_call:
+    inputs:
+      IMAGE_VERSION:
+        type: string
+        required: false
+        description: "Container image tag to deploy"
     secrets:
       GCP_SERVICE_ACCOUNT_CONTENTS:
         required: true
@@ -16,6 +21,10 @@ on:
 
   workflow_dispatch:
     inputs:
+      IMAGE_VERSION:
+        type: string
+        required: false
+        description: "Container image tag to deploy"
       tags:
         description: 'Ansible tags to limit task execution.'
         required: false
@@ -48,3 +57,4 @@ jobs:
             --inventory inventory.gcp.yaml ${{ github.event.inputs.tags && format('-t {}', github.event.inputs.tags) || '' }}
         env:
           GCP_SERVICE_ACCOUNT_CONTENTS: "${{secrets.GCP_SERVICE_ACCOUNT_CONTENTS}}"
+          IMAGE_VERSION: "${{inputs.IMAGE_VERSION}}"
