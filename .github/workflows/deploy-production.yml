@@ -34,7 +34,8 @@ jobs:
   ansible-deploy:
     needs: [terraform-apply, git-release, build-docker-image]
     uses: ./.github/workflows/ansible-deploy.yml
-    with: ${{ needs.git-release.outputs.semver }}
+    with: 
+      IMAGE_VERSION: ${{ needs.git-release.outputs.semver }}
     secrets:
       GCP_SERVICE_ACCOUNT_CONTENTS: "${{secrets.GCP_SERVICE_ACCOUNT_CONTENTS}}"
       SSH_PRIVATE_KEY: "${{secrets.SSH_PRIVATE_KEY}}"
