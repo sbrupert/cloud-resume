@@ -5,7 +5,8 @@
     ansible_user: ansible
     webserver_fqdn: "resume.sbrtech.xyz"
     webserver_port: 8080
-    webserver_image: ghcr.io/sbrupert/cloud-resume
+    webserver_image_version: "{{ lookup('ansible.builtin.env', 'IMAGE_VERSION') | default('latest', true) }}"
+    webserver_image: ghcr.io/sbrupert/cloud-resume:{{webserver_image_version}}
     letsencrypt_staging: true
 
   handlers:
