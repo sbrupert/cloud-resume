@@ -61,6 +61,7 @@
             name: cloud-resume
             image: "{{ webserver_image }}"
             state: started
+            recreate: true
             restart_policy: "always"
             pull: "always"
             published_ports: "8080:{{ webserver_port }}"
