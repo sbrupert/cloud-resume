@@ -65,6 +65,9 @@
             restart_policy: "always"
             pull: "always"
             published_ports: "8080:{{ webserver_port }}"
+            env:
+              DD_SERVICE: resume-website
+              DD_ENV: cloud-resume-prod
             etc_hosts:
               host.docker.internal: host-gateway
             labels:
