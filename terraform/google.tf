@@ -40,6 +40,10 @@ resource "google_compute_instance" "web01" {
     email = google_service_account.webserver_sa.email
     scopes = ["cloud-platform"]
   }
+
+  lifecycle {
+    ignore_changes = [ boot_disk[0].initialize_params[0].image ]
+  }
 }
 
 # Firestore Related Resources
