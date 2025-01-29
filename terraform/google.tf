@@ -42,7 +42,7 @@ resource "google_compute_instance" "web01" {
   }
 
   lifecycle {
-    ignore_changes = [ boot_disk[0].initialize_params.image ]
+    ignore_changes = [ boot_disk[0].initialize_params[0].image ]
   }
 }
 
