@@ -67,6 +67,9 @@
             published_ports: "8080:{{ webserver_port }}"
             etc_hosts:
               host.docker.internal: host-gateway
+            env:
+              DD_SERVICE: "resume-website"
+              DD_ENV: "cloud-resume-prod"
             labels:
               com.datadoghq.tags.env: cloud-resume-prod
               com.datadoghq.tags.service: resume-website
