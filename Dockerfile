@@ -1,5 +1,7 @@
 FROM ubuntu:22.04
 
+ARG VERSION
+
 WORKDIR /app
 RUN apt-get update -y && apt-get install -y python3 python3-pip
 
