@@ -19,7 +19,7 @@ resource "google_compute_instance" "web01" {
     initialize_params {
       image = data.google_compute_image.ubuntu-22-lts.self_link
       size  = 30 # Currently the largest disk we can use and stay within the free tier.
-      type  = "pd-standard"
+      type  = "pd-balanced"
     }
 
     mode = "READ_WRITE"
