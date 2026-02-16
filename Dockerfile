@@ -13,6 +13,8 @@ RUN pip install -r /app/requirements.txt
 
 EXPOSE 8080
 
+ARG IMAGE_VERSION
+
 # Set Environment Variables to Configure Datadog APM Tracing
-ENV DD_LOGS_INJECTION=true DD_PROFILING_ENABLED=true DD_APPSEC_ENABLED=true DD_APPSEC_SCA_ENABLED=true DD_AGENT_HOST=host.docker.internal DD_ENV=${VERSION}
+ENV DD_LOGS_INJECTION=true DD_PROFILING_ENABLED=true DD_APPSEC_ENABLED=true DD_APPSEC_SCA_ENABLED=true DD_AGENT_HOST=host.docker.internal DD_VERSION=${IMAGE_VERSION}
 CMD ["ddtrace-run", "gunicorn", "cloud_resume.app:app"]
