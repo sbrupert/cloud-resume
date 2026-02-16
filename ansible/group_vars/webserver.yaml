@@ -28,14 +28,6 @@ network_config:
   enabled: true
 
 datadog_additional_groups: docker
-# Datadog APM Config for Auto APM with Docker
-datadog_apm_instrumentation_enabled: all
-datadog_apm_instrumentation_libraries: ["python"]
-datadog_apm_instrumentation_docker_config:
-  log_level: info
-  output_paths:
-    - stderr
-  config_sources: BASIC
 
 datadog_checks:
   docker:
