@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-    <title>Steven Rupert - Cloud / Infrastructure / DevOps Engineer</title>
+    <title>Steven Rupert - System Administrator</title>
     <!-- Tailwind CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
@@ -38,7 +38,7 @@
     <header class="bg-gray-200 py-12">
         <div class="container mx-auto text-center">
             <h1 class="text-4xl font-bold">Steven Rupert</h1>
-            <p class="text-lg">Cloud / Infrastructure / DevOps Engineer</p>
+            <p class="text-lg">Experienced System Administrator</p>
             <p class="mt-4 text-blue-600 font-semibold"><b>You are visitor number: {{ counter }}</b></p>
         </div>
     </header>
@@ -47,20 +47,17 @@
         <section id="summary" class="mb-12">
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-4">Summary</h2>
-                <p class="mb-4">Cloud and Infrastructure Engineer with 5+ years of experience operating and automating production systems across AWS and on-prem environments. Strong background in infrastructure as code, CI/CD automation, configuration management, and on-call operations. Seeking a DevOps, SRE, or Platform Engineering role focused on automation, reliability, and scalable infrastructure.</p>
+                <p class="mb-4">Experienced System Administrator with 4 years of hands-on experience working with Ansible, Terraform, vSphere, Packer, Windows Active Directory, Windows Server, Linux (Ubuntu and RedHat), and AWS. Proven ability to manage resources in AWS and VMWare vSphere using Terraform. Extensive experience using Packer to create OS templates, reducing the time needed to create new virtual machines. Comfortable working with Linux systems, including OS installs, network configuration, and performance monitoring.</p>
                 <h3 class="text-xl font-semibold mb-2">Technologies</h3>
                 <ul class="list-disc list-inside">
-                    <li>AWS (EC2, VPC, IAM, RDS, S3, Route53)</li>
-                    <li>VMware vSphere 7–8, vCenter</li>
-                    <li>Terraform</li>
                     <li>Ansible</li>
+                    <li>Terraform</li>
+                    <li>vSphere</li>
                     <li>Packer</li>
-                    <li>Jenkins (CI/CD)</li>
-                    <li>Containers</li>
-                    <li>Kubernetes</li>
-                    <li>Datadog (metrics, logs, alerting)</li>
-                    <li>Linux (Ubuntu, RHEL)</li>
-                    <li>Python, Bash</li>
+                    <li>Windows Active Directory</li>
+                    <li>Windows Server</li>
+                    <li>Linux (Ubuntu and RedHat)</li>
+                    <li>AWS</li>
                 </ul>
             </div>
         </section>
@@ -68,20 +65,14 @@
         <section id="experience" class="mb-12">
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-4">Work Experience</h2>
-                <h3 class="text-xl font-semibold mb-2">Cloud / Infrastructure / Platform Engineer</h3>
-                <p class="font-semibold">Kajeet, Inc. [2020–2026]</p>
+                <h3 class="text-xl font-semibold mb-2">System Administrator</h3>
+                <p class="font-semibold">Kajeet, Inc. [2020-2023]</p>
                 <ul class="list-disc list-inside">
-                    <li>Designed, deployed, and operated production infrastructure across AWS and on-prem environments, supporting Dev, QA, Staging, and Production systems.</li>
-                    <li>Developed and maintained Ansible automation for security agents, monitoring agents, OS updates, and internal reporting; refactored legacy automation to improve maintainability and reduce configuration drift.</li>
-                    <li>Designed and deployed Ansible Automation Platform (AAP), integrating with Active Directory via LDAP and centralizing execution of automation previously run manually.</li>
-                    <li>Built a greenfield Terraform codebase for vSphere, enabling automated provisioning of ~20 production VMs across two datacenters and reducing provisioning time from days to hours.</li>
-                    <li>Maintained Terraform deployments for AWS infrastructure (EC2, VPC, IAM, RDS, S3) across multiple environments using Jenkins-driven plan/apply workflows with remote state and Git reviews.</li>
-                    <li>Served as the subject-matter expert for a multi-cluster vSphere 7–8 environment (~20 ESXi hosts, ~100 VMs), administering vCenter, performing ESXi and vCenter upgrades, and managing storage across vSAN (VxRail) and Dell PowerStore arrays.</li>
-                    <li>Executed live workload migrations during SAN decommissioning and storage transitions without production downtime.</li>
-                    <li>Built standardized Packer VM templates and Jenkins pipelines to automate template builds, ensuring patched, compliant base images for on-prem deployments.</li>
-                    <li>Developed Python tooling integrated into CI/CD pipelines, including testing for Ansible/SSM workflows and automated reporting compiled from Ansible run logs.</li>
-                    <li>Participated in a 4-person on-call rotation supporting AWS and vSphere production systems; reduced alert fatigue by tuning Datadog monitors and alert thresholds.</li>
-                    <li>Supported a production Kubernetes environment (Anthos GKE) during initial rollout and stabilization, collaborating with lead architects on cluster design and implementation.</li>
+                    <li>Managed various AWS resources using Terraform, including RDS Clusters, Route53 records, S3 buckets, and IAM Roles + Policies.</li>
+                    <li>Worked with vSphere in a production environment containing 25 hosts and 200 virtual machines, utilizing vSphere Distributed Switches.</li>
+                    <li>Used Packer to create OS templates, reducing the time needed to create new virtual machines and implemented a CI/CD pipeline to keep templates up-to-date.</li>
+                    <li>Maintained and updated Linux systems, including OS installs, network configuration, and performance monitoring.</li>
+                    <li>Worked with AWS in a production environment, managing resources in multiple AWS accounts and ensuring consistency and compliance with security policies.</li>
                 </ul>
             </div>
         </section>
@@ -90,14 +81,12 @@
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-4">Skills</h2>
                 <ul class="list-disc list-inside">
-                    <li><strong>Infrastructure as Code:</strong> Terraform; remote state; plan/apply workflows; Git review-driven changes.</li>
-                    <li><strong>Automation & Configuration Management:</strong> Ansible; Ansible Automation Platform (AAP); OS patching and baseline hardening.</li>
-                    <li><strong>CI/CD & Image Pipelines:</strong> Jenkins; Packer template automation; governed execution for recurring production changes.</li>
-                    <li><strong>Cloud & Platforms:</strong> AWS (EC2, VPC, IAM, RDS, S3, Route53); on-prem & hybrid infrastructure; VMware vSphere 7–8 and vCenter.</li>
-                    <li><strong>Observability & Operations:</strong> Datadog metrics/logs/alerting; incident response; on-call operations; monitor tuning and signal quality improvements.</li>
-                    <li><strong>Containers & Kubernetes:</strong> containerized workloads; supported Kubernetes (Anthos GKE) during rollout and stabilization.</li>
-                    <li><strong>Programming & Scripting:</strong> Python (automation, reporting, tooling); Bash.</li>
-                    <li><strong>Networking & Security:</strong> VPC design; subnets, routing, security groups; IAM roles & policies; VPN, DNS, firewall fundamentals.</li>
+                    <li>Experience managing infrastructure as code using Terraform.</li>
+                    <li>Knowledge of vSphere and its core features (Networking, Storage, Host/Cluster setup).</li>
+                    <li>Proficient in using Packer to create OS templates.</li>
+                    <li>Familiar with Windows Active Directory and Windows Server.</li>
+                    <li>Strong background in Linux administration, including OS installs, network configuration, and performance monitoring.</li>
+                    <li>Experience working with AWS in a production environment.</li>
                 </ul>
             </div>
         </section>
@@ -105,17 +94,18 @@
         <section id="education" class="mb-12">
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-bold mb-4">Education</h2>
-                <p><strong>University of Maryland Global Campus - B.S. | Computer Networks & Cybersecurity</strong></p>
-                <p>2020</p>
-                <p><strong>College of Southern Maryland - A.A.S. | Information Services Technology</strong></p>
-                <p>2018</p>
+                <p><strong>University of Maryland Global Campus, Largo, MD - Bachelors | Computer Networks & Cybersecurity</strong></p>
+                <p>Spring 2019 - Fall 2020</p>
+                <p><strong>College of Southern Maryland, La Plata, MD - Associate of Applied Science | Information Services Technology</strong></p>
+                <p>Fall 2016 - Fall 2018</p>
+                <p>Received A+ Skills Technician letter of recognition.</p>
             </div>
         </section>
     </main>
 
     <footer class="bg-white shadow text-center py-6">
         <div class="container mx-auto">
-            <p class="text-gray-600">© 2026 Steven Rupert</p>
+            <p class="text-gray-600">© 2024 Steven Rupert</p>
         </div>
     </footer>
 
