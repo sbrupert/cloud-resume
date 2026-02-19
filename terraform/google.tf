@@ -1,7 +1,7 @@
 # GCP Related Resources
 # This looks up the official Ubuntu 22 LTS GCP image so we can create our instance from it.
 data "google_compute_image" "ubuntu-22-lts" {
-  family  = "ubuntu-2204-lts"
+  family  = "ubuntu-2404-lts-amd64"
   project = "ubuntu-os-cloud"
   most_recent = true
 }
