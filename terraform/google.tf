@@ -92,9 +92,7 @@ resource "google_compute_firewall" "webserver_ssh_ingress" {
   source_ranges = ["0.0.0.0/0"]
   description   = "Allow SSH traffic from anywhere to webservers."
 }
-
-# Note: Our ingress rules are overly permissive. This is fine if we aren't going to use Cloudflare and directly serve the site to visitors.
-#       But if our website will be behind Cloudflare's proxy, we should restrict access to Cloudflare-owned IPs: https://www.cloudflare.com/ips/       
+    
 resource "google_compute_firewall" "webserver_http_ingress" {
   name    = "webserver-http-ingress"
   network = resource.google_compute_network.webserver_vpc.self_link
@@ -102,7 +100,7 @@ resource "google_compute_firewall" "webserver_http_ingress" {
     protocol = "tcp"
     ports    = ["80"]
   }
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = data.cloudflare_ip_ranges.cf_ingress.ipv4_cidr_blocks
   description   = "Allow all HTTP traffic to webservers."
 }
 
@@ -113,7 +111,7 @@ resource "google_compute_firewall" "webserver_https_ingress" {
     protocol = "tcp"
     ports    = ["443"]
   }
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = data.cloudflare_ip_ranges.cf_ingress.ipv4_cidr_blocks
   description   = "Allow all HTTPS traffic to webservers."
 }
 
