@@ -25,7 +25,7 @@ datadog_config:
       polling: true
   
 network_config:
-  enabled: true
+  enabled: false
 
 datadog_additional_groups: docker
 
