@@ -38,7 +38,7 @@ resource "google_compute_instance" "web01" {
   }
   service_account {
     email = google_service_account.webserver_sa.email
-    scopes = ["cloud-platform"]
+    scopes = ["datastore"]
   }
 
   lifecycle {
