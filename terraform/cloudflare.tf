@@ -1,3 +1,6 @@
+data "cloudflare_ip_ranges" "cf_ingress" {
+}
+
 resource "cloudflare_record" "cloud_resume" {
   zone_id = var.cloudflare_zone_id
   name = var.webserver_subdomain
