@@ -10,11 +10,15 @@
 
 
 :80 {
-        reverse_proxy localhost:{{ webserver_port}}
+        reverse_proxy localhost:{{ webserver_port}} {
+                header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+        }
 }
 
 {{ webserver_fqdn }}:443 {
-        reverse_proxy localhost:{{ webserver_port}}
+        reverse_proxy localhost:{{ webserver_port}} {
+                header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+        }
         {% if letsencrypt_staging == true %}
         tls {
                 ca https://acme-staging-v02.api.letsencrypt.org/directory
