@@ -20,7 +20,7 @@ variable "webserver_domain" {
 
 variable "google_cloud_project" {
   type = string
-  sensitive = true
+  sensitive = false
 }
 
 variable "google_cloud_billing_account" {
