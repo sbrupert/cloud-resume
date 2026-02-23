@@ -127,3 +127,20 @@ resource "google_compute_firewall" "webserver_egress" {
   destination_ranges = ["0.0.0.0/0"]
   description        = "Allow webservers to reach anywhere."
 }
+
+module "kill-switch" {
+  source = "github.com/TrisNol/gcp-billing-kill-switch?ref=v1.0.0"
+
+  project_id      = var.google_cloud_project
+  region          = var.google_cloud_region
+  billing_account = var.google_cloud_billing_account
+  storage_bucket  = google_storage_bucket.billing_kill_switch.name
+  depends_on = [ resource.google_storage_bucket.billing_kill_switch ]
+}
+
+resource "google_storage_bucket" "billing_kill_switch" {
+  name = "billing_kill_switch"
+  location = "us-east1"
+  storage_class = "standard"
+  force_destroy = true
+}
