@@ -141,7 +141,7 @@ module "kill-switch" {
 }
 
 resource "google_storage_bucket" "billing_kill_switch" {
-  name = "billing_kill_switch"
+  name = "billing-kill-switch-${var.google_cloud_project}"
   location = "us-east1"
   storage_class = "standard"
   force_destroy = true
