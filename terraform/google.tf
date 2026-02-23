@@ -129,7 +129,9 @@ resource "google_compute_firewall" "webserver_egress" {
 }
 
 module "kill-switch" {
-  source = "github.com/TrisNol/gcp-billing-kill-switch?ref=v1.0.0"
+  source = "github.com/TrisNol/gcp-billing-kill-switch?ref=v2.1.0"
+  budget = "20"
+  currency = "USD"
 
   project_id      = var.google_cloud_project
   region          = var.google_cloud_region
