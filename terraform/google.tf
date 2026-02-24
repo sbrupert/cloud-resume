@@ -10,6 +10,7 @@ resource "google_compute_instance" "web01" {
   machine_type = "e2-micro"
   name         = "web01"
   zone         = "us-east1-b" # Could also be "us-west1" or "us-central1" and be eligible for the free tier.
+  desired_status = "RUNNING"
   labels = {
     instance_function = "webserver"
     env               = "cloud-resume-prod"
@@ -126,23 +127,4 @@ resource "google_compute_firewall" "webserver_egress" {
   # If we could use URLs instead of IPs, then we could list all the domains we want to whitelist. However, this isn't supported by GCP at the moment.
   destination_ranges = ["0.0.0.0/0"]
   description        = "Allow webservers to reach anywhere."
-}
-
-module "kill-switch" {
-  source   = "github.com/TrisNol/gcp-billing-kill-switch?ref=v2.1.0"
-  budget   = "20"
-  currency = "USD"
-
-  project_id      = var.google_cloud_project
-  region          = var.google_cloud_region
-  billing_account = var.google_cloud_billing_account
-  storage_bucket  = google_storage_bucket.billing_kill_switch.name
-  depends_on      = [resource.google_storage_bucket.billing_kill_switch]
-}
-
-resource "google_storage_bucket" "billing_kill_switch" {
-  name          = "billing-kill-switch-${var.google_cloud_project}"
-  location      = "us-east1"
-  storage_class = "standard"
-  force_destroy = true
 }
