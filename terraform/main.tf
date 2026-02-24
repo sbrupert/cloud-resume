@@ -1,11 +1,11 @@
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "~> 5.32.0"
     }
     cloudflare = {
-      source = "cloudflare/cloudflare"
+      source  = "cloudflare/cloudflare"
       version = "~> 4.0"
     }
   }
@@ -13,7 +13,7 @@ terraform {
 
 provider "google" {
   project = var.google_cloud_project
-  region = var.google_cloud_region
+  region  = var.google_cloud_region
 }
 
 provider "cloudflare" {
