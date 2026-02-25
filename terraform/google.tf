@@ -94,6 +94,7 @@ resource "google_compute_firewall" "webserver_ssh_ingress" {
   description   = "Allow SSH traffic from anywhere to webservers."
 }
 
+# Restrict HTTP/HTTPS ingress to Cloudflare IP ranges so the site is only reachable via Cloudflare proxy.
 resource "google_compute_firewall" "webserver_http_ingress" {
   name    = "webserver-http-ingress"
   network = resource.google_compute_network.webserver_vpc.self_link
@@ -102,7 +103,7 @@ resource "google_compute_firewall" "webserver_http_ingress" {
     ports    = ["80"]
   }
   source_ranges = data.cloudflare_ip_ranges.cf_ingress.ipv4_cidr_blocks
-  description   = "Allow all HTTP traffic to webservers."
+  description   = "Allow only Cloudflare HTTP traffic to webservers."
 }
 
 resource "google_compute_firewall" "webserver_https_ingress" {
@@ -113,7 +114,7 @@ resource "google_compute_firewall" "webserver_https_ingress" {
     ports    = ["443"]
   }
   source_ranges = data.cloudflare_ip_ranges.cf_ingress.ipv4_cidr_blocks
-  description   = "Allow all HTTPS traffic to webservers."
+  description   = "Allow only Cloudflare HTTPS traffic to webservers."
 }
 
 resource "google_compute_firewall" "webserver_egress" {
