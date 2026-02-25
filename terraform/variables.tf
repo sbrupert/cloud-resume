@@ -1,34 +1,39 @@
 variable "cloudflare_api_token" {
-  type = string
+  type      = string
   sensitive = true
 }
 
 variable "cloudflare_zone_id" {
-  type = string
+  type      = string
   sensitive = true
 }
 
 variable "webserver_subdomain" {
-  type = string
+  type      = string
   sensitive = false
 }
 
 variable "webserver_domain" {
-  type = string
+  type      = string
   sensitive = false
 }
 
 variable "google_cloud_project" {
-  type = string
+  type      = string
   sensitive = false
 }
 
+variable "google_cloud_billing_account" {
+  type      = string
+  sensitive = true
+}
+
 variable "google_cloud_region" {
-  type = string
+  type      = string
   sensitive = false
 }
 
 variable "ssh_pub_keys" {
-  type = list(string)
+  type      = list(string)
   sensitive = true
 }

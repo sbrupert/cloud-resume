@@ -49,6 +49,7 @@
     group: caddy
     mode: '0640'
     backup: true
+  no_log: true
   notify: restart caddy
 
 - name: Flush handlers

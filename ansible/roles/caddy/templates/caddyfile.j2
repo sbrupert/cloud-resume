@@ -10,16 +10,24 @@
 
 
 :80 {
-        reverse_proxy localhost:{{ webserver_port}}
+        reverse_proxy localhost:{{ webserver_port}} {
+                header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+        }
 }
 
 {{ webserver_fqdn }}:443 {
-        reverse_proxy localhost:{{ webserver_port}}
-        {% if letsencrypt_staging == true %}
-        tls {
-                ca https://acme-staging-v02.api.letsencrypt.org/directory
+        reverse_proxy localhost:{{ webserver_port}} {
+                header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
         }
-        {% endif %}
+
+        tls {
+                {% if letsencrypt_staging == true %}
+                ca https://acme-staging-v02.api.letsencrypt.org/directory
+                {% endif %}
+                {% if cloudflare_api_key is defined %}
+                dns cloudflare {{ cloudflare_api_key }}
+                {% endif %}
+        }
 }
 
 # Refer to the Caddy docs for more information:
