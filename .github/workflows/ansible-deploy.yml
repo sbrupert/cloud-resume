@@ -50,6 +50,7 @@ jobs:
           configuration: |
             [defaults]
             timeout = 300
+            allow_broken_conditionals = True
           key: "${{secrets.SSH_PRIVATE_KEY}}"
           vault_password: "${{secrets.VAULT_PASSWORD}}"
           requirements: galaxy-requirements.yaml
