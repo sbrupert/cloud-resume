@@ -195,6 +195,8 @@ def cache_ip():
                 return True
             else:
                 logger.debug(f"IP {client_ip} found in cache but expired.")
+                ip_cache[client_ip] = current_time
+                database.update_visitor_ip(client_ip, current_time)
                 return False
         else:
             logger.debug(f"IP {client_ip} not found in cache. Checking database.")
