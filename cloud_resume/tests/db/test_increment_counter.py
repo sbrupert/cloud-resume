@@ -45,6 +45,11 @@ def test_increment_counter_exception(mocker, monkeypatch):
     assert db.increment_counter() == "Unavailable"
 
 def test_increment_counter_only_increments_once_for_expired_cached_ip(mocker, monkeypatch):
+    """
+    Tests the increment_counter() function for proper counter increment behavior.
+
+    This test checks that the visitor counter is only incremented once when the client IP is already present in ip_cache with an expired timestamp.
+    """
     client_ip = "192.168.1.1"
     current_time = datetime.now(timezone.utc)
     expired_time = current_time - timedelta(days=2)
