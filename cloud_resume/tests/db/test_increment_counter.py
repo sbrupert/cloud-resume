@@ -1,6 +1,5 @@
 import pytest
 from datetime import datetime, timedelta, timezone
-from cloud_resume.db import increment_counter, FirestoreClient
 from cloud_resume import db
 
 @pytest.mark.parametrize("cache_result, counter_cache, database_visitor_count, expected_result",[
@@ -27,10 +26,10 @@ def test_increment_counter_cache(mocker, monkeypatch, cache_result, counter_cach
     """
     monkeypatch.setattr("cloud_resume.db.counter_cache", counter_cache)
     mocker.patch('cloud_resume.db.cache_ip', return_value=cache_result)
-    mocker.patch.object(FirestoreClient, "get_visitor_count", return_value = database_visitor_count)
-    mocker.patch.object(FirestoreClient, "update_visitor_count", return_value = None)
+    mocker.patch.object(db.FirestoreClient, "get_visitor_count", return_value = database_visitor_count)
+    mocker.patch.object(db.FirestoreClient, "update_visitor_count", return_value = None)
     
-    assert increment_counter() == expected_result
+    assert db.increment_counter() == expected_result
 
 
 def test_increment_counter_exception(mocker, monkeypatch):
@@ -43,7 +42,7 @@ def test_increment_counter_exception(mocker, monkeypatch):
     monkeypatch.setattr("cloud_resume.db.counter_cache", None)
     mocker.patch('cloud_resume.db.cache_ip', side_effect=Exception("Mock DB error"))
     
-    assert increment_counter() == "Unavailable"
+    assert db.increment_counter() == "Unavailable"
 
 def test_increment_counter_only_increments_once_for_expired_cached_ip(mocker, monkeypatch):
     client_ip = "192.168.1.1"
