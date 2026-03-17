@@ -72,7 +72,7 @@ class FirestoreClient():
                 visitor_count = doc.to_dict().get('count')
                 return visitor_count
             else:
-                logger.error("Counter document does not exist!")
+                logger.warning("Counter document does not exist!")
                 return None
         except Exception as e:
             logger.error(f"Error retrieving visitor count from Firestore database: {e}")
