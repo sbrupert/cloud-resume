@@ -116,7 +116,7 @@ class FirestoreClient():
                 content = doc.to_dict()
                 return True, content
             else:
-                logger.warning(f"Visitor document does not exist for ip {ip_address}!")
+                logger.debug(f"Visitor document does not exist for ip {ip_address}!")
                 return False, None
         except Exception as e:
             logger.error(f"Error retrieving visitor ip address from Firestore database! {e}")
