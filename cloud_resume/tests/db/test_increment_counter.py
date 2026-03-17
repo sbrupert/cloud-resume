@@ -1,5 +1,6 @@
 import pytest
-from cloud_resume.db import increment_counter, FirestoreClient
+from datetime import datetime, timedelta, timezone
+from cloud_resume import db
 
 @pytest.mark.parametrize("cache_result, counter_cache, database_visitor_count, expected_result",[
     (True, 5, None, 5),             # Scenario 1: Cache hit, use cached counter.
@@ -25,10 +26,10 @@ def test_increment_counter_cache(mocker, monkeypatch, cache_result, counter_cach
     """
     monkeypatch.setattr("cloud_resume.db.counter_cache", counter_cache)
     mocker.patch('cloud_resume.db.cache_ip', return_value=cache_result)
-    mocker.patch.object(FirestoreClient, "get_visitor_count", return_value = database_visitor_count)
-    mocker.patch.object(FirestoreClient, "update_visitor_count", return_value = None)
+    mocker.patch.object(db.FirestoreClient, "get_visitor_count", return_value = database_visitor_count)
+    mocker.patch.object(db.FirestoreClient, "update_visitor_count", return_value = None)
     
-    assert increment_counter() == expected_result
+    assert db.increment_counter() == expected_result
 
 
 def test_increment_counter_exception(mocker, monkeypatch):
@@ -41,4 +42,55 @@ def test_increment_counter_exception(mocker, monkeypatch):
     monkeypatch.setattr("cloud_resume.db.counter_cache", None)
     mocker.patch('cloud_resume.db.cache_ip', side_effect=Exception("Mock DB error"))
     
-    assert increment_counter() == "Unavailable"
+    assert db.increment_counter() == "Unavailable"
+
+def test_increment_counter_only_increments_once_for_expired_cached_ip(mocker, monkeypatch):
+    """
+    Tests the increment_counter() function for proper counter increment behavior.
+
+    This test checks that the visitor counter is only incremented once when the client IP is already present in ip_cache with an expired timestamp.
+    """
+    client_ip = "192.168.1.1"
+    current_time = datetime.now(timezone.utc)
+    expired_time = current_time - timedelta(days=2)
+
+    counter_state = {"count": 10}
+    db_state = {client_ip: {"timestamp": expired_time}}
+
+    def fake_update_visitor_ip(ip_address, timestamp):
+        db_state[ip_address] = {"timestamp": timestamp}
+        return True
+    
+    def fake_get_visitor_count():
+        return counter_state["count"]
+    
+    def fake_update_visitor_count(count):
+        counter_state["count"] = count
+    
+    mocker.patch("cloud_resume.db.get_client_ip", return_value=client_ip)
+    
+    mocker.patch.object(
+        db.FirestoreClient,
+        "update_visitor_ip",
+        side_effect=fake_update_visitor_ip,
+    )
+    mock_get_visitor_count = mocker.patch.object(
+        db.FirestoreClient,
+        "get_visitor_count",
+        side_effect=fake_get_visitor_count,
+    )
+    mock_update_visitor_count = mocker.patch.object(
+        db.FirestoreClient,
+        "update_visitor_count",
+        side_effect=fake_update_visitor_count,
+    )
+
+    monkeypatch.setattr("cloud_resume.db.ip_cache", {client_ip: expired_time})
+    monkeypatch.setattr("cloud_resume.db.counter_cache", None)
+
+    first_result = db.increment_counter()
+    second_result = db.increment_counter()
+
+    assert first_result == 11
+    assert second_result == 11
+    mock_update_visitor_count.assert_called_once_with(11)  

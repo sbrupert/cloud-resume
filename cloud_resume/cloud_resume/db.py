@@ -72,7 +72,7 @@ class FirestoreClient():
                 visitor_count = doc.to_dict().get('count')
                 return visitor_count
             else:
-                logger.error("Counter document does not exist!")
+                logger.warning("Counter document does not exist!")
                 return None
         except Exception as e:
             logger.error(f"Error retrieving visitor count from Firestore database: {e}")
@@ -116,7 +116,7 @@ class FirestoreClient():
                 content = doc.to_dict()
                 return True, content
             else:
-                logger.warning(f"Visitor document does not exist for ip {ip_address}!")
+                logger.debug(f"Visitor document does not exist for ip {ip_address}!")
                 return False, None
         except Exception as e:
             logger.error(f"Error retrieving visitor ip address from Firestore database! {e}")
@@ -186,15 +186,18 @@ def cache_ip():
     global database
     client_ip = get_client_ip()
     current_time = datetime.now(timezone.utc)
+    expiration_threshold = current_time - timedelta(hours=24)
 
     try:
         if client_ip in ip_cache:
             cache_timestamp = ip_cache[client_ip]
-            if cache_timestamp >= (current_time - timedelta(days=1)):
+            if cache_timestamp >= expiration_threshold:
                 logger.debug(f"IP {client_ip} found in cache and not expired.")
                 return True
             else:
-                logger.debug(f"IP {client_ip} found in cache but expired.")
+                logger.debug(f"IP {client_ip} found in cache but expired. Updating timestamp in cache and database.")
+                ip_cache[client_ip] = current_time
+                database.update_visitor_ip(client_ip, current_time)
                 return False
         else:
             logger.debug(f"IP {client_ip} not found in cache. Checking database.")
@@ -203,7 +206,7 @@ def cache_ip():
 
         if db_ip[0] == True:
             db_timestamp = db_ip[1]['timestamp']
-            if db_timestamp >= (current_time - timedelta(days=1)):
+            if db_timestamp >= expiration_threshold:
                 ip_cache[client_ip] = db_timestamp
                 logger.debug(f"IP {client_ip} found in database and not expired.")
                 return True
