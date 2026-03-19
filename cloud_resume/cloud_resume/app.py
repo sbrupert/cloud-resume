@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from cloud_resume.logger import *
 from cloud_resume.db import increment_counter
 
