@@ -26,6 +26,11 @@ def test_index(mocker, test_app, client):
     assert response.status_code == 200
     assert b'<title>Steven Rupert' in response.data
 
+def test_healthz(client):
+    response = client.get('/healthz')
+    assert response.status_code == 200
+    assert response.get_json() == {"status": "ok"}
+
 def test_counter_integration(setup_firestore_emulator, client, monkeypatch, mocker):
     firestore_port = setup_firestore_emulator
     monkeypatch.setenv('FIRESTORE_EMULATOR_HOST', f'localhost:{firestore_port}')

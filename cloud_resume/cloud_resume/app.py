@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from cloud_resume.logger import *
 from cloud_resume.db import increment_counter
 
@@ -14,3 +14,7 @@ app.wsgi_app = RequestLoggerMiddleware(app, app.wsgi_app)
 def index():
     counter = increment_counter()
     return render_template('index.html', counter=counter)
+
+@app.route('/healthz')
+def healthz():
+    return {"status": "ok"}, 200
