@@ -27,7 +27,8 @@ app.wsgi_app = RequestLoggerMiddleware(app, app.wsgi_app)
 @app.route('/')
 def index():
     counter = increment_counter()
-    return render_template('index.html', counter=counter)
+    site_version = os.environ.get('SITE_VERSION', "Development")
+    return render_template('index.html', counter=counter, site_version=site_version)
 
 
 @app.route('/page/<path:slug>')
