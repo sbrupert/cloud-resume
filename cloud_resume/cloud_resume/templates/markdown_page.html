@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <title>{{ page.meta.title or "Page" }} | Steven Rupert</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        .markdown-content h1,
+        .markdown-content h2,
+        .markdown-content h3,
+        .markdown-content h4,
+        .markdown-content h5,
+        .markdown-content h6 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            color: #111827;
+        }
+        .markdown-content h1 { font-size: 2rem; }
+        .markdown-content h2 { font-size: 1.5rem; }
+        .markdown-content h3 { font-size: 1.25rem; }
+        .markdown-content h1[id],
+        .markdown-content h2[id],
+        .markdown-content h3[id],
+        .markdown-content h4[id],
+        .markdown-content h5[id],
+        .markdown-content h6[id] {
+            /* Offset anchor navigation so sticky header doesn't cover section titles. */
+            scroll-margin-top: 5.5rem;
+        }
+        .markdown-content h1 > a[href^="#"],
+        .markdown-content h2 > a[href^="#"],
+        .markdown-content h3 > a[href^="#"],
+        .markdown-content h4 > a[href^="#"],
+        .markdown-content h5 > a[href^="#"],
+        .markdown-content h6 > a[href^="#"] {
+            margin-left: 0.35rem;
+            color: #9ca3af;
+            text-decoration: none;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 150ms ease, color 150ms ease;
+        }
+        .markdown-content h1:hover > a[href^="#"],
+        .markdown-content h2:hover > a[href^="#"],
+        .markdown-content h3:hover > a[href^="#"],
+        .markdown-content h4:hover > a[href^="#"],
+        .markdown-content h5:hover > a[href^="#"],
+        .markdown-content h6:hover > a[href^="#"],
+        .markdown-content h1:focus-within > a[href^="#"],
+        .markdown-content h2:focus-within > a[href^="#"],
+        .markdown-content h3:focus-within > a[href^="#"],
+        .markdown-content h4:focus-within > a[href^="#"],
+        .markdown-content h5:focus-within > a[href^="#"],
+        .markdown-content h6:focus-within > a[href^="#"] {
+            opacity: 1;
+            pointer-events: auto;
+            color: #2563eb;
+        }
+        .markdown-content p { margin-bottom: 1rem; color: #1f2937; line-height: 1.75; }
+        .markdown-content ul,
+        .markdown-content ol {
+            margin: 0.75rem 0 1.25rem 1.25rem;
+            padding-left: 1.25rem;
+        }
+        .markdown-content ul { list-style-type: disc; }
+        .markdown-content ol { list-style-type: decimal; }
+        .markdown-content ul ul { list-style-type: circle; }
+        .markdown-content ol ol { list-style-type: lower-alpha; }
+        .markdown-content li {
+            display: list-item;
+            margin: 0.3rem 0;
+        }
+        .markdown-content a { color: #2563eb; text-decoration: underline; }
+        .markdown-content blockquote {
+            border-left: 4px solid #9ca3af;
+            margin: 1.25rem 0;
+            padding: 0.5rem 0 0.5rem 1rem;
+            color: #374151;
+            font-style: italic;
+            background: #f9fafb;
+        }
+        .markdown-content blockquote p {
+            margin: 0;
+        }
+        .markdown-content .toc {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem 1.25rem;
+            margin: 0 0 1.5rem 0;
+        }
+        .markdown-content .toc ul,
+        .markdown-content .toc ol {
+            margin: 0.5rem 0 0.75rem 1rem;
+            padding-left: 1.25rem;
+        }
+        .markdown-content .toc li { margin: 0.2rem 0; }
+        .markdown-content details {
+            margin-bottom: 1.25rem;
+        }
+        .markdown-content summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        .markdown-content pre {
+            background: #111827;
+            color: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .markdown-content code {
+            background: #f3f4f6;
+            color: #111827;
+            padding: 0.15rem 0.3rem;
+            border-radius: 0.25rem;
+            font-size: 0.95em;
+        }
+        .markdown-content pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .markdown-content th,
+        .markdown-content td {
+            border: 1px solid #d1d5db;
+            padding: 0.6rem;
+            text-align: left;
+        }
+        .markdown-content hr {
+            margin: 2rem 0;
+            border: 0;
+            border-top: 1px solid #d1d5db;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
+    <nav class="bg-white shadow sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a class="text-xl font-bold text-gray-800" href="/">Steven Rupert</a>
+            <a class="text-gray-700 hover:text-gray-900" href="/">Back to Resume</a>
+        </div>
+    </nav>
+
+    <main class="flex-1 container mx-auto px-6 py-12">
+        <article class="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+            <header class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900">{{ page.meta.title or "Page" }}</h1>
+                {% if page.meta.description %}
+                <p class="mt-3 text-gray-600">{{ page.meta.description }}</p>
+                {% endif %}
+            </header>
+            <section class="markdown-content">
+                {{ page.html|safe }}
+            </section>
+        </article>
+    </main>
+
+    <footer class="bg-white shadow text-center py-6">
+        <div class="container mx-auto">
+            <p class="text-gray-600">© 2026 Steven Rupert</p>
+        </div>
+    </footer>
+</body>
+</html>
