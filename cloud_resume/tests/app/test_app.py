@@ -2,6 +2,7 @@ import pytest
 import cloud_resume.app as cloud_resume
 import cloud_resume.db as db
 from flask import request
+from pathlib import Path
 from datetime import datetime, timezone, timedelta
 
 @pytest.fixture
@@ -30,6 +31,22 @@ def test_healthz(client):
     response = client.get('/healthz')
     assert response.status_code == 200
     assert response.get_json() == {"status": "ok"}
+
+def test_markdown_pages_are_auto_routable(client):
+    pages_dir = Path(cloud_resume.app.root_path) / "pages"
+    slugs = sorted(
+        page_file.relative_to(pages_dir).with_suffix("").as_posix()
+        for page_file in pages_dir.rglob("*.md")
+    )
+    assert slugs
+
+    for slug in slugs:
+        response = client.get(f"/page/{slug}")
+        assert response.status_code == 200, f"Expected /page/{slug} to be routable"
+
+def test_project_route_removed(client):
+    response = client.get('/project')
+    assert response.status_code == 404
 
 def test_counter_integration(setup_firestore_emulator, client, monkeypatch, mocker):
     firestore_port = setup_firestore_emulator
