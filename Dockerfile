@@ -1,15 +1,20 @@
-FROM ubuntu:22.04
-
-ARG VERSION
+FROM ubuntu:24.04
 
 WORKDIR /app
-RUN apt-get update -y && apt-get install -y python3 python3-pip
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends python3 python3-venv ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV VIRTUAL_ENV=/opt/venv
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
+
+RUN python3 -m venv "${VIRTUAL_ENV}"
+
+COPY ./cloud_resume/requirements.txt /app/
+RUN python -m pip install --no-cache-dir -r /app/requirements.txt
 
 COPY ./cloud_resume/cloud_resume /app/cloud_resume
-COPY ./cloud_resume/requirements.txt /app/
 COPY ./cloud_resume/gunicorn.conf.py /app
-
-RUN pip install -r /app/requirements.txt
 
 EXPOSE 8080
 
