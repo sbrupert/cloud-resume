@@ -74,6 +74,8 @@ This python application showcases my resume, featuring a visitor counter powered
 
 Docker compose is the quickest way to check out the project. The docker compose file will deploy a Google Cloud Firestore emulator alongside our cloud-resume app. The Firestore emulator container's source code/Dockerfile can be found [here](https://github.com/ridedott/firestore-emulator-docker).
 
+The application image is built from Ubuntu 24.04 LTS and installs Python dependencies into an in-container virtual environment at `/opt/venv`. This avoids installing application packages into the system Python environment.
+
 #### Requirements
 
 1. Docker & Docker-Compose
@@ -94,6 +96,8 @@ In order to launch the app without using a real Firestore database, you will nee
       ```bash
       docker-compose up
       ```
+
+   The compose service still runs `gunicorn cloud_resume.app:app`, and that command resolves from `/opt/venv/bin` inside the container.
 
 3. Open a browser to http://localhost:8080 and check it out!
 4. To stop the app:
