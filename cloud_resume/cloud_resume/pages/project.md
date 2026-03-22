@@ -1,6 +1,7 @@
 ---
 title: "Cloud Resume Project: Architecture, Operations, and Lessons Learned"
 description: A technical deep dive into the design decisions, deployment workflow, observability stack, and hard-earned lessons from building and operating my Cloud Resume project.
+doc_type: Project Write Up
 ---
 
 [TOC]
