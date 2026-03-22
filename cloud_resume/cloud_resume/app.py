@@ -24,18 +24,21 @@ app.logger = logger
 
 app.wsgi_app = RequestLoggerMiddleware(app, app.wsgi_app)
 
+site_version = os.environ.get('SITE_VERSION', "Development")
+
 @app.route('/')
 def index():
     counter = increment_counter()
-    site_version = os.environ.get('SITE_VERSION', "Development")
     return render_template('index.html', counter=counter, site_version=site_version)
 
+@app.route('/project_overview')
+def project_overview():
+    return render_template('project_overview.html', site_version=site_version)
 
 @app.route('/page/<path:slug>')
 def markdown_page(slug):
     page = pages.get_or_404(slug)
     return render_template("markdown_page.html", page=page)
-
 
 @app.route('/healthz')
 def healthz():
