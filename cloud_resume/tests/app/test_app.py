@@ -5,6 +5,10 @@ from flask import request
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
 
+def assert_counter_value(response, expected: int):
+    expected_attr = f'data-counter="{expected}"'.encode()
+    assert expected_attr in response.data
+
 @pytest.fixture
 def test_app():
     app = cloud_resume.app
@@ -54,15 +58,15 @@ def test_counter_integration(setup_firestore_emulator, client, monkeypatch, mock
 
     # Test Counter is initialized to 1.
     response = client.get('/')
-    assert b'<b>You are visitor number: 1' in response.data
+    assert_counter_value(response, 1)
     
     # Counter shouldn't increment on visits within 24 hours.
     response = client.get('/')
-    assert b'<b>You are visitor number: 1' in response.data
+    assert_counter_value(response, 1)
     
     # Counter should increment on visit from new user.
     response = client.get('/', headers={"X-Forwarded-For": "10.0.10.1"})
-    assert b'<b>You are visitor number: 2' in response.data
+    assert_counter_value(response, 2)
 
     # Counter should increment when user visits 24 hours later.
     one_day_ago = datetime.now(timezone.utc) - timedelta(days=1)
@@ -71,7 +75,7 @@ def test_counter_integration(setup_firestore_emulator, client, monkeypatch, mock
     database._db.collection('visitor_ips').document('10.0.10.1').set({'timestamp': one_day_ago})
     monkeypatch.setattr('cloud_resume.db.ip_cache', {})
     response = client.get('/', headers={"X-Forwarded-For": "10.0.10.1"})
-    assert b'<b>You are visitor number: 3' in response.data
+    assert_counter_value(response, 3)
 
 def test_counter_integration_stale_ip_cache_only_increments_once(setup_firestore_emulator, client, monkeypatch, mocker):
     """
@@ -95,7 +99,7 @@ def test_counter_integration_stale_ip_cache_only_increments_once(setup_firestore
     monkeypatch.setattr('cloud_resume.db.counter_cache', None)
 
     response = client.get('/', headers={"X-Forwarded-For": client_ip})
-    assert b'<b>You are visitor number: 11' in response.data
+    assert_counter_value(response, 11)
 
     response = client.get('/', headers={"X-Forwarded-For": client_ip})
-    assert b'<b>You are visitor number: 11' in response.data
+    assert_counter_value(response, 11)
