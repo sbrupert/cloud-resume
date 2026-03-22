@@ -1,0 +1,38 @@
+<nav
+  class="fixed top-0 w-full z-50 bg-[#f8f9ff]/85 backdrop-blur-md border-b border-[#c3c6d7]/35 shadow-sm"
+>
+  <div class="flex justify-between items-center px-8 h-16 max-w-7xl mx-auto">
+    <div class="flex items-center gap-3">
+      <div class="font-['Inter'] text-xl font-bold tracking-tighter text-[#121c2a]">
+        <a href="/">Steven Rupert</a>
+      </div>
+      <span
+        class="inline-flex items-center rounded-[999px] border border-[#c3c6d7]/60 bg-[#dbe1ff] px-2.5 py-1 font-['Inter'] text-xs font-bold uppercase tracking-[0.16em] leading-none text-[#003ea8]"
+      >
+        {{ site_version }}
+      </span>
+    </div>
+    <div class="hidden md:flex items-center gap-8">
+      <a
+        class="font-['Inter'] text-sm font-medium tracking-tight {% if active_nav == 'resume' %}text-[#1d4ed8] border-b-2 border-[#1d4ed8] pb-1{% else %}text-[#64748b] hover:text-[#1d4ed8] transition-colors{% endif %}"
+        href="/"
+      >
+        Resume
+      </a>
+      <a
+        class="font-['Inter'] text-sm font-medium tracking-tight {% if active_nav == 'project_overview' %}text-[#1d4ed8] border-b-2 border-[#1d4ed8] pb-1{% else %}text-[#64748b] hover:text-[#1d4ed8] transition-colors{% endif %}"
+        href="/project_overview"
+      >
+        Project Overview
+      </a>
+    </div>
+    <a
+      class="bg-[#004ac6] text-white px-4 py-2 text-sm font-['Inter'] font-semibold rounded-[4px] hover:opacity-85 transition-opacity active:scale-95"
+      href="https://github.com/sbrupert/cloud-resume"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View GitHub Repo
+    </a>
+  </div>
+</nav>
