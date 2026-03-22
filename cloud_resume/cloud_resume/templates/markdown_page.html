@@ -1,177 +1,598 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+<!doctype html>
+
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
     <title>{{ page.meta.title or "Page" }} | Steven Rupert</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#f8f9ff",
+              surface: "#f8f9ff",
+              background: "#f8f9ff",
+              "surface-dim": "#d0dbed",
+              "surface-container-low": "#eff4ff",
+              "surface-container": "#e6eeff",
+              "surface-container-high": "#dee9fc",
+              "surface-container-highest": "#d9e3f6",
+              "surface-container-lowest": "#ffffff",
+              "surface-variant": "#d9e3f6",
+              outline: "#737686",
+              "outline-variant": "#c3c6d7",
+              primary: "#004ac6",
+              "primary-container": "#2563eb",
+              "primary-fixed": "#dbe1ff",
+              "on-primary": "#ffffff",
+              "on-primary-fixed": "#00174b",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-surface": "#121c2a",
+              "on-surface-variant": "#434655",
+              "inverse-surface": "#27313f",
+              "inverse-on-surface": "#eaf1ff",
+            },
+            fontFamily: {
+              headline: ["Space Grotesk"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+          },
+        },
+      };
+    </script>
+
     <style>
-        .markdown-content h1,
-        .markdown-content h2,
-        .markdown-content h3,
-        .markdown-content h4,
-        .markdown-content h5,
-        .markdown-content h6 {
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-            color: #111827;
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        vertical-align: middle;
+      }
+
+      .doc-grid {
+        max-width: 80rem;
+        margin: 0 auto;
+      }
+
+      .markdown-content {
+        counter-reset: section;
+        color: #2a3445;
+        font-family: "Inter", sans-serif;
+        font-size: 1.06rem;
+        line-height: 1.85;
+      }
+
+      .markdown-content > * {
+        min-width: 0;
+      }
+
+      .markdown-content h1,
+      .markdown-content h2,
+      .markdown-content h3,
+      .markdown-content h4,
+      .markdown-content h5,
+      .markdown-content h6 {
+        color: #101827;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.012em;
+      }
+
+      .markdown-content h1 {
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        margin-top: 2.25rem;
+        margin-bottom: 1rem;
+      }
+
+      .markdown-content h2 {
+        counter-increment: section;
+        font-size: clamp(1.75rem, 2.1vw, 2.2rem);
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+      }
+
+      .markdown-content h2::before {
+        content: "#";
+        color: rgba(37, 99, 235, 0.4);
+        font-size: 0.86em;
+        font-weight: 700;
+      }
+
+      .markdown-content h3 {
+        font-size: clamp(1.3rem, 1.6vw, 1.55rem);
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .markdown-content h4,
+      .markdown-content h5,
+      .markdown-content h6 {
+        font-size: 1.08rem;
+        margin-top: 1.65rem;
+        margin-bottom: 0.65rem;
+      }
+
+      .markdown-content h1[id],
+      .markdown-content h2[id],
+      .markdown-content h3[id],
+      .markdown-content h4[id],
+      .markdown-content h5[id],
+      .markdown-content h6[id] {
+        scroll-margin-top: 6.25rem;
+      }
+
+      .markdown-content h1 > a[href^="#"],
+      .markdown-content h2 > a[href^="#"],
+      .markdown-content h3 > a[href^="#"],
+      .markdown-content h4 > a[href^="#"],
+      .markdown-content h5 > a[href^="#"],
+      .markdown-content h6 > a[href^="#"] {
+        margin-left: 0.35rem;
+        color: #9ca3af;
+        text-decoration: none;
+        font-weight: 700;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 160ms ease,
+          color 160ms ease;
+      }
+
+      .markdown-content h1:hover > a[href^="#"],
+      .markdown-content h2:hover > a[href^="#"],
+      .markdown-content h3:hover > a[href^="#"],
+      .markdown-content h4:hover > a[href^="#"],
+      .markdown-content h5:hover > a[href^="#"],
+      .markdown-content h6:hover > a[href^="#"],
+      .markdown-content h1:focus-within > a[href^="#"],
+      .markdown-content h2:focus-within > a[href^="#"],
+      .markdown-content h3:focus-within > a[href^="#"],
+      .markdown-content h4:focus-within > a[href^="#"],
+      .markdown-content h5:focus-within > a[href^="#"],
+      .markdown-content h6:focus-within > a[href^="#"] {
+        opacity: 1;
+        pointer-events: auto;
+        color: #2563eb;
+      }
+
+      .markdown-content p {
+        margin: 0 0 1.28rem;
+        color: #323f55;
+      }
+
+      .markdown-content ul,
+      .markdown-content ol {
+        margin: 0.7rem 0 1.45rem;
+        padding-left: 1.5rem;
+      }
+
+      .markdown-content ul {
+        list-style: disc;
+      }
+
+      .markdown-content ol {
+        list-style: decimal;
+      }
+
+      .markdown-content li {
+        margin: 0.3rem 0;
+        color: #2f3c51;
+      }
+
+      .markdown-content ul ul,
+      .markdown-content ol ul {
+        list-style: circle;
+        margin-top: 0.32rem;
+      }
+
+      .markdown-content ul ol,
+      .markdown-content ol ol {
+        list-style: lower-alpha;
+        margin-top: 0.32rem;
+      }
+
+      .markdown-content a {
+        color: #1d4ed8;
+        text-decoration: underline;
+        text-decoration-thickness: 0.08em;
+        text-underline-offset: 0.14em;
+      }
+
+      .markdown-content a:hover {
+        color: #1e40af;
+      }
+
+      .markdown-content blockquote {
+        margin: 1.7rem 0;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid #2563eb;
+        border-radius: 0 0.75rem 0.75rem 0;
+        background: rgba(219, 225, 255, 0.45);
+      }
+
+      .markdown-content blockquote p {
+        margin: 0;
+        color: #334155;
+        font-style: italic;
+      }
+
+      .markdown-content pre {
+        margin: 1.7rem 0;
+        padding: 1.15rem 1.2rem;
+        border-radius: 0.8rem;
+        overflow-x: auto;
+        border: 1px solid rgba(195, 198, 215, 0.35);
+        background: #27313f;
+        color: #eaf1ff;
+        box-shadow: 0 18px 40px -32px rgba(18, 28, 42, 0.8);
+        font-size: 0.9rem;
+        line-height: 1.65;
+      }
+
+      .markdown-content code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 0.88em;
+        padding: 0.14rem 0.35rem;
+        border-radius: 0.3rem;
+        background: #e7ecfb;
+        color: #1e3a8a;
+      }
+
+      .markdown-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .markdown-content table {
+        width: 100%;
+        margin: 1.8rem 0;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 0.75rem;
+        overflow: hidden;
+      }
+
+      .markdown-content thead tr {
+        background: #e6eeff;
+      }
+
+      .markdown-content th,
+      .markdown-content td {
+        padding: 0.75rem 0.85rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(195, 198, 215, 0.55);
+      }
+
+      .markdown-content th {
+        font-size: 0.73rem;
+        font-family: "Inter", sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+        color: #61667a;
+      }
+
+      .markdown-content td {
+        color: #2f3c51;
+      }
+
+      .markdown-content tbody tr {
+        background: #ffffff;
+      }
+
+      .markdown-content tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .markdown-content img {
+        display: block;
+        width: min(100%, 58rem);
+        height: auto;
+        margin: 2rem auto;
+        border-radius: 0.85rem;
+        background: #ffffff;
+        padding: 0.25rem;
+        box-shadow: 0 20px 50px -40px rgba(18, 28, 42, 0.6);
+      }
+
+      .markdown-content hr {
+        margin: 2.7rem 0;
+        border: 0;
+        border-top: 1px solid rgba(195, 198, 215, 0.55);
+      }
+
+      .markdown-content details {
+        margin: 1.1rem 0 2rem;
+      }
+
+      .markdown-content details > summary {
+        cursor: pointer;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #111827;
+      }
+
+      .markdown-content .toc {
+        margin-top: 0.75rem;
+        background: #ffffff;
+        border: 1px solid rgba(195, 198, 215, 0.5);
+        border-radius: 0.75rem;
+        padding: 0.85rem 0.95rem;
+      }
+
+      .markdown-content .toc ul,
+      .markdown-content .toc ol {
+        margin: 0;
+        padding-left: 0;
+        list-style: none;
+      }
+
+      .markdown-content .toc ul ul,
+      .markdown-content .toc ol ol,
+      .markdown-content .toc ul ol,
+      .markdown-content .toc ol ul {
+        margin-top: 0.2rem;
+        padding-left: 0.9rem;
+      }
+
+      .markdown-content .toc li {
+        margin: 0.1rem 0;
+      }
+
+      .markdown-content .toc a {
+        display: block;
+        color: #526079;
+        text-decoration: none;
+        font-size: 0.86rem;
+        line-height: 1.45;
+        border-left: 2px solid transparent;
+        padding: 0.27rem 0.48rem;
+        border-radius: 0.3rem;
+      }
+
+      .markdown-content .toc a:hover {
+        color: #1d4ed8;
+        background: #f3f6ff;
+        border-left-color: #2563eb;
+      }
+
+      .markdown-content.has-toc .doc-flow > :first-child {
+        margin-top: 0;
+      }
+
+      .markdown-content.has-toc .toc-rail > details {
+        margin: 0;
+      }
+
+      @media (min-width: 1100px) {
+        .markdown-content.has-toc .markdown-layout {
+          display: grid;
+          grid-template-columns: 16.5rem minmax(0, 1fr);
+          column-gap: 3.2rem;
+          align-items: start;
         }
-        .markdown-content h1 { font-size: 2rem; }
-        .markdown-content h2 { font-size: 1.5rem; }
-        .markdown-content h3 { font-size: 1.25rem; }
-        .markdown-content h1[id],
-        .markdown-content h2[id],
-        .markdown-content h3[id],
-        .markdown-content h4[id],
-        .markdown-content h5[id],
-        .markdown-content h6[id] {
-            /* Offset anchor navigation so sticky header doesn't cover section titles. */
-            scroll-margin-top: 5.5rem;
+
+        .markdown-content.has-toc .toc-rail {
+          position: sticky;
+          top: 6.4rem;
+          max-height: calc(100vh - 8.5rem);
+          overflow: auto;
+          align-self: start;
+          background: rgba(230, 238, 255, 0.4);
+          border-radius: 0.75rem;
+          padding: 0.8rem;
+          border: 1px solid rgba(195, 198, 215, 0.35);
         }
-        .markdown-content h1 > a[href^="#"],
-        .markdown-content h2 > a[href^="#"],
-        .markdown-content h3 > a[href^="#"],
-        .markdown-content h4 > a[href^="#"],
-        .markdown-content h5 > a[href^="#"],
-        .markdown-content h6 > a[href^="#"] {
-            margin-left: 0.35rem;
-            color: #9ca3af;
-            text-decoration: none;
-            font-weight: 600;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 150ms ease, color 150ms ease;
+
+        .markdown-content.has-toc .toc-rail > details > summary {
+          list-style: none;
+          margin-bottom: 0.45rem;
+          font-size: 1.1rem;
+          cursor: default;
+          pointer-events: none;
         }
-        .markdown-content h1:hover > a[href^="#"],
-        .markdown-content h2:hover > a[href^="#"],
-        .markdown-content h3:hover > a[href^="#"],
-        .markdown-content h4:hover > a[href^="#"],
-        .markdown-content h5:hover > a[href^="#"],
-        .markdown-content h6:hover > a[href^="#"],
-        .markdown-content h1:focus-within > a[href^="#"],
-        .markdown-content h2:focus-within > a[href^="#"],
-        .markdown-content h3:focus-within > a[href^="#"],
-        .markdown-content h4:focus-within > a[href^="#"],
-        .markdown-content h5:focus-within > a[href^="#"],
-        .markdown-content h6:focus-within > a[href^="#"] {
-            opacity: 1;
-            pointer-events: auto;
-            color: #2563eb;
+
+        .markdown-content.has-toc .toc-rail > details > summary::-webkit-details-marker {
+          display: none;
         }
-        .markdown-content p { margin-bottom: 1rem; color: #1f2937; line-height: 1.75; }
-        .markdown-content ul,
-        .markdown-content ol {
-            margin: 0.75rem 0 1.25rem 1.25rem;
-            padding-left: 1.25rem;
+
+        .markdown-content.has-toc .toc-rail > details:not([open]) > :not(summary) {
+          display: block;
         }
-        .markdown-content ul { list-style-type: disc; }
-        .markdown-content ol { list-style-type: decimal; }
-        .markdown-content ul ul { list-style-type: circle; }
-        .markdown-content ol ol { list-style-type: lower-alpha; }
-        .markdown-content li {
-            display: list-item;
-            margin: 0.3rem 0;
+
+        .markdown-content.has-toc .toc-rail .toc {
+          margin-top: 0;
         }
-        .markdown-content a { color: #2563eb; text-decoration: underline; }
-        .markdown-content blockquote {
-            border-left: 4px solid #9ca3af;
-            margin: 1.25rem 0;
-            padding: 0.5rem 0 0.5rem 1rem;
-            color: #374151;
-            font-style: italic;
-            background: #f9fafb;
+      }
+
+      @media (max-width: 1099px) {
+        .markdown-content {
+          font-size: 1.02rem;
+          line-height: 1.78;
         }
-        .markdown-content blockquote p {
-            margin: 0;
+
+        .markdown-content h2 {
+          margin-top: 2.5rem;
         }
-        .markdown-content .toc {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.5rem;
-            padding: 1rem 1.25rem;
-            margin: 0 0 1.5rem 0;
+
+        .markdown-content.has-toc .toc-rail {
+          margin-bottom: 1.8rem;
         }
-        .markdown-content .toc ul,
-        .markdown-content .toc ol {
-            margin: 0.5rem 0 0.75rem 1rem;
-            padding-left: 1.25rem;
-        }
-        .markdown-content .toc li { margin: 0.2rem 0; }
-        .markdown-content details {
-            margin-bottom: 1.25rem;
-        }
-        .markdown-content summary {
-            cursor: pointer;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 0.5rem;
-        }
-        .markdown-content pre {
-            background: #111827;
-            color: #f9fafb;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-        .markdown-content code {
-            background: #f3f4f6;
-            color: #111827;
-            padding: 0.15rem 0.3rem;
-            border-radius: 0.25rem;
-            font-size: 0.95em;
-        }
-        .markdown-content pre code {
-            background: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        .markdown-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-        }
-        .markdown-content th,
-        .markdown-content td {
-            border: 1px solid #d1d5db;
-            padding: 0.6rem;
-            text-align: left;
-        }
-        .markdown-content hr {
-            margin: 2rem 0;
-            border: 0;
-            border-top: 1px solid #d1d5db;
-        }
+      }
     </style>
-</head>
-<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
-    <nav class="bg-white shadow sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a class="text-xl font-bold text-gray-800" href="/">Steven Rupert</a>
-            <a class="text-gray-700 hover:text-gray-900" href="/">Back to Resume</a>
+  </head>
+
+  <body
+    class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed"
+  >
+    <nav
+      class="fixed top-0 w-full z-50 bg-surface/75 backdrop-blur-xl border-b border-outline-variant/20"
+    >
+      <div class="max-w-7xl mx-auto h-16 px-8 flex items-center justify-between">
+        <div class="text-3xl font-headline font-bold tracking-tight text-on-surface">
+          Steven Rupert
         </div>
+        <div class="hidden md:flex items-center gap-8">
+          <a
+            class="font-body text-sm font-medium text-on-surface-variant hover:text-primary transition-colors"
+            href="/"
+            >Resume</a
+          >
+          <a
+            class="font-body text-sm font-medium text-on-surface-variant hover:text-primary transition-colors"
+            href="/project_overview"
+            >Project Overview</a
+          >
+        </div>
+      </div>
     </nav>
 
-    <main class="flex-1 container mx-auto px-6 py-12">
-        <article class="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
-            <header class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900">{{ page.meta.title or "Page" }}</h1>
-                {% if page.meta.description %}
-                <p class="mt-3 text-gray-600">{{ page.meta.description }}</p>
-                {% endif %}
-            </header>
-            <section class="markdown-content">
-                {{ page.html|safe }}
-            </section>
-        </article>
+    <main class="pt-28 pb-20 px-6 lg:px-10">
+      <div class="doc-grid">
+        <header class="relative mb-12 lg:mb-14">
+          <div
+            class="pointer-events-none absolute -top-10 -left-1 text-[7.5rem] leading-none font-headline font-bold text-on-surface opacity-[0.04] select-none"
+          >
+            01
+          </div>
+          <div class="relative max-w-5xl">
+            <p
+              class="font-label text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-outline mb-4"
+            >
+              {{ page.meta.doc_type }}
+            </p>
+            <h1
+              class="font-headline text-4xl md:text-5xl lg:text-6xl leading-[1.08] tracking-tight font-bold text-on-surface"
+            >
+              {{ page.meta.title or "Page" }}
+            </h1>
+            {% if page.meta.description %}
+            <p
+              class="mt-6 max-w-4xl font-body text-lg md:text-xl leading-relaxed text-on-surface-variant"
+            >
+              {{ page.meta.description }}
+            </p>
+            {% endif %}
+          </div>
+        </header>
+      </div>
+      <section
+        class="-mx-6 lg:-mx-10 border-y border-outline-variant/20 bg-surface-container-low/35 py-8 lg:py-10"
+      >
+        <div class="doc-grid px-6 lg:px-10">
+          <article class="markdown-content">{{ page.html|safe }}</article>
+        </div>
+      </section>
     </main>
 
-    <footer class="bg-white shadow text-center py-6">
-        <div class="container mx-auto">
-            <p class="text-gray-600">© 2026 Steven Rupert</p>
+    <footer class="bg-surface-dim/35 border-t border-outline-variant/25 py-8">
+      <div class="max-w-7xl mx-auto px-8 flex items-center justify-between">
+        <div class="font-headline text-lg font-bold tracking-tight text-on-surface">
+          Steven Rupert
         </div>
+        <p
+          class="font-label text-[0.68rem] uppercase tracking-[0.2em] text-on-surface-variant"
+        >
+          Technical Docs
+        </p>
+      </div>
     </footer>
-</body>
+
+    <script>
+      (function () {
+        const desktopTocMedia = window.matchMedia("(min-width: 1100px)");
+        const article = document.querySelector(".markdown-content");
+
+        if (!article) {
+          return;
+        }
+
+        const directChildren = Array.from(article.children);
+        const detailsWithToc = directChildren.find(
+          (element) =>
+            element.tagName === "DETAILS" &&
+            element.querySelector(".toc"),
+        );
+        const directToc = directChildren.find((element) =>
+          element.classList.contains("toc"),
+        );
+
+        if (!detailsWithToc && !directToc) {
+          return;
+        }
+
+        const tocHost = detailsWithToc || directToc;
+        const contentNodes = Array.from(article.childNodes).filter(
+          (node) => node !== tocHost,
+        );
+
+        const layout = document.createElement("div");
+        layout.className = "markdown-layout";
+
+        const rail = document.createElement("aside");
+        rail.className = "toc-rail";
+
+        let tocDetails;
+        if (detailsWithToc) {
+          tocDetails = detailsWithToc;
+        } else {
+          tocDetails = document.createElement("details");
+          const summary = document.createElement("summary");
+          summary.textContent = "Table of Contents";
+          tocDetails.appendChild(summary);
+          tocDetails.appendChild(directToc);
+        }
+        rail.appendChild(tocDetails);
+
+        const body = document.createElement("div");
+        body.className = "doc-flow";
+        contentNodes.forEach((node) => body.appendChild(node));
+
+        article.innerHTML = "";
+        layout.appendChild(rail);
+        layout.appendChild(body);
+        article.appendChild(layout);
+        article.classList.add("has-toc");
+
+        const syncTocState = () => {
+          if (desktopTocMedia.matches) {
+            tocDetails.open = true;
+            return;
+          }
+          tocDetails.open = false;
+        };
+
+        syncTocState();
+        if (typeof desktopTocMedia.addEventListener === "function") {
+          desktopTocMedia.addEventListener("change", syncTocState);
+          return;
+        }
+        desktopTocMedia.addListener(syncTocState);
+      })();
+    </script>
+  </body>
 </html>
