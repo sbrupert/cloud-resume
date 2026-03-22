@@ -31,6 +31,13 @@ def test_index(mocker, test_app, client):
     assert response.status_code == 200
     assert b'<title>Steven Rupert' in response.data
 
+def test_project_overview(client):
+    response = client.get('/project_overview')
+    assert response.status_code == 200
+    assert b"<title>Cloud Resume | Project Overview" in response.data
+    assert b"Project Overview" in response.data
+    assert b"/page/project" in response.data
+
 def test_healthz(client):
     response = client.get('/healthz')
     assert response.status_code == 200
