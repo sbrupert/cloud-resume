@@ -449,27 +449,7 @@
   <body
     class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed"
   >
-    <nav
-      class="fixed top-0 w-full z-50 bg-surface/75 backdrop-blur-xl border-b border-outline-variant/20"
-    >
-      <div class="max-w-7xl mx-auto h-16 px-8 flex items-center justify-between">
-        <div class="text-3xl font-headline font-bold tracking-tight text-on-surface">
-          Steven Rupert
-        </div>
-        <div class="hidden md:flex items-center gap-8">
-          <a
-            class="font-body text-sm font-medium text-on-surface-variant hover:text-primary transition-colors"
-            href="/"
-            >Resume</a
-          >
-          <a
-            class="font-body text-sm font-medium text-on-surface-variant hover:text-primary transition-colors"
-            href="/project_overview"
-            >Project Overview</a
-          >
-        </div>
-      </div>
-    </nav>
+    {% include "partials/navbar.html" %}
 
     <main class="pt-28 pb-20 px-6 lg:px-10">
       <div class="doc-grid">
@@ -509,18 +489,7 @@
       </section>
     </main>
 
-    <footer class="bg-surface-dim/35 border-t border-outline-variant/25 py-8">
-      <div class="max-w-7xl mx-auto px-8 flex items-center justify-between">
-        <div class="font-headline text-lg font-bold tracking-tight text-on-surface">
-          Steven Rupert
-        </div>
-        <p
-          class="font-label text-[0.68rem] uppercase tracking-[0.2em] text-on-surface-variant"
-        >
-          Technical Docs
-        </p>
-      </div>
-    </footer>
+    {% include "partials/footer.html" %}
 
     <script>
       (function () {

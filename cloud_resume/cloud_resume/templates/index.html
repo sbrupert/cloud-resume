@@ -169,46 +169,7 @@
   <body
     class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container"
   >
-    <!-- TopNavBar -->
-    <nav
-      class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm dark:shadow-none"
-    >
-      <div
-        class="flex justify-between items-center px-8 h-16 max-w-7xl mx-auto"
-      >
-        <div class="flex items-center gap-3">
-          <div
-            class="text-xl font-bold tracking-tighter text-slate-900 dark:text-slate-50"
-          >
-            Steven Rupert
-          </div>
-          <span
-            class="inline-flex items-center rounded-full border border-outline-variant/60 bg-primary-fixed px-2.5 py-1 font-label text-xs font-bold uppercase tracking-widest text-on-primary-fixed-variant"
-            >{{ site_version }}</span
-          >
-        </div>
-        <div class="hidden md:flex items-center gap-8">
-          <a
-            class="font-sans text-sm font-medium tracking-tight text-blue-700 dark:text-blue-400 border-b-2 border-blue-700 dark:border-blue-400 pb-1"
-            href="/"
-            >Resume</a
-          >
-          <a
-            class="font-sans text-sm font-medium tracking-tight text-slate-500 dark:text-slate-500 hover:text-blue-500 transition-opacity"
-            href="/project_overview"
-            >Project Overview</a
-          >
-        </div>
-        <a
-          class="bg-primary text-on-primary px-4 py-2 text-sm font-medium rounded hover:opacity-80 transition-opacity active:scale-95"
-          href="https://github.com/sbrupert/cloud-resume"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View GitHub Repo
-        </a>
-      </div>
-    </nav>
+    {% include "partials/navbar.html" %}
     <main class="pt-24 pb-20 max-w-7xl mx-auto px-8">
       <!-- Hero Section -->
       <section
@@ -773,42 +734,7 @@
         </div>
       </section>
     </main>
-    <!-- Footer -->
-    <footer
-      class="bg-slate-50 dark:bg-slate-950 w-full py-12 border-t border-slate-200/15 dark:border-slate-800/15"
-    >
-      <div
-        class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto gap-4"
-      >
-        <div class="text-lg font-black text-slate-900 dark:text-slate-100">
-          Steven Rupert
-        </div>
-        <div class="flex flex-wrap justify-center gap-8">
-          <a
-            class="font-mono text-xs uppercase tracking-widest text-slate-500 dark:text-slate-500 hover:text-blue-500 transition-all hover:underline"
-            href="https://www.linkedin.com/in/steven-rupert-a34405197"
-            target="_blank"
-            rel="noopener noreferrer"
-            >LinkedIn</a
-          >
-          <a
-            class="font-mono text-xs uppercase tracking-widest text-slate-500 dark:text-slate-500 hover:text-blue-500 transition-all hover:underline"
-            href="https://github.com/sbrupert"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub</a
-          >
-          <a
-            class="font-mono text-xs uppercase tracking-widest text-slate-500 dark:text-slate-500 hover:text-blue-500 transition-all hover:underline"
-            href="/page/project"
-            >Project Write-Up</a
-          >
-        </div>
-        <div class="font-mono text-xs uppercase tracking-widest text-slate-500">
-          © 2026 Steven Rupert • Site Version {{ site_version }}
-        </div>
-      </div>
-    </footer>
+    {% include "partials/footer.html" %}
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const counterEl = document.getElementById("visitor-counter-value");
