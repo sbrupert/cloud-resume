@@ -1,4 +1,5 @@
 import pytest
+import re
 import cloud_resume.app as cloud_resume
 import cloud_resume.db as db
 from flask import request
@@ -8,6 +9,33 @@ from datetime import datetime, timezone, timedelta
 def assert_counter_value(response, expected: int):
     expected_attr = f'data-counter="{expected}"'.encode()
     assert expected_attr in response.data
+
+def assert_global_chrome(response):
+    assert b'href="/"' in response.data
+    assert b"Resume" in response.data
+    assert b'href="/project_overview"' in response.data
+    assert b"Project Overview" in response.data
+    assert b"View GitHub Repo" in response.data
+    assert b"https://github.com/sbrupert/cloud-resume" in response.data
+    assert b"https://www.linkedin.com/in/steven-rupert-a34405197" in response.data
+    assert b'href="https://github.com/sbrupert"' in response.data
+    assert b"Site Version" in response.data
+
+def assert_active_nav(response, active_nav: str):
+    html = response.get_data(as_text=True)
+    active_targets = {
+        "resume": ("/", "Resume"),
+        "project_overview": ("/project_overview", "Project Overview"),
+    }
+    href, label = active_targets[active_nav]
+    pattern = (
+        r'<a\s+class="[^"]*border-b-2[^"]*"[^>]*href="'
+        + re.escape(href)
+        + r'"[^>]*>\s*'
+        + re.escape(label)
+        + r"\s*</a>"
+    )
+    assert re.search(pattern, html, re.S), f"Expected '{label}' to be active"
 
 @pytest.fixture
 def test_app():
@@ -30,6 +58,8 @@ def test_index(mocker, test_app, client):
         print(request.user_agent.string)
     assert response.status_code == 200
     assert b'<title>Steven Rupert' in response.data
+    assert_global_chrome(response)
+    assert_active_nav(response, "resume")
 
 def test_project_overview(client):
     response = client.get('/project_overview')
@@ -37,6 +67,8 @@ def test_project_overview(client):
     assert b"<title>Cloud Resume | Project Overview" in response.data
     assert b"Project Overview" in response.data
     assert b"/page/project" in response.data
+    assert_global_chrome(response)
+    assert_active_nav(response, "project_overview")
 
 def test_healthz(client):
     response = client.get('/healthz')
@@ -54,6 +86,19 @@ def test_markdown_pages_are_auto_routable(client):
     for slug in slugs:
         response = client.get(f"/page/{slug}")
         assert response.status_code == 200, f"Expected /page/{slug} to be routable"
+
+def test_markdown_page_uses_global_chrome_and_project_overview_active(client):
+    pages_dir = Path(cloud_resume.app.root_path) / "pages"
+    slugs = sorted(
+        page_file.relative_to(pages_dir).with_suffix("").as_posix()
+        for page_file in pages_dir.rglob("*.md")
+    )
+    assert slugs
+
+    response = client.get(f"/page/{slugs[0]}")
+    assert response.status_code == 200
+    assert_global_chrome(response)
+    assert_active_nav(response, "project_overview")
 
 def test_project_route_removed(client):
     response = client.get('/project')
