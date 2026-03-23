@@ -11,3 +11,11 @@ __pycache__
 *.venv
 
 .vscode
+
+killswitch/
+
+# Frontend build artifacts
+cloud_resume/node_modules/
+cloud_resume/cloud_resume/static/css/site.css
+cloud_resume/cloud_resume/static/fonts/*.woff
+cloud_resume/cloud_resume/static/fonts/*.woff2
