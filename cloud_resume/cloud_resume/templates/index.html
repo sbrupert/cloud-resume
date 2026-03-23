@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html class="light" lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -79,6 +79,23 @@
       }
       .terminal-ok {
         color: rgba(110, 231, 183, 0.95);
+      }
+      .counter-widget-shell {
+        background: #27313f;
+        color: #eaf1ff;
+      }
+      .education-panel-static {
+        background: #27313f;
+        color: #eeefff;
+      }
+      .education-panel-static .education-kicker {
+        color: #b4c5ff;
+      }
+      .education-panel-static .education-copy {
+        color: rgba(238, 239, 255, 0.72);
+      }
+      .education-panel-static .education-degree {
+        color: #ffffff;
       }
     </style>
   </head>
@@ -196,7 +213,7 @@
         <div class="md:col-span-5 grid grid-cols-1 gap-6">
           <!-- Live System Metric Card -->
           <div
-            class="bg-inverse-surface p-6 rounded-xl relative overflow-hidden"
+            class="counter-widget-shell p-6 rounded-xl relative overflow-hidden"
           >
             <div class="absolute top-0 right-0 p-4">
               <span
@@ -604,7 +621,7 @@
       </section>
       <!-- Academic Base -->
       <section
-        class="mb-16 md:mb-24 lg:mb-32 bg-inverse-surface text-on-primary-container p-6 md:p-12 rounded-2xl md:rounded-3xl overflow-hidden relative"
+        class="mb-16 md:mb-24 lg:mb-32 education-panel-static p-6 md:p-12 rounded-2xl md:rounded-3xl overflow-hidden relative"
         id="education"
       >
         <div class="absolute top-0 right-0 p-8 md:p-12 opacity-5 hidden md:block">
@@ -612,7 +629,7 @@
         </div>
         <div class="relative z-10">
           <div
-            class="text-label text-[10px] font-bold uppercase tracking-widest text-primary mb-4 md:mb-6"
+            class="education-kicker text-label text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-6"
           >
             Foundational Logic
           </div>
@@ -625,7 +642,7 @@
               >
                 Education
               </h2>
-              <p class="text-on-primary-container/70 leading-relaxed">
+              <p class="education-copy leading-relaxed">
                 Formal training in networking and cybersecurity, backed by
                 hands-on infrastructure operations and automation experience.
               </p>
@@ -633,14 +650,14 @@
             <div class="space-y-3 md:space-y-4">
               <div class="flex items-center gap-4">
                 <span class="w-2 h-2 rounded-full bg-primary"></span>
-                <span class="font-headline font-bold text-white"
+                <span class="education-degree font-headline font-bold"
                   >B.S. Computer Networks &amp; Cybersecurity, University of
                   Maryland Global Campus (2020)</span
                 >
               </div>
               <div class="flex items-center gap-4">
                 <span class="w-2 h-2 rounded-full bg-primary"></span>
-                <span class="font-headline font-bold text-white"
+                <span class="education-degree font-headline font-bold"
                   >A.A.S. Information Services Technology, College of Southern
                   Maryland (2018)</span
                 >
