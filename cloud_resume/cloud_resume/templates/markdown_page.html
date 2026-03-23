@@ -5,64 +5,11 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="{{ url_for('static', filename='css/site.css') }}" rel="stylesheet" />
     <title>{{ page.meta.title or "Page" }} | Steven Rupert</title>
-
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "surface-bright": "#f8f9ff",
-              surface: "#f8f9ff",
-              background: "#f8f9ff",
-              "surface-dim": "#d0dbed",
-              "surface-container-low": "#eff4ff",
-              "surface-container": "#e6eeff",
-              "surface-container-high": "#dee9fc",
-              "surface-container-highest": "#d9e3f6",
-              "surface-container-lowest": "#ffffff",
-              "surface-variant": "#d9e3f6",
-              outline: "#737686",
-              "outline-variant": "#c3c6d7",
-              primary: "#004ac6",
-              "primary-container": "#2563eb",
-              "primary-fixed": "#dbe1ff",
-              "on-primary": "#ffffff",
-              "on-primary-fixed": "#00174b",
-              "on-primary-fixed-variant": "#003ea8",
-              "on-surface": "#121c2a",
-              "on-surface-variant": "#434655",
-              "inverse-surface": "#27313f",
-              "inverse-on-surface": "#eaf1ff",
-            },
-            fontFamily: {
-              headline: ["Space Grotesk"],
-              body: ["Inter"],
-              label: ["Inter"],
-            },
-          },
-        },
-      };
-    </script>
 
     <style>
       .material-symbols-outlined {
-        font-variation-settings:
-          "FILL" 0,
-          "wght" 400,
-          "GRAD" 0,
-          "opsz" 24;
         vertical-align: middle;
       }
 
