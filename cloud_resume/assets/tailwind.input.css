@@ -92,7 +92,7 @@
 
 @layer base {
   body {
-    @apply bg-surface text-on-surface font-body antialiased;
+    @apply bg-surface text-on-surface font-body;
   }
 
   .material-symbols-outlined {
