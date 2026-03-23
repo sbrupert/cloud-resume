@@ -24,6 +24,12 @@ def assert_global_chrome(response):
     assert b'id="mobile-nav-menu"' in response.data
     assert b'aria-controls="mobile-nav-menu"' in response.data
     assert b'data-mobile-nav-link' in response.data
+    assert b'data-theme-menu-toggle' in response.data
+    assert b'id="theme-menu-desktop"' in response.data
+    assert b'id="theme-menu-mobile"' in response.data
+    assert b'data-theme-option="system"' in response.data
+    assert b'data-theme-option="light"' in response.data
+    assert b'data-theme-option="dark"' in response.data
 
 def assert_static_frontend_assets(response):
     assert b'href="/static/css/site.css"' in response.data
