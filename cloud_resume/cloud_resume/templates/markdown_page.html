@@ -435,12 +435,32 @@
           line-height: 1.78;
         }
 
+        .markdown-content h1 {
+          margin-top: 1.8rem;
+          margin-bottom: 0.8rem;
+        }
+
         .markdown-content h2 {
-          margin-top: 2.5rem;
+          margin-top: 2rem;
+          margin-bottom: 0.8rem;
+        }
+
+        .markdown-content h3 {
+          margin-top: 1.5rem;
+          margin-bottom: 0.6rem;
+        }
+
+        .markdown-content p {
+          margin-bottom: 1.05rem;
+        }
+
+        .markdown-content ul,
+        .markdown-content ol {
+          margin: 0.55rem 0 1.1rem;
         }
 
         .markdown-content.has-toc .toc-rail {
-          margin-bottom: 1.8rem;
+          margin-bottom: 1.2rem;
         }
       }
     </style>
@@ -451,28 +471,28 @@
   >
     {% include "partials/navbar.html" %}
 
-    <main class="pt-28 pb-20 px-6 lg:px-10">
+    <main class="pt-20 md:pt-24 lg:pt-28 pb-14 md:pb-20 px-4 sm:px-6 lg:px-10">
       <div class="doc-grid">
-        <header class="relative mb-12 lg:mb-14">
+        <header class="relative mb-8 md:mb-12 lg:mb-14">
           <div
-            class="pointer-events-none absolute -top-10 -left-1 text-[7.5rem] leading-none font-headline font-bold text-on-surface opacity-[0.04] select-none"
+            class="pointer-events-none absolute -top-6 sm:-top-10 -left-1 text-[5.5rem] sm:text-[7.5rem] leading-none font-headline font-bold text-on-surface opacity-[0.04] select-none hidden sm:block"
           >
             01
           </div>
           <div class="relative max-w-5xl">
             <p
-              class="font-label text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-outline mb-4"
+              class="font-label text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-outline mb-3 md:mb-4"
             >
               {{ page.meta.doc_type }}
             </p>
             <h1
-              class="font-headline text-4xl md:text-5xl lg:text-6xl leading-[1.08] tracking-tight font-bold text-on-surface"
+              class="font-headline text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.08] tracking-tight font-bold text-on-surface"
             >
               {{ page.meta.title or "Page" }}
             </h1>
             {% if page.meta.description %}
             <p
-              class="mt-6 max-w-4xl font-body text-lg md:text-xl leading-relaxed text-on-surface-variant"
+              class="mt-4 md:mt-6 max-w-4xl font-body text-base md:text-xl leading-relaxed text-on-surface-variant"
             >
               {{ page.meta.description }}
             </p>
@@ -481,9 +501,9 @@
         </header>
       </div>
       <section
-        class="-mx-6 lg:-mx-10 border-y border-outline-variant/20 bg-surface-container-low/35 py-8 lg:py-10"
+        class="-mx-4 sm:-mx-6 lg:-mx-10 border-y border-outline-variant/20 bg-surface-container-low/35 py-6 md:py-8 lg:py-10"
       >
-        <div class="doc-grid px-6 lg:px-10">
+        <div class="doc-grid px-4 sm:px-6 lg:px-10">
           <article class="markdown-content">{{ page.html|safe }}</article>
         </div>
       </section>

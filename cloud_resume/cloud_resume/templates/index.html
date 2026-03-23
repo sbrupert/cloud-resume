@@ -170,14 +170,14 @@
     class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container"
   >
     {% include "partials/navbar.html" %}
-    <main class="pt-24 pb-20 max-w-7xl mx-auto px-8">
+    <main class="pt-20 md:pt-24 pb-14 md:pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Hero Section -->
       <section
-        class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start mb-32"
+        class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start mb-16 md:mb-24 lg:mb-32"
         id="summary"
       >
         <!-- Left: Identity -->
-        <div class="md:col-span-7 pt-12">
+        <div class="md:col-span-7 pt-6 md:pt-12">
           <div
             class="mb-4 inline-flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-full"
           >
@@ -188,15 +188,15 @@
             >
           </div>
           <h1
-            class="font-headline text-display-lg text-6xl md:text-8xl font-bold tracking-tighter text-on-surface mb-6 leading-[0.9]"
+            class="font-headline text-display-lg text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter text-on-surface mb-5 md:mb-6 leading-[0.9]"
           >
             Steven Rupert
           </h1>
-          <p class="font-headline text-2xl text-primary font-medium mb-8">
+          <p class="font-headline text-xl md:text-2xl text-primary font-medium mb-6 md:mb-8">
             Cloud / Infrastructure / DevOps Engineer
           </p>
           <p
-            class="text-body-lg text-on-surface-variant max-w-xl leading-relaxed mb-12"
+            class="text-body-lg text-on-surface-variant max-w-xl leading-relaxed mb-8 md:mb-12"
           >
             Cloud and Infrastructure Engineer with 5+ years of experience
             operating and automating production systems across AWS and on-prem
@@ -250,13 +250,13 @@
             </div>
           </div>
           <!-- Curiosity CTA -->
-          <div class="group relative inline-block mt-8">
+          <div class="group relative inline-block mt-6 md:mt-8">
             <a
-              class="flex items-center gap-6 p-1 pr-6 bg-surface-container-low rounded-full border border-outline-variant/20 hover:border-primary/40 transition-all duration-500"
+              class="flex items-center gap-3 sm:gap-6 p-1 pr-4 sm:pr-6 bg-surface-container-low rounded-full border border-outline-variant/20 hover:border-primary/40 transition-all duration-500"
               href="/project_overview"
             >
               <div
-                class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary"
+                class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center text-on-primary"
               >
                 <span class="material-symbols-outlined">terminal</span>
               </div>
@@ -265,7 +265,7 @@
                   class="text-label text-[10px] font-bold text-primary uppercase tracking-tighter"
                   >Curious?</span
                 >
-                <span class="font-headline font-bold text-on-surface"
+                <span class="font-headline font-bold text-on-surface text-sm sm:text-base"
                   >See how this resume is built</span
                 >
               </div>
@@ -421,27 +421,27 @@
         </div>
       </section>
       <!-- Engineering Philosophy -->
-      <section class="mb-32">
-        <div class="flex flex-col md:flex-row gap-12 items-baseline mb-16">
+      <section class="mb-16 md:mb-24 lg:mb-32">
+        <div class="flex flex-col md:flex-row gap-3 md:gap-12 items-start md:items-baseline mb-8 md:mb-16">
           <h2
-            class="font-headline text-4xl font-bold tracking-tighter text-on-surface"
+            class="font-headline text-3xl md:text-4xl font-bold tracking-tighter text-on-surface"
           >
             Philosophy
           </h2>
-          <div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+          <div class="hidden md:block h-[1px] flex-grow bg-outline-variant/30"></div>
           <span
-            class="text-label text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
+            class="text-label text-[9px] md:text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
             >01_PRINCIPLES</span
           >
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
           <div
-            class="p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-lg transition-all"
+            class="p-6 md:p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-lg transition-all"
           >
-            <span class="material-symbols-outlined text-primary mb-6 text-3xl"
+            <span class="material-symbols-outlined text-primary mb-4 md:mb-6 text-2xl md:text-3xl"
               >precision_manufacturing</span
             >
-            <h3 class="font-headline text-xl font-bold mb-4">
+            <h3 class="font-headline text-xl font-bold mb-3 md:mb-4">
               Automation First
             </h3>
             <p class="text-sm text-on-surface-variant leading-relaxed">
@@ -450,12 +450,12 @@
             </p>
           </div>
           <div
-            class="p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-lg transition-all"
+            class="p-6 md:p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-lg transition-all"
           >
-            <span class="material-symbols-outlined text-primary mb-6 text-3xl"
+            <span class="material-symbols-outlined text-primary mb-4 md:mb-6 text-2xl md:text-3xl"
               >security</span
             >
-            <h3 class="font-headline text-xl font-bold mb-4">
+            <h3 class="font-headline text-xl font-bold mb-3 md:mb-4">
               Reliability Focused
             </h3>
             <p class="text-sm text-on-surface-variant leading-relaxed">
@@ -464,12 +464,12 @@
             </p>
           </div>
           <div
-            class="p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-lg transition-all"
+            class="p-6 md:p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-lg transition-all"
           >
-            <span class="material-symbols-outlined text-primary mb-6 text-3xl"
+            <span class="material-symbols-outlined text-primary mb-4 md:mb-6 text-2xl md:text-3xl"
               >vpn_lock</span
             >
-            <h3 class="font-headline text-xl font-bold mb-4">
+            <h3 class="font-headline text-xl font-bold mb-3 md:mb-4">
               Security by Baseline
             </h3>
             <p class="text-sm text-on-surface-variant leading-relaxed">
@@ -480,23 +480,23 @@
         </div>
       </section>
       <!-- Professional Timeline -->
-      <section class="mb-32" id="experience">
-        <div class="flex flex-col md:flex-row gap-12 items-baseline mb-16">
+      <section class="mb-16 md:mb-24 lg:mb-32" id="experience">
+        <div class="flex flex-col md:flex-row gap-3 md:gap-12 items-start md:items-baseline mb-8 md:mb-16">
           <h2
-            class="font-headline text-4xl font-bold tracking-tighter text-on-surface"
+            class="font-headline text-3xl md:text-4xl font-bold tracking-tighter text-on-surface"
           >
             Experience
           </h2>
-          <div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+          <div class="hidden md:block h-[1px] flex-grow bg-outline-variant/30"></div>
           <span
-            class="text-label text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
+            class="text-label text-[9px] md:text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
             >02_ARCHITECTURE_HISTORY</span
           >
         </div>
-        <div class="space-y-16">
+        <div class="space-y-10 md:space-y-16">
           <!-- Job 1 -->
           <div
-            class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative"
+            class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start relative"
           >
             <div class="md:col-span-3">
               <div class="sticky top-24">
@@ -515,13 +515,13 @@
               </div>
             </div>
             <div
-              class="md:col-span-9 bg-surface-container-low p-10 rounded-2xl relative"
+              class="md:col-span-9 bg-surface-container-low p-6 md:p-10 rounded-2xl relative"
             >
               <div
                 class="absolute -left-3 top-10 w-6 h-6 bg-primary rotate-45 hidden md:block"
               ></div>
-              <ul class="space-y-6 text-on-surface-variant">
-                <li class="flex gap-4">
+              <ul class="space-y-4 md:space-y-6 text-on-surface-variant">
+                <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">01</span>
                   <p class="leading-relaxed">
                     Designed, deployed, and operated production infrastructure
@@ -529,7 +529,7 @@
                     Staging, and Production systems.
                   </p>
                 </li>
-                <li class="flex gap-4">
+                <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">02</span>
                   <p class="leading-relaxed">
                     Developed and maintained Ansible automation for security
@@ -537,7 +537,7 @@
                     and refactored legacy automation to reduce drift.
                   </p>
                 </li>
-                <li class="flex gap-4">
+                <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">03</span>
                   <p class="leading-relaxed">
                     Designed and deployed Ansible Automation Platform (AAP),
@@ -545,7 +545,7 @@
                     recurring production automation.
                   </p>
                 </li>
-                <li class="flex gap-4">
+                <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">04</span>
                   <p class="leading-relaxed">
                     Built a greenfield Terraform codebase for vSphere,
@@ -554,7 +554,7 @@
                     time from days to hours.
                   </p>
                 </li>
-                <li class="flex gap-4">
+                <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">05</span>
                   <p class="leading-relaxed">
                     Maintained Terraform deployments for AWS infrastructure
@@ -562,7 +562,7 @@
                     workflows, remote state, and Git review gates.
                   </p>
                 </li>
-                <li class="flex gap-4">
+                <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">06</span>
                   <p class="leading-relaxed">
                     Served as SME for multi-cluster vSphere 7-8 operations and
@@ -610,20 +610,20 @@
         </div>
       </section>
       <!-- Core Capabilities Grid -->
-      <section class="mb-32" id="skills">
-        <div class="flex flex-col md:flex-row gap-12 items-baseline mb-16">
+      <section class="mb-16 md:mb-24 lg:mb-32" id="skills">
+        <div class="flex flex-col md:flex-row gap-3 md:gap-12 items-start md:items-baseline mb-8 md:mb-16">
           <h2
-            class="font-headline text-4xl font-bold tracking-tighter text-on-surface"
+            class="font-headline text-3xl md:text-4xl font-bold tracking-tighter text-on-surface"
           >
             Capability Stack
           </h2>
-          <div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+          <div class="hidden md:block h-[1px] flex-grow bg-outline-variant/30"></div>
           <span
-            class="text-label text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
+            class="text-label text-[9px] md:text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
             >03_SYSTEM_RESOURCES</span
           >
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4">
           <div
             class="bg-surface-container-low p-6 rounded-lg group hover:bg-primary transition-all duration-300"
           >
@@ -688,24 +688,24 @@
       </section>
       <!-- Academic Base -->
       <section
-        class="mb-32 bg-inverse-surface text-on-primary-container p-12 rounded-3xl overflow-hidden relative"
+        class="mb-16 md:mb-24 lg:mb-32 bg-inverse-surface text-on-primary-container p-6 md:p-12 rounded-2xl md:rounded-3xl overflow-hidden relative"
         id="education"
       >
-        <div class="absolute top-0 right-0 p-12 opacity-5">
+        <div class="absolute top-0 right-0 p-8 md:p-12 opacity-5 hidden md:block">
           <span class="material-symbols-outlined text-[12rem]">school</span>
         </div>
         <div class="relative z-10">
           <div
-            class="text-label text-[10px] font-bold uppercase tracking-widest text-primary mb-6"
+            class="text-label text-[10px] font-bold uppercase tracking-widest text-primary mb-4 md:mb-6"
           >
             Foundational Logic
           </div>
           <div
-            class="flex flex-col md:flex-row gap-12 justify-between items-start"
+            class="flex flex-col md:flex-row gap-6 md:gap-12 justify-between items-start"
           >
             <div class="max-w-xl">
               <h2
-                class="font-headline text-4xl font-bold tracking-tighter mb-4 text-white"
+                class="font-headline text-3xl md:text-4xl font-bold tracking-tighter mb-4 text-white"
               >
                 Education
               </h2>
@@ -714,7 +714,7 @@
                 hands-on infrastructure operations and automation experience.
               </p>
             </div>
-            <div class="space-y-4">
+            <div class="space-y-3 md:space-y-4">
               <div class="flex items-center gap-4">
                 <span class="w-2 h-2 rounded-full bg-primary"></span>
                 <span class="font-headline font-bold text-white"
