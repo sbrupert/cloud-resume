@@ -20,6 +20,10 @@ def assert_global_chrome(response):
     assert b"https://www.linkedin.com/in/steven-rupert-a34405197" in response.data
     assert b'href="https://github.com/sbrupert"' in response.data
     assert b"Site Version" in response.data
+    assert b'id="mobile-nav-toggle"' in response.data
+    assert b'id="mobile-nav-menu"' in response.data
+    assert b'aria-controls="mobile-nav-menu"' in response.data
+    assert b'data-mobile-nav-link' in response.data
 
 def assert_active_nav(response, active_nav: str):
     html = response.get_data(as_text=True)
