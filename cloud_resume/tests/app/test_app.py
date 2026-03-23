@@ -25,6 +25,11 @@ def assert_global_chrome(response):
     assert b'aria-controls="mobile-nav-menu"' in response.data
     assert b'data-mobile-nav-link' in response.data
 
+def assert_static_frontend_assets(response):
+    assert b'href="/static/css/site.css"' in response.data
+    assert b"cdn.tailwindcss.com" not in response.data
+    assert b"fonts.googleapis.com" not in response.data
+
 def assert_active_nav(response, active_nav: str):
     html = response.get_data(as_text=True)
     active_targets = {
@@ -63,6 +68,7 @@ def test_index(mocker, test_app, client):
     assert response.status_code == 200
     assert b'<title>Steven Rupert' in response.data
     assert_global_chrome(response)
+    assert_static_frontend_assets(response)
     assert_active_nav(response, "resume")
 
 def test_project_overview(client):
@@ -72,6 +78,7 @@ def test_project_overview(client):
     assert b"Project Overview" in response.data
     assert b"/page/project" in response.data
     assert_global_chrome(response)
+    assert_static_frontend_assets(response)
     assert_active_nav(response, "project_overview")
 
 def test_healthz(client):
@@ -102,6 +109,7 @@ def test_markdown_page_uses_global_chrome_and_project_overview_active(client):
     response = client.get(f"/page/{slugs[0]}")
     assert response.status_code == 200
     assert_global_chrome(response)
+    assert_static_frontend_assets(response)
     assert_active_nav(response, "project_overview")
 
 def test_project_route_removed(client):
