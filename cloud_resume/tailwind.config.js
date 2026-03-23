@@ -48,7 +48,7 @@ module.exports = {
         "on-secondary-fixed-variant": "#3d4756",
         "on-error-container": "#93000a",
         background: "#f8f9ff",
-        error: "#ba1a1a",
+        error: "#ff0000",
         "surface-container-lowest": "#ffffff",
         "surface-container-low": "#eff4ff",
         "inverse-surface": "#27313f",
