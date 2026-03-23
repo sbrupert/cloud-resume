@@ -14,6 +14,10 @@ This python application showcases my resume, featuring a visitor counter powered
 
 - `LOGLEVEL`: Sets the logging level. Default is `INFO`. Can be set to `DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`.
 - `FIRESTORE_EMULATOR_HOST`: If set, the application connects to the Firestore emulator instead of the production Firestore.
+- `GUNICORN_THREADS`: Optional Gunicorn runtime override. Default is `2`.
+- `GUNICORN_TIMEOUT`: Optional Gunicorn request timeout override (seconds). Default is `60`.
+
+Gunicorn uses defaults from `cloud_resume/gunicorn.conf.py`. Only `GUNICORN_THREADS` and `GUNICORN_TIMEOUT` are intentionally exposed as runtime tunables. Other worker settings are fixed.
 
 ## Getting Started Guide
 
