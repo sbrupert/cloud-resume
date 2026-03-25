@@ -1,0 +1,219 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Inter";
+  src: url("/static/fonts/inter-latin-300-normal.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/static/fonts/inter-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/static/fonts/inter-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/static/fonts/inter-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/static/fonts/inter-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/static/fonts/space-grotesk-latin-300-normal.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/static/fonts/space-grotesk-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/static/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/static/fonts/space-grotesk-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/static/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Material Symbols Outlined";
+  src: url("/static/fonts/material-symbols-outlined-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --color-background: 248 249 255;
+    --color-on-background: 18 28 42;
+    --color-surface: 248 249 255;
+    --color-on-surface: 18 28 42;
+    --color-on-surface-variant: 67 70 85;
+    --color-surface-dim: 208 219 237;
+    --color-surface-bright: 248 249 255;
+    --color-surface-container-lowest: 255 255 255;
+    --color-surface-container-low: 239 244 255;
+    --color-surface-container: 230 238 255;
+    --color-surface-container-high: 222 233 252;
+    --color-surface-container-highest: 217 227 246;
+    --color-surface-variant: 217 227 246;
+    --color-surface-tint: 0 83 219;
+    --color-primary: 0 74 198;
+    --color-on-primary: 255 255 255;
+    --color-primary-container: 37 99 235;
+    --color-on-primary-container: 238 239 255;
+    --color-primary-fixed: 219 225 255;
+    --color-primary-fixed-dim: 180 197 255;
+    --color-on-primary-fixed: 0 23 75;
+    --color-on-primary-fixed-variant: 0 62 168;
+    --color-secondary: 85 95 111;
+    --color-on-secondary: 255 255 255;
+    --color-secondary-container: 214 224 243;
+    --color-on-secondary-container: 89 99 115;
+    --color-secondary-fixed: 217 227 246;
+    --color-secondary-fixed-dim: 189 199 217;
+    --color-on-secondary-fixed: 18 28 42;
+    --color-on-secondary-fixed-variant: 61 71 86;
+    --color-tertiary: 62 63 204;
+    --color-on-tertiary: 255 255 255;
+    --color-tertiary-container: 88 91 230;
+    --color-on-tertiary-container: 241 238 255;
+    --color-tertiary-fixed: 225 224 255;
+    --color-tertiary-fixed-dim: 192 193 255;
+    --color-on-tertiary-fixed: 7 0 108;
+    --color-on-tertiary-fixed-variant: 47 46 190;
+    --color-error: 255 0 0;
+    --color-on-error: 255 255 255;
+    --color-error-container: 255 218 214;
+    --color-on-error-container: 147 0 10;
+    --color-outline: 115 118 134;
+    --color-outline-variant: 195 198 215;
+    --color-inverse-surface: 39 49 63;
+    --color-inverse-on-surface: 234 241 255;
+    --color-inverse-primary: 180 197 255;
+    color-scheme: light;
+  }
+
+  html.dark {
+    --color-background: 12 19 36;
+    --color-on-background: 220 225 251;
+    --color-surface: 12 19 36;
+    --color-on-surface: 220 225 251;
+    --color-on-surface-variant: 195 198 215;
+    --color-surface-dim: 12 19 36;
+    --color-surface-bright: 51 57 76;
+    --color-surface-container-lowest: 7 13 31;
+    --color-surface-container-low: 21 27 45;
+    --color-surface-container: 25 31 49;
+    --color-surface-container-high: 35 41 60;
+    --color-surface-container-highest: 46 52 71;
+    --color-surface-variant: 46 52 71;
+    --color-surface-tint: 173 198 255;
+    --color-primary: 173 198 255;
+    --color-on-primary: 0 46 106;
+    --color-primary-container: 15 105 220;
+    --color-on-primary-container: 236 240 255;
+    --color-primary-fixed: 216 226 255;
+    --color-primary-fixed-dim: 173 198 255;
+    --color-on-primary-fixed: 0 26 66;
+    --color-on-primary-fixed-variant: 0 67 149;
+    --color-secondary: 183 200 225;
+    --color-on-secondary: 33 49 69;
+    --color-secondary-container: 58 74 95;
+    --color-on-secondary-container: 147 165 190;
+    --color-secondary-fixed: 211 228 254;
+    --color-secondary-fixed-dim: 183 200 225;
+    --color-on-secondary-fixed: 11 28 48;
+    --color-on-secondary-fixed-variant: 56 72 93;
+    --color-tertiary: 137 206 255;
+    --color-on-tertiary: 0 52 77;
+    --color-tertiary-container: 0 116 166;
+    --color-on-tertiary-container: 228 242 255;
+    --color-tertiary-fixed: 201 230 255;
+    --color-tertiary-fixed-dim: 137 206 255;
+    --color-on-tertiary-fixed: 0 30 47;
+    --color-on-tertiary-fixed-variant: 0 76 110;
+    --color-error: 220 38 38;
+    --color-on-error: 105 0 5;
+    --color-error-container: 147 0 10;
+    --color-on-error-container: 255 218 214;
+    --color-outline: 141 144 160;
+    --color-outline-variant: 67 70 85;
+    --color-inverse-surface: 220 225 251;
+    --color-inverse-on-surface: 42 48 67;
+    --color-inverse-primary: 0 90 194;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-surface text-on-surface font-body;
+  }
+
+  .material-symbols-outlined {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    font-variation-settings:
+      "FILL" 0,
+      "wght" 400,
+      "GRAD" 0,
+      "opsz" 24;
+  }
+}

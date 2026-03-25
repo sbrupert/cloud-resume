@@ -1,0 +1,18 @@
+{
+  "name": "cloud-resume-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:fonts": "rm -rf ./cloud_resume/static/fonts && mkdir -p ./cloud_resume/static/fonts && cp ./node_modules/@fontsource/inter/files/inter-latin-300-normal.woff2 ./node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2 ./node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2 ./node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2 ./node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2 ./cloud_resume/static/fonts/ && cp ./node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-300-normal.woff2 ./node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-400-normal.woff2 ./node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-500-normal.woff2 ./node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-600-normal.woff2 ./node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff2 ./cloud_resume/static/fonts/ && cp ./node_modules/@fontsource/material-symbols-outlined/files/material-symbols-outlined-latin-400-normal.woff2 ./cloud_resume/static/fonts/",
+    "build:css": "mkdir -p ./cloud_resume/static/css && tailwindcss -c tailwind.config.js -i ./assets/tailwind.input.css -o ./cloud_resume/static/css/site.css --minify",
+    "build:assets": "npm run build:fonts && npm run build:css"
+  },
+  "devDependencies": {
+    "@fontsource/inter": "5.2.8",
+    "@fontsource/material-symbols-outlined": "5.2.38",
+    "@fontsource/space-grotesk": "5.2.10",
+    "@tailwindcss/container-queries": "0.1.1",
+    "@tailwindcss/forms": "0.5.10",
+    "tailwindcss": "3.4.17"
+  }
+}

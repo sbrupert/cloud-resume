@@ -1,140 +1,749 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="{{ url_for('static', filename='css/site.css') }}" rel="stylesheet" />
     <title>Steven Rupert - Cloud / Infrastructure / DevOps Engineer</title>
-    <!-- Tailwind CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+      .glass-nav {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      .text-vertical {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+      }
+      @keyframes cursor-blink {
+        0%,
+        49% {
+          opacity: 1;
         }
-        main {
-            flex: 1;
+        50%,
+        100% {
+          opacity: 0;
         }
+      }
+      @keyframes terminal-line-enter {
+        from {
+          opacity: 0;
+          transform: translateY(2px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .terminal-cursor {
+        display: inline-block;
+        width: 0.6ch;
+        animation: cursor-blink 1s steps(1, end) infinite;
+      }
+      .terminal-line-enter {
+        animation: terminal-line-enter 220ms ease-out both;
+      }
+      .terminal-panel {
+        position: relative;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(238, 239, 255, 0.2);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.07),
+          inset 0 -10px 24px rgba(0, 0, 0, 0.25);
+      }
+      .terminal-panel::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.05) 0px,
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+        opacity: 0.2;
+      }
+      .terminal-dot {
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 9999px;
+        display: inline-block;
+      }
+      .terminal-prompt {
+        color: rgba(180, 197, 255, 0.95);
+        margin-right: 0.35rem;
+      }
+      .terminal-ok {
+        color: rgba(110, 231, 183, 0.95);
+      }
+      .counter-widget-shell {
+        background: #27313f;
+        color: #eaf1ff;
+      }
+      .education-panel-static {
+        background: #27313f;
+        color: #eeefff;
+      }
+      .education-panel-static .education-kicker {
+        color: #b4c5ff;
+      }
+      .education-panel-static .education-copy {
+        color: rgba(238, 239, 255, 0.72);
+      }
+      .education-panel-static .education-degree {
+        color: #ffffff;
+      }
     </style>
-</head>
-<body class="bg-gray-100 text-gray-800">
-    <nav class="bg-white shadow sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-3">
-            <div class="flex justify-between items-center">
+  </head>
+  <body
+    class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container"
+  >
+    {% include "partials/navbar.html" %}
+    <main class="pt-20 md:pt-24 pb-14 md:pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Hero Section -->
+      <section
+        class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start mb-16 md:mb-24 lg:mb-32"
+        id="summary"
+      >
+        <!-- Left: Identity -->
+        <div class="md:col-span-7 pt-6 md:pt-12">
+          <div
+            class="mb-4 inline-flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-full"
+          >
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            <span
+              class="text-label text-[10px] uppercase tracking-widest font-bold text-primary"
+              >5+ years * AWS + On-Prem</span
+            >
+          </div>
+          <h1
+            class="font-headline text-display-lg text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter text-on-surface mb-5 md:mb-6 leading-[0.9]"
+          >
+            Steven Rupert
+          </h1>
+          <p class="font-headline text-xl md:text-2xl text-primary font-medium mb-6 md:mb-8">
+            Cloud / Infrastructure / DevOps Engineer
+          </p>
+          <p
+            class="text-body-lg text-on-surface-variant max-w-xl leading-relaxed mb-8 md:mb-12"
+          >
+            Cloud and Infrastructure Engineer with 5+ years of experience
+            operating and automating production systems across AWS and on-prem
+            environments.
+          </p>
+          <div class="mt-6">
+            <div
+              class="text-label text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em] mb-2"
+            >
+              Connect
+            </div>
+            <div class="flex items-center gap-3">
+              <a
+                class="inline-flex items-center rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-blue-800"
+                href="https://www.linkedin.com/in/steven-rupert-a34405197"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn Profile"
+                title="LinkedIn"
+              >
+                <svg
+                  class="h-7 w-7"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19ZM8.34 10.67H5.67V18H8.34V10.67ZM7 6.5A1.5 1.5 0 1 0 7 9.5A1.5 1.5 0 1 0 7 6.5ZM18.34 13.83C18.34 11.43 17.06 10.33 15.36 10.33C13.98 10.33 13.36 11.09 13 11.63V10.67H10.34V18H13V13.93C13 12.86 13.2 11.83 14.53 11.83C15.84 11.83 15.86 13.06 15.86 14V18H18.34V13.83Z"
+                  />
+                </svg>
+              </a>
+              <a
+                class="inline-flex items-center rounded-md bg-gray-800 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-gray-900"
+                href="https://github.com/sbrupert"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub Profile"
+                title="GitHub"
+              >
+                <svg
+                  class="h-7 w-7"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 .5A12 12 0 0 0 8.2 23.9C8.8 24 9 23.6 9 23.3V21.2C5.7 21.9 5 19.8 5 19.8C4.5 18.5 3.8 18.1 3.8 18.1C2.7 17.4 3.9 17.4 3.9 17.4C5.1 17.5 5.7 18.6 5.7 18.6C6.8 20.4 8.5 19.9 9.1 19.6C9.2 18.8 9.5 18.3 9.8 18C7.1 17.7 4.3 16.6 4.3 11.9C4.3 10.5 4.8 9.4 5.6 8.5C5.5 8.2 5.1 7 5.7 5.4C5.7 5.4 6.7 5.1 9 6.7A12.4 12.4 0 0 1 15 6.7C17.3 5.1 18.3 5.4 18.3 5.4C18.9 7 18.5 8.2 18.4 8.5C19.2 9.4 19.7 10.5 19.7 11.9C19.7 16.6 16.9 17.7 14.2 18C14.6 18.4 15 19.1 15 20.2V23.3C15 23.6 15.2 24 15.8 23.9A12 12 0 0 0 12 .5Z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <!-- Curiosity CTA -->
+          <div class="group relative inline-block mt-6 md:mt-8">
+            <a
+              class="flex items-center gap-3 sm:gap-6 p-1 pr-4 sm:pr-6 bg-surface-container-low rounded-full border border-outline-variant/20 hover:border-primary/40 transition-all duration-500"
+              href="/project_overview"
+            >
+              <div
+                class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center text-on-primary"
+              >
+                <span class="material-symbols-outlined">terminal</span>
+              </div>
+              <div class="flex flex-col">
+                <span
+                  class="text-label text-[10px] font-bold text-primary uppercase tracking-tighter"
+                  >Curious?</span
+                >
+                <span class="font-headline font-bold text-on-surface text-sm sm:text-base"
+                  >See how this resume is built</span
+                >
+              </div>
+              <span
+                class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform"
+                >arrow_forward</span
+              >
+            </a>
+          </div>
+        </div>
+        <!-- Right: Capability & Proof Panel -->
+        <div class="md:col-span-5 grid grid-cols-1 gap-6">
+          <!-- Live System Metric Card -->
+          <div
+            class="counter-widget-shell p-6 rounded-xl relative overflow-hidden"
+          >
+            <div class="absolute top-0 right-0 p-4">
+              <span
+                class="flex items-center gap-1.5 px-2 py-0.5 bg-error/20 rounded-full border border-error/30"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                <span
+                  class="text-[9px] font-bold text-error uppercase tracking-widest"
+                  >Live</span
+                >
+              </span>
+            </div>
+            <div
+              class="text-label text-[10px] text-on-primary-container/60 uppercase tracking-widest mb-1"
+            >
+              Visitor Counter
+            </div>
+            <div class="mt-4 rounded-lg terminal-panel font-mono text-[11px]">
+              <div
+                class="relative z-10 flex items-center justify-between border-b border-on-primary-container/15 px-3 py-2"
+              >
+                <div class="flex items-center gap-1.5">
+                  <span class="terminal-dot bg-red-400/80"></span>
+                  <span class="terminal-dot bg-amber-300/80"></span>
+                  <span class="terminal-dot bg-emerald-400/80"></span>
+                </div>
+                <span
+                  class="text-[10px] uppercase tracking-widest text-on-primary-container/55"
+                  >tty://counter-sync</span
+                >
+              </div>
+              <div
+                class="relative z-10 px-3 py-2 leading-5 text-on-primary-container/75"
+              >
+                <div id="counter-status-line-1">
+                  <span class="terminal-prompt">&gt;</span>[visitor_counter]
+                  syncing visitor total<span class="terminal-cursor">_</span>
+                </div>
+                <div id="counter-status-line-2" class="hidden">
+                  <span class="terminal-prompt">&gt;</span>[cache] checking
+                  in-memory cache... <span class="terminal-ok">ok</span>
+                </div>
+                <div id="counter-status-line-3" class="hidden">
+                  <span class="terminal-prompt">&gt;</span>[db] reading
+                  persistent count... <span class="terminal-ok">ok</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="font-headline text-4xl font-bold text-white mt-4 mb-2 tracking-tighter"
+            >
+              <span
+                id="visitor-counter-value"
+                class="terminal-cursor"
+                data-counter="{{ counter }}"
+                >_</span
+              >
+            </div>
+            <div
+              class="text-body-sm text-on-primary-container/40 text-xs"
+              id="visitor-counter-caption"
+            >
+              Visitor count sync in progress...
+            </div>
+          </div>
+          <!-- Capability Cluster -->
+          <div
+            class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/10"
+          >
+            <h3
+              class="font-headline font-bold text-on-surface-variant text-xs uppercase tracking-[0.2em] mb-6"
+            >
+              Core Competencies
+            </h3>
+            <div class="space-y-6">
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary"
+                  >cloud</span
+                >
                 <div>
-                    <a class="text-xl font-bold text-gray-800" href="#">Steven Rupert</a>
+                  <div
+                    class="font-headline font-bold text-on-surface leading-none mb-1"
+                  >
+                    Cloud &amp; Platform Operations
+                  </div>
+                  <div class="text-xs text-on-surface-variant font-medium">
+                    AWS, VMware vSphere 7-8, on-prem and hybrid systems
+                  </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <a class="text-gray-800 hover:text-gray-600" href="#summary">Summary</a>
-                    <a class="text-gray-800 hover:text-gray-600" href="#experience">Experience</a>
-                    <a class="text-gray-800 hover:text-gray-600" href="#skills">Skills</a>
-                    <a class="text-gray-800 hover:text-gray-600" href="#education">Education</a>
-                    <a class="text-gray-800 hover:text-gray-600" href="/page/project">Project Writeup</a>
+              </div>
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary"
+                  >code_blocks</span
+                >
+                <div>
+                  <div
+                    class="font-headline font-bold text-on-surface leading-none mb-1"
+                  >
+                    Infrastructure as Code
+                  </div>
+                  <div class="text-xs text-on-surface-variant font-medium">
+                    Terraform, Ansible, Packer
+                  </div>
                 </div>
+              </div>
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary"
+                  >sync_alt</span
+                >
+                <div>
+                  <div
+                    class="font-headline font-bold text-on-surface leading-none mb-1"
+                  >
+                    CI/CD &amp; Delivery
+                  </div>
+                  <div class="text-xs text-on-surface-variant font-medium">
+                    Jenkins pipelines, Git review workflows, release automation
+                  </div>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <span class="material-symbols-outlined text-primary"
+                  >monitoring</span
+                >
+                <div>
+                  <div
+                    class="font-headline font-bold text-on-surface leading-none mb-1"
+                  >
+                    Observability
+                  </div>
+                  <div class="text-xs text-on-surface-variant font-medium">
+                    Datadog metrics, logs, alerting, and on-call operations
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </nav>
-
-    <header class="bg-gray-200 pt-10 pb-4">
-        <div class="container mx-auto text-center">
-            <h1 class="text-4xl font-bold">Steven Rupert</h1>
-            <p class="text-lg">Cloud / Infrastructure / DevOps Engineer</p>
-            <div class="mt-6 flex flex-col items-center">
-                <div class="space-y-2 mb-6">
-                    <p class="text-blue-600 font-semibold"><b>You are visitor number: {{ counter }}</b></p>
-                    <p class="text-gray-700 font-semibold">Curious? <a class="text-blue-600 font-semibold underline hover:text-blue-700" href="/page/project">How this resume is built</a></p>
-                </div>
-                <div class="flex justify-center space-x-3">
-                    <a class="inline-flex items-center rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-blue-800" href="https://www.linkedin.com/in/steven-rupert-a34405197" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" title="LinkedIn">
-                        <svg class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19ZM8.34 10.67H5.67V18H8.34V10.67ZM7 6.5A1.5 1.5 0 1 0 7 9.5A1.5 1.5 0 1 0 7 6.5ZM18.34 13.83C18.34 11.43 17.06 10.33 15.36 10.33C13.98 10.33 13.36 11.09 13 11.63V10.67H10.34V18H13V13.93C13 12.86 13.2 11.83 14.53 11.83C15.84 11.83 15.86 13.06 15.86 14V18H18.34V13.83Z"/></svg>
-                    </a>
-                    <a class="inline-flex items-center rounded-md bg-gray-800 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-gray-900" href="https://github.com/sbrupert" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" title="GitHub">
-                        <svg class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A12 12 0 0 0 8.2 23.9C8.8 24 9 23.6 9 23.3V21.2C5.7 21.9 5 19.8 5 19.8C4.5 18.5 3.8 18.1 3.8 18.1C2.7 17.4 3.9 17.4 3.9 17.4C5.1 17.5 5.7 18.6 5.7 18.6C6.8 20.4 8.5 19.9 9.1 19.6C9.2 18.8 9.5 18.3 9.8 18C7.1 17.7 4.3 16.6 4.3 11.9C4.3 10.5 4.8 9.4 5.6 8.5C5.5 8.2 5.1 7 5.7 5.4C5.7 5.4 6.7 5.1 9 6.7A12.4 12.4 0 0 1 15 6.7C17.3 5.1 18.3 5.4 18.3 5.4C18.9 7 18.5 8.2 18.4 8.5C19.2 9.4 19.7 10.5 19.7 11.9C19.7 16.6 16.9 17.7 14.2 18C14.6 18.4 15 19.1 15 20.2V23.3C15 23.6 15.2 24 15.8 23.9A12 12 0 0 0 12 .5Z"/></svg>
-                    </a>
-                </div>
-            </div>
+      </section>
+      <!-- Engineering Philosophy -->
+      <section class="mb-16 md:mb-24 lg:mb-32">
+        <div class="flex flex-col md:flex-row gap-3 md:gap-12 items-start md:items-baseline mb-8 md:mb-16">
+          <h2
+            class="font-headline text-3xl md:text-4xl font-bold tracking-tighter text-on-surface"
+          >
+            Philosophy
+          </h2>
+          <div class="hidden md:block h-[1px] flex-grow bg-outline-variant/30"></div>
+          <span
+            class="text-label text-[9px] md:text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
+            >01_PRINCIPLES</span
+          >
         </div>
-    </header>
-
-    <main class="container mx-auto px-6 py-12">
-        <section id="summary" class="mb-12">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-4">Summary</h2>
-                <p class="mb-4">Cloud and Infrastructure Engineer with 5+ years of experience operating and automating production systems across AWS and on-prem environments. Strong background in infrastructure as code, CI/CD automation, configuration management, and on-call operations. Seeking a DevOps, SRE, or Platform Engineering role focused on automation, reliability, and scalable infrastructure.</p>
-                <h3 class="text-xl font-semibold mb-2">Technologies</h3>
-                <ul class="list-disc list-inside">
-                    <li>AWS (EC2, VPC, IAM, RDS, S3, Route53)</li>
-                    <li>VMware vSphere 7–8, vCenter</li>
-                    <li>Terraform</li>
-                    <li>Ansible</li>
-                    <li>Packer</li>
-                    <li>Jenkins (CI/CD)</li>
-                    <li>Containers</li>
-                    <li>Kubernetes</li>
-                    <li>Datadog (metrics, logs, alerting)</li>
-                    <li>Linux (Ubuntu, RHEL)</li>
-                    <li>Python, Bash</li>
-                </ul>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+          <div
+            class="p-6 md:p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-lg transition-all"
+          >
+            <span class="material-symbols-outlined text-primary mb-4 md:mb-6 text-2xl md:text-3xl"
+              >precision_manufacturing</span
+            >
+            <h3 class="font-headline text-xl font-bold mb-3 md:mb-4">
+              Automation First
+            </h3>
+            <p class="text-sm text-on-surface-variant leading-relaxed">
+              If it happens twice, automate it. Infrastructure should be
+              predictable, versioned, and reproducible.
+            </p>
+          </div>
+          <div
+            class="p-6 md:p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-lg transition-all"
+          >
+            <span class="material-symbols-outlined text-primary mb-4 md:mb-6 text-2xl md:text-3xl"
+              >security</span
+            >
+            <h3 class="font-headline text-xl font-bold mb-3 md:mb-4">
+              Reliability Focused
+            </h3>
+            <p class="text-sm text-on-surface-variant leading-relaxed">
+              Production operations are part of engineering. Monitoring quality
+              and actionable alerting matter as much as deployment speed.
+            </p>
+          </div>
+          <div
+            class="p-6 md:p-8 bg-surface-container-lowest rounded-xl border border-outline-variant/10 hover:shadow-lg transition-all"
+          >
+            <span class="material-symbols-outlined text-primary mb-4 md:mb-6 text-2xl md:text-3xl"
+              >vpn_lock</span
+            >
+            <h3 class="font-headline text-xl font-bold mb-3 md:mb-4">
+              Security by Baseline
+            </h3>
+            <p class="text-sm text-on-surface-variant leading-relaxed">
+              IAM, network controls, and consistent hardening are treated as
+              default platform requirements, not post-release tasks.
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- Professional Timeline -->
+      <section class="mb-16 md:mb-24 lg:mb-32" id="experience">
+        <div class="flex flex-col md:flex-row gap-3 md:gap-12 items-start md:items-baseline mb-8 md:mb-16">
+          <h2
+            class="font-headline text-3xl md:text-4xl font-bold tracking-tighter text-on-surface"
+          >
+            Experience
+          </h2>
+          <div class="hidden md:block h-[1px] flex-grow bg-outline-variant/30"></div>
+          <span
+            class="text-label text-[9px] md:text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
+            >02_ARCHITECTURE_HISTORY</span
+          >
+        </div>
+        <div class="space-y-10 md:space-y-16">
+          <!-- Job 1 -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start relative"
+          >
+            <div class="md:col-span-3">
+              <div class="sticky top-24">
+                <span
+                  class="text-label text-[10px] font-bold text-primary tracking-widest uppercase mb-2 block"
+                  >2020 — Present</span
+                >
+                <h3
+                  class="font-headline text-2xl font-bold text-on-surface leading-tight"
+                >
+                  Cloud / Infrastructure / Platform Engineer
+                </h3>
+                <p class="text-on-surface-variant font-medium mt-1">
+                  Kajeet, Inc.
+                </p>
+              </div>
             </div>
-        </section>
-
-        <section id="experience" class="mb-12">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-4">Work Experience</h2>
-                <h3 class="text-xl font-semibold mb-2">Cloud / Infrastructure / Platform Engineer</h3>
-                <p class="font-semibold">Kajeet, Inc. [2020–2026]</p>
-                <ul class="list-disc list-inside">
-                    <li>Designed, deployed, and operated production infrastructure across AWS and on-prem environments, supporting Dev, QA, Staging, and Production systems.</li>
-                    <li>Developed and maintained Ansible automation for security agents, monitoring agents, OS updates, and internal reporting; refactored legacy automation to improve maintainability and reduce configuration drift.</li>
-                    <li>Designed and deployed Ansible Automation Platform (AAP), integrating with Active Directory via LDAP and centralizing execution of automation previously run manually.</li>
-                    <li>Built a greenfield Terraform codebase for vSphere, enabling automated provisioning of ~20 production VMs across two datacenters and reducing provisioning time from days to hours.</li>
-                    <li>Maintained Terraform deployments for AWS infrastructure (EC2, VPC, IAM, RDS, S3) across multiple environments using Jenkins-driven plan/apply workflows with remote state and Git reviews.</li>
-                    <li>Served as the subject-matter expert for a multi-cluster vSphere 7–8 environment (~20 ESXi hosts, ~100 VMs), administering vCenter, performing ESXi and vCenter upgrades, and managing storage across vSAN (VxRail) and Dell PowerStore arrays.</li>
-                    <li>Executed live workload migrations during SAN decommissioning and storage transitions without production downtime.</li>
-                    <li>Built standardized Packer VM templates and Jenkins pipelines to automate template builds, ensuring patched, compliant base images for on-prem deployments.</li>
-                    <li>Developed Python tooling integrated into CI/CD pipelines, including testing for Ansible/SSM workflows and automated reporting compiled from Ansible run logs.</li>
-                    <li>Participated in a 4-person on-call rotation supporting AWS and vSphere production systems; reduced alert fatigue by tuning Datadog monitors and alert thresholds.</li>
-                    <li>Supported a production Kubernetes environment (Anthos GKE) during initial rollout and stabilization, collaborating with lead architects on cluster design and implementation.</li>
-                </ul>
+            <div
+              class="md:col-span-9 bg-surface-container-low p-6 md:p-10 rounded-2xl relative"
+            >
+              <div
+                class="absolute -left-3 top-10 w-6 h-6 bg-primary rotate-45 hidden md:block"
+              ></div>
+              <ul class="space-y-4 md:space-y-6 text-on-surface-variant">
+                <li class="flex gap-3 md:gap-4">
+                  <span class="text-primary font-headline font-bold">01</span>
+                  <p class="leading-relaxed">
+                    Designed, deployed, and operated production infrastructure
+                    across AWS and on-prem environments supporting Dev, QA,
+                    Staging, and Production systems.
+                  </p>
+                </li>
+                <li class="flex gap-3 md:gap-4">
+                  <span class="text-primary font-headline font-bold">02</span>
+                  <p class="leading-relaxed">
+                    Developed and maintained Ansible automation for security
+                    agents, monitoring agents, OS updates, internal reporting,
+                    and refactored legacy automation to reduce drift.
+                  </p>
+                </li>
+                <li class="flex gap-3 md:gap-4">
+                  <span class="text-primary font-headline font-bold">03</span>
+                  <p class="leading-relaxed">
+                    Designed and deployed Ansible Automation Platform (AAP),
+                    integrated with Active Directory via LDAP, to centralize
+                    recurring production automation.
+                  </p>
+                </li>
+                <li class="flex gap-3 md:gap-4">
+                  <span class="text-primary font-headline font-bold">04</span>
+                  <p class="leading-relaxed">
+                    Built a greenfield Terraform codebase for vSphere,
+                    automating provisioning for production workloads across two
+                    datacenters and multiple environments, and reducing delivery
+                    time from days to hours.
+                  </p>
+                </li>
+                <li class="flex gap-3 md:gap-4">
+                  <span class="text-primary font-headline font-bold">05</span>
+                  <p class="leading-relaxed">
+                    Maintained Terraform deployments for AWS infrastructure
+                    across multiple environments using Jenkins-driven plan/apply
+                    workflows, remote state, and Git review gates.
+                  </p>
+                </li>
+                <li class="flex gap-3 md:gap-4">
+                  <span class="text-primary font-headline font-bold">06</span>
+                  <p class="leading-relaxed">
+                    Served as SME for multi-cluster vSphere 7-8 operations and
+                    participated in a 4-person on-call rotation, reducing alert
+                    fatigue through Datadog monitor tuning.
+                  </p>
+                </li>
+              </ul>
+              <div class="mt-8 flex flex-wrap gap-2">
+                <span
+                  class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                  >AWS</span
+                >
+                <span
+                  class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                  >VMware vSphere</span
+                >
+                <span
+                  class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                  >Terraform</span
+                >
+                <span
+                  class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                  >Ansible</span
+                >
+                <span
+                  class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                  >Jenkins</span
+                >
+                <span
+                  class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                  >Datadog</span
+                >
+                <span
+                  class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                  >Python</span
+                >
+                <span
+                  class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                  >Kubernetes</span
+                >
+              </div>
             </div>
-        </section>
-
-        <section id="skills" class="mb-12">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-4">Skills</h2>
-                <ul class="list-disc list-inside">
-                    <li><strong>Infrastructure as Code:</strong> Terraform; remote state; plan/apply workflows; Git review-driven changes.</li>
-                    <li><strong>Automation & Configuration Management:</strong> Ansible; Ansible Automation Platform (AAP); OS patching and baseline hardening.</li>
-                    <li><strong>CI/CD & Image Pipelines:</strong> Jenkins; Packer template automation; governed execution for recurring production changes.</li>
-                    <li><strong>Cloud & Platforms:</strong> AWS (EC2, VPC, IAM, RDS, S3, Route53); on-prem & hybrid infrastructure; VMware vSphere 7–8 and vCenter.</li>
-                    <li><strong>Observability & Operations:</strong> Datadog metrics/logs/alerting; incident response; on-call operations; monitor tuning and signal quality improvements.</li>
-                    <li><strong>Containers & Kubernetes:</strong> containerized workloads; supported Kubernetes (Anthos GKE) during rollout and stabilization.</li>
-                    <li><strong>Programming & Scripting:</strong> Python (automation, reporting, tooling); Bash.</li>
-                    <li><strong>Networking & Security:</strong> VPC design; subnets, routing, security groups; IAM roles & policies; VPN, DNS, firewall fundamentals.</li>
-                </ul>
+          </div>
+        </div>
+      </section>
+      <!-- Core Capabilities Grid -->
+      <section class="mb-16 md:mb-24 lg:mb-32" id="skills">
+        <div class="flex flex-col md:flex-row gap-3 md:gap-12 items-start md:items-baseline mb-8 md:mb-16">
+          <h2
+            class="font-headline text-3xl md:text-4xl font-bold tracking-tighter text-on-surface"
+          >
+            Capability Stack
+          </h2>
+          <div class="hidden md:block h-[1px] flex-grow bg-outline-variant/30"></div>
+          <span
+            class="text-label text-[9px] md:text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
+            >03_SYSTEM_RESOURCES</span
+          >
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4">
+          <div
+            class="bg-surface-container-low p-6 rounded-lg group hover:bg-primary transition-all duration-300"
+          >
+            <span
+              class="text-label text-[10px] font-bold text-primary group-hover:text-on-primary mb-4 block"
+              >PLATFORMS</span
+            >
+            <div
+              class="space-y-2 font-headline font-bold text-on-surface group-hover:text-on-primary"
+            >
+              <div>AWS</div>
+              <div>VMware vSphere 7-8</div>
+              <div>Hybrid On-Prem/Cloud</div>
             </div>
-        </section>
-
-        <section id="education" class="mb-12">
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-4">Education</h2>
-                <p><strong>University of Maryland Global Campus - B.S. | Computer Networks & Cybersecurity</strong></p>
-                <p>2020</p>
-                <p><strong>College of Southern Maryland - A.A.S. | Information Services Technology</strong></p>
-                <p>2018</p>
+          </div>
+          <div
+            class="bg-surface-container-low p-6 rounded-lg group hover:bg-primary transition-all duration-300"
+          >
+            <span
+              class="text-label text-[10px] font-bold text-primary group-hover:text-on-primary mb-4 block"
+              >PROVISIONING</span
+            >
+            <div
+              class="space-y-2 font-headline font-bold text-on-surface group-hover:text-on-primary"
+            >
+              <div>Terraform</div>
+              <div>Ansible</div>
+              <div>Packer</div>
             </div>
-        </section>
+          </div>
+          <div
+            class="bg-surface-container-low p-6 rounded-lg group hover:bg-primary transition-all duration-300"
+          >
+            <span
+              class="text-label text-[10px] font-bold text-primary group-hover:text-on-primary mb-4 block"
+              >RUNTIME</span
+            >
+            <div
+              class="space-y-2 font-headline font-bold text-on-surface group-hover:text-on-primary"
+            >
+              <div>Linux (Ubuntu, RHEL)</div>
+              <div>Containers</div>
+              <div>Kubernetes</div>
+            </div>
+          </div>
+          <div
+            class="bg-surface-container-low p-6 rounded-lg group hover:bg-primary transition-all duration-300"
+          >
+            <span
+              class="text-label text-[10px] font-bold text-primary group-hover:text-on-primary mb-4 block"
+              >TOOLING</span
+            >
+            <div
+              class="space-y-2 font-headline font-bold text-on-surface group-hover:text-on-primary"
+            >
+              <div>Jenkins</div>
+              <div>Datadog</div>
+              <div>Python / Bash</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Academic Base -->
+      <section
+        class="mb-16 md:mb-24 lg:mb-32 education-panel-static p-6 md:p-12 rounded-2xl md:rounded-3xl overflow-hidden relative"
+        id="education"
+      >
+        <div class="absolute top-0 right-0 p-8 md:p-12 opacity-5 hidden md:block">
+          <span class="material-symbols-outlined text-[12rem]">school</span>
+        </div>
+        <div class="relative z-10">
+          <div
+            class="education-kicker text-label text-[10px] font-bold uppercase tracking-widest mb-4 md:mb-6"
+          >
+            Foundational Logic
+          </div>
+          <div
+            class="flex flex-col md:flex-row gap-6 md:gap-12 justify-between items-start"
+          >
+            <div class="max-w-xl">
+              <h2
+                class="font-headline text-3xl md:text-4xl font-bold tracking-tighter mb-4 text-white"
+              >
+                Education
+              </h2>
+              <p class="education-copy leading-relaxed">
+                Formal training in networking and cybersecurity, backed by
+                hands-on infrastructure operations and automation experience.
+              </p>
+            </div>
+            <div class="space-y-3 md:space-y-4">
+              <div class="flex items-center gap-4">
+                <span class="w-2 h-2 rounded-full bg-primary"></span>
+                <span class="education-degree font-headline font-bold"
+                  >B.S. Computer Networks &amp; Cybersecurity, University of
+                  Maryland Global Campus (2020)</span
+                >
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="w-2 h-2 rounded-full bg-primary"></span>
+                <span class="education-degree font-headline font-bold"
+                  >A.A.S. Information Services Technology, College of Southern
+                  Maryland (2018)</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
+    {% include "partials/footer.html" %}
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const counterEl = document.getElementById("visitor-counter-value");
+        if (!counterEl) return;
 
-    <footer class="bg-white shadow text-center py-6">
-        <div class="container mx-auto">
-            <p class="text-gray-600">© 2026 Steven Rupert</p>
-            <p class="text-gray-600 font-semibold">Site Version: <a class="text-blue-600" href="https://github.com/sbrupert/cloud-resume">{{ site_version }}</a></p>
-        </div>
-    </footer>
+        const rawTarget = counterEl.dataset.counter || "0";
+        const target = Number.parseInt(rawTarget, 10);
+        const captionEl = document.getElementById("visitor-counter-caption");
+        const line2 = document.getElementById("counter-status-line-2");
+        const line3 = document.getElementById("counter-status-line-3");
+        const preRevealDelay = 1200;
+        const fallbackDelay = 10000;
+        let counterSettled = false;
 
-    <!-- Tailwind CSS JavaScript (Optional) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.0/alpine.min.js"></script>
-</body>
+        const settleCounter = () => {
+          counterSettled = true;
+          window.clearTimeout(fallbackTimer);
+        };
+
+        const showUnavailableFallback = () => {
+          if (counterSettled) return;
+          counterSettled = true;
+          counterEl.classList.remove("terminal-cursor");
+          counterEl.textContent = "Unavailable 🥲";
+          if (captionEl) captionEl.textContent = "Visitor counter unavailable.";
+        };
+
+        const fallbackTimer = window.setTimeout(
+          showUnavailableFallback,
+          fallbackDelay,
+        );
+
+        const revealLine = (el, delay) => {
+          window.setTimeout(() => {
+            if (!el) return;
+            el.classList.remove("hidden");
+            el.classList.add("terminal-line-enter");
+          }, delay);
+        };
+
+        revealLine(line2, 320);
+        revealLine(line3, 700);
+
+        if (!Number.isFinite(target)) {
+          return;
+        }
+
+        window.setTimeout(() => {
+          if (counterSettled) return;
+          counterEl.classList.remove("terminal-cursor");
+          if (captionEl) {
+            captionEl.textContent = `You are visitor number ${target.toLocaleString()}`;
+          }
+          const duration = 900;
+          const startTime = performance.now();
+
+          const animate = (now) => {
+            if (counterSettled) return;
+            const progress = Math.min((now - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            let value = Math.floor(target * eased);
+            if (target > 0 && value < 1) value = 1;
+            counterEl.textContent = value.toLocaleString();
+
+            if (progress < 1) {
+              window.requestAnimationFrame(animate);
+              return;
+            }
+
+            counterEl.textContent = target.toLocaleString();
+            settleCounter();
+          };
+
+          window.requestAnimationFrame(animate);
+        }, preRevealDelay);
+      });
+    </script>
+  </body>
 </html>

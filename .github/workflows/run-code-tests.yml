@@ -21,8 +21,20 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: cloud_resume/package-lock.json
+
       - name: Install development dependencies
         run: pip install -r cloud_resume/requirements-dev.txt
+
+      - name: Build frontend assets
+        working-directory: cloud_resume
+        run: |
+          npm ci
+          npm run build:assets
       
       - name: Run tests and output coverage file
         run: |
