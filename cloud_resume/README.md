@@ -23,7 +23,7 @@ Recommended follow-up options for automated viewport/layout coverage:
 - `LOGLEVEL`: Sets the logging level. Default is `INFO`. Can be set to `DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`.
 - `FIRESTORE_EMULATOR_HOST`: If set, the application connects to the Firestore emulator instead of the production Firestore.
 - `SITE_VERSION`: Optional version tag displayed in shared site chrome. Default is `Development`.
-- `GUNICORN_THREADS`: Optional Gunicorn runtime override. Default is `2`.
+- `GUNICORN_THREADS`: Optional Gunicorn runtime override. Default is `1`.
 - `GUNICORN_TIMEOUT`: Optional Gunicorn request timeout override (seconds). Default is `60`.
 
 Gunicorn uses defaults from `cloud_resume/gunicorn.conf.py`. Only `GUNICORN_THREADS` and `GUNICORN_TIMEOUT` are intentionally exposed as runtime tunables. Other worker settings are fixed.
