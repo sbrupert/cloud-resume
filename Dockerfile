@@ -1,3 +1,13 @@
+FROM node:22-alpine AS frontend-builder
+
+WORKDIR /app/cloud_resume
+
+COPY ./cloud_resume/package.json ./cloud_resume/package-lock.json ./cloud_resume/tailwind.config.js ./
+COPY ./cloud_resume/assets ./assets
+COPY ./cloud_resume/cloud_resume ./cloud_resume
+
+RUN npm ci && npm run build:assets
+
 FROM ubuntu:24.04
 
 WORKDIR /app
@@ -14,6 +24,8 @@ COPY ./cloud_resume/requirements.txt /app/
 RUN python -m pip install --no-cache-dir -r /app/requirements.txt
 
 COPY ./cloud_resume/cloud_resume /app/cloud_resume
+COPY --from=frontend-builder /app/cloud_resume/cloud_resume/static/css /app/cloud_resume/static/css
+COPY --from=frontend-builder /app/cloud_resume/cloud_resume/static/fonts /app/cloud_resume/static/fonts
 COPY ./cloud_resume/gunicorn.conf.py /app
 
 EXPOSE 8080

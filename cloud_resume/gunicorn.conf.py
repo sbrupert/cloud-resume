@@ -8,6 +8,15 @@ errorlog = None
 # Configure logging level from environment or default to INFO
 LOGLEVEL = os.environ.get('LOGLEVEL', 'INFO').upper()
 
+# Gunicorn worker/runtime tuning
+# Keep only the most useful incident-response knobs tunable in production.
+worker_class = "gthread"
+workers = 1
+threads = int(os.environ.get("GUNICORN_THREADS", "1"))
+timeout = int(os.environ.get("GUNICORN_TIMEOUT", "60"))
+graceful_timeout = 30
+keepalive = 5
+
 # Configure JSON formatter
 formatter = jsonlogger.JsonFormatter(
     fmt="%(asctime)s %(name)s %(levelname)s %(message)s",

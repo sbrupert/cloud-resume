@@ -1,0 +1,507 @@
+<script>
+  (() => {
+    const THEME_KEY = "theme-preference";
+    const VALID_THEMES = new Set(["system", "light", "dark"]);
+
+    const normalizeTheme = (value) => (VALID_THEMES.has(value) ? value : "system");
+
+    let savedTheme = "system";
+    try {
+      savedTheme = normalizeTheme(window.localStorage.getItem(THEME_KEY));
+    } catch (error) {
+      savedTheme = "system";
+    }
+
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const resolvedTheme =
+      savedTheme === "system" ? (prefersDark ? "dark" : "light") : savedTheme;
+
+    document.documentElement.classList.toggle("dark", resolvedTheme === "dark");
+    document.documentElement.dataset.themePreference = savedTheme;
+    document.documentElement.dataset.theme = resolvedTheme;
+  })();
+</script>
+
+<nav
+  class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-md border-b border-outline-variant/35 shadow-sm"
+>
+  <div
+    class="flex justify-between items-center px-4 sm:px-6 md:px-8 h-14 md:h-16 max-w-7xl mx-auto gap-3"
+  >
+    <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+      <div class="font-['Inter'] text-lg sm:text-xl font-bold tracking-tighter text-on-surface truncate">
+        <a class="hover:text-primary transition-colors" href="/">Steven Rupert</a>
+      </div>
+      <span
+        class="inline-flex items-center rounded-[999px] border border-outline-variant/60 bg-primary-fixed px-2 py-0.5 sm:px-2.5 sm:py-1 font-['Inter'] text-[10px] sm:text-xs font-bold uppercase tracking-[0.12em] sm:tracking-[0.16em] leading-none text-on-primary-fixed-variant"
+      >
+        {{ site_version }}
+      </span>
+    </div>
+
+    <div class="hidden md:flex items-center gap-8">
+      <a
+        class="font-['Inter'] text-sm font-medium tracking-tight {% if active_nav == 'resume' %}text-primary border-b-2 border-primary pb-1{% else %}text-on-surface-variant hover:text-primary transition-colors{% endif %}"
+        href="/"
+      >
+        Resume
+      </a>
+      <a
+        class="font-['Inter'] text-sm font-medium tracking-tight {% if active_nav == 'project_overview' %}text-primary border-b-2 border-primary pb-1{% else %}text-on-surface-variant hover:text-primary transition-colors{% endif %}"
+        href="/project_overview"
+      >
+        Project Overview
+      </a>
+    </div>
+
+    <div class="hidden md:flex items-center gap-2">
+      <div class="relative" data-theme-menu-root>
+        <button
+          id="theme-menu-toggle-desktop"
+          type="button"
+          class="inline-flex items-center justify-center rounded-[4px] border border-outline-variant/60 bg-surface-container-low p-2 text-primary hover:bg-surface-container transition-colors"
+          aria-expanded="false"
+          aria-controls="theme-menu-desktop"
+          aria-haspopup="menu"
+          aria-label="Change theme"
+          data-theme-menu-toggle
+        >
+          <span class="material-symbols-outlined text-[20px]" data-theme-current-icon
+            >brightness_auto</span
+          >
+          <span class="sr-only" data-theme-current-label>Theme: System</span>
+        </button>
+
+        <div
+          id="theme-menu-desktop"
+          class="hidden absolute right-0 mt-2 w-44 rounded-lg border border-outline-variant/50 bg-surface-container-lowest shadow-lg p-1"
+          role="menu"
+          aria-label="Theme selection"
+          data-theme-menu
+        >
+          <button
+            type="button"
+            role="menuitemradio"
+            aria-checked="false"
+            data-theme-option="system"
+            class="w-full flex items-center justify-between rounded-md px-3 py-2 text-left text-sm font-['Inter'] text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+          >
+            <span>System</span>
+            <span class="material-symbols-outlined text-[18px] text-primary opacity-0" data-theme-check
+              >check</span
+            >
+          </button>
+          <button
+            type="button"
+            role="menuitemradio"
+            aria-checked="false"
+            data-theme-option="light"
+            class="w-full flex items-center justify-between rounded-md px-3 py-2 text-left text-sm font-['Inter'] text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+          >
+            <span>Light</span>
+            <span class="material-symbols-outlined text-[18px] text-primary opacity-0" data-theme-check
+              >check</span
+            >
+          </button>
+          <button
+            type="button"
+            role="menuitemradio"
+            aria-checked="false"
+            data-theme-option="dark"
+            class="w-full flex items-center justify-between rounded-md px-3 py-2 text-left text-sm font-['Inter'] text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+          >
+            <span>Dark</span>
+            <span class="material-symbols-outlined text-[18px] text-primary opacity-0" data-theme-check
+              >check</span
+            >
+          </button>
+        </div>
+      </div>
+
+      <a
+        class="inline-flex bg-primary text-on-primary px-4 py-2 text-sm font-['Inter'] font-semibold rounded-[4px] hover:opacity-85 transition-opacity active:scale-95"
+        href="https://github.com/sbrupert/cloud-resume"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View GitHub Repo
+      </a>
+    </div>
+
+    <div class="md:hidden flex items-center gap-2">
+      <div class="relative" data-theme-menu-root>
+        <button
+          id="theme-menu-toggle-mobile"
+          type="button"
+          class="inline-flex items-center justify-center rounded-[4px] border border-outline-variant/60 bg-surface-container-low p-2 text-primary hover:bg-surface-container transition-colors"
+          aria-expanded="false"
+          aria-controls="theme-menu-mobile"
+          aria-haspopup="menu"
+          aria-label="Change theme"
+          data-theme-menu-toggle
+        >
+          <span class="material-symbols-outlined text-[20px]" data-theme-current-icon
+            >brightness_auto</span
+          >
+          <span class="sr-only" data-theme-current-label>Theme: System</span>
+        </button>
+
+        <div
+          id="theme-menu-mobile"
+          class="hidden absolute right-0 mt-2 w-44 rounded-lg border border-outline-variant/50 bg-surface-container-lowest shadow-lg p-1"
+          role="menu"
+          aria-label="Theme selection"
+          data-theme-menu
+        >
+          <button
+            type="button"
+            role="menuitemradio"
+            aria-checked="false"
+            data-theme-option="system"
+            class="w-full flex items-center justify-between rounded-md px-3 py-2 text-left text-sm font-['Inter'] text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+          >
+            <span>System</span>
+            <span class="material-symbols-outlined text-[18px] text-primary opacity-0" data-theme-check
+              >check</span
+            >
+          </button>
+          <button
+            type="button"
+            role="menuitemradio"
+            aria-checked="false"
+            data-theme-option="light"
+            class="w-full flex items-center justify-between rounded-md px-3 py-2 text-left text-sm font-['Inter'] text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+          >
+            <span>Light</span>
+            <span class="material-symbols-outlined text-[18px] text-primary opacity-0" data-theme-check
+              >check</span
+            >
+          </button>
+          <button
+            type="button"
+            role="menuitemradio"
+            aria-checked="false"
+            data-theme-option="dark"
+            class="w-full flex items-center justify-between rounded-md px-3 py-2 text-left text-sm font-['Inter'] text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+          >
+            <span>Dark</span>
+            <span class="material-symbols-outlined text-[18px] text-primary opacity-0" data-theme-check
+              >check</span
+            >
+          </button>
+        </div>
+      </div>
+
+      <button
+        id="mobile-nav-toggle"
+        type="button"
+        class="inline-flex items-center justify-center rounded-[4px] border border-outline-variant/60 bg-surface-container-low p-2 text-primary hover:bg-surface-container transition-colors"
+        aria-expanded="false"
+        aria-controls="mobile-nav-menu"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="material-symbols-outlined text-[20px]" data-mobile-nav-icon>menu</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav-menu" class="md:hidden hidden border-t border-outline-variant/35">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-2">
+      <a
+        data-mobile-nav-link
+        class="rounded-md px-3 py-2 font-['Inter'] text-sm font-semibold tracking-tight {% if active_nav == 'resume' %}bg-primary-fixed text-on-primary-fixed-variant{% else %}text-on-surface-variant hover:bg-surface-container-low hover:text-primary{% endif %}"
+        href="/"
+      >
+        Resume
+      </a>
+      <a
+        data-mobile-nav-link
+        class="rounded-md px-3 py-2 font-['Inter'] text-sm font-semibold tracking-tight {% if active_nav == 'project_overview' %}bg-primary-fixed text-on-primary-fixed-variant{% else %}text-on-surface-variant hover:bg-surface-container-low hover:text-primary{% endif %}"
+        href="/project_overview"
+      >
+        Project Overview
+      </a>
+      <a
+        data-mobile-nav-link
+        class="mt-2 inline-flex items-center justify-center bg-primary text-on-primary px-4 py-2 text-sm font-['Inter'] font-semibold rounded-[4px] hover:opacity-85 transition-opacity active:scale-95"
+        href="https://github.com/sbrupert/cloud-resume"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View GitHub Repo
+      </a>
+    </div>
+  </div>
+</nav>
+
+<style>
+  [data-theme-option][data-selected="true"] {
+    background-color: rgb(var(--color-surface-container-high));
+    color: rgb(var(--color-on-surface));
+  }
+</style>
+
+<script>
+  (() => {
+    const THEME_KEY = "theme-preference";
+    const VALID_THEMES = new Set(["system", "light", "dark"]);
+    const THEME_META = {
+      system: { icon: "brightness_auto", label: "Theme: System" },
+      light: { icon: "light_mode", label: "Theme: Light" },
+      dark: { icon: "dark_mode", label: "Theme: Dark" },
+    };
+
+    const normalizeTheme = (value) => (VALID_THEMES.has(value) ? value : "system");
+
+    const root = document.documentElement;
+    const systemThemeMedia = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const readStoredTheme = () => {
+      try {
+        return normalizeTheme(window.localStorage.getItem(THEME_KEY));
+      } catch (error) {
+        return "system";
+      }
+    };
+
+    const writeStoredTheme = (theme) => {
+      try {
+        window.localStorage.setItem(THEME_KEY, normalizeTheme(theme));
+      } catch (error) {
+        // localStorage may be blocked; ignore and keep runtime-only preference.
+      }
+    };
+
+    const resolveTheme = (themePreference) => {
+      if (themePreference === "system") {
+        return systemThemeMedia.matches ? "dark" : "light";
+      }
+      return themePreference;
+    };
+
+    const applyTheme = (themePreference) => {
+      const resolvedTheme = resolveTheme(themePreference);
+      root.classList.toggle("dark", resolvedTheme === "dark");
+      root.dataset.theme = resolvedTheme;
+      root.dataset.themePreference = themePreference;
+    };
+
+    const mobileToggleButton = document.getElementById("mobile-nav-toggle");
+    const mobileMenu = document.getElementById("mobile-nav-menu");
+    const mobileMenuIcon = mobileToggleButton?.querySelector("[data-mobile-nav-icon]");
+    const mobileMenuLinks = mobileMenu?.querySelectorAll("[data-mobile-nav-link]") ?? [];
+    const desktopNavMedia = window.matchMedia("(min-width: 768px)");
+
+    const themeToggleButtons = Array.from(document.querySelectorAll("[data-theme-menu-toggle]"));
+    const themeMenus = Array.from(document.querySelectorAll("[data-theme-menu]"));
+    const themeOptions = Array.from(document.querySelectorAll("[data-theme-option]"));
+    const themeIcons = Array.from(document.querySelectorAll("[data-theme-current-icon]"));
+    const themeLabels = Array.from(document.querySelectorAll("[data-theme-current-label]"));
+
+    let themePreference = normalizeTheme(root.dataset.themePreference || readStoredTheme());
+
+    const setMobileMenuState = (isOpen) => {
+      if (!mobileToggleButton || !mobileMenu) {
+        return;
+      }
+      mobileToggleButton.setAttribute("aria-expanded", String(isOpen));
+      mobileMenu.classList.toggle("hidden", !isOpen);
+      if (mobileMenuIcon) {
+        mobileMenuIcon.textContent = isOpen ? "close" : "menu";
+      }
+    };
+
+    const closeThemeMenus = () => {
+      themeToggleButtons.forEach((button) => button.setAttribute("aria-expanded", "false"));
+      themeMenus.forEach((menu) => menu.classList.add("hidden"));
+    };
+
+    const syncThemeMenuState = () => {
+      const meta = THEME_META[themePreference] || THEME_META.system;
+
+      themeIcons.forEach((icon) => {
+        icon.textContent = meta.icon;
+      });
+
+      themeLabels.forEach((label) => {
+        label.textContent = meta.label;
+      });
+
+      themeOptions.forEach((option) => {
+        const optionTheme = normalizeTheme(option.dataset.themeOption);
+        const isSelected = optionTheme === themePreference;
+        option.setAttribute("aria-checked", String(isSelected));
+        option.dataset.selected = String(isSelected);
+        option.querySelector("[data-theme-check]")?.classList.toggle("opacity-0", !isSelected);
+      });
+    };
+
+    const setThemePreference = (nextTheme) => {
+      themePreference = normalizeTheme(nextTheme);
+      writeStoredTheme(themePreference);
+      applyTheme(themePreference);
+      syncThemeMenuState();
+      closeThemeMenus();
+    };
+
+    const focusFirstMenuOption = (menu) => {
+      const selectedOption = menu.querySelector('[data-theme-option][aria-checked="true"]');
+      const firstOption = menu.querySelector("[data-theme-option]");
+      (selectedOption || firstOption)?.focus();
+    };
+
+    const toggleThemeMenu = (button, menu) => {
+      const isOpen = button.getAttribute("aria-expanded") === "true";
+      closeThemeMenus();
+      if (!isOpen) {
+        button.setAttribute("aria-expanded", "true");
+        menu.classList.remove("hidden");
+        focusFirstMenuOption(menu);
+      }
+    };
+
+    const handleThemeMenuKeyboard = (event, menu, button) => {
+      const options = Array.from(menu.querySelectorAll("[data-theme-option]"));
+      if (!options.length) {
+        return;
+      }
+
+      const currentIndex = options.indexOf(document.activeElement);
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeThemeMenus();
+        button.focus();
+        return;
+      }
+
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        const direction = event.key === "ArrowDown" ? 1 : -1;
+        const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+        const nextIndex = (safeIndex + direction + options.length) % options.length;
+        options[nextIndex].focus();
+        return;
+      }
+
+      if (event.key === "Home") {
+        event.preventDefault();
+        options[0].focus();
+        return;
+      }
+
+      if (event.key === "End") {
+        event.preventDefault();
+        options[options.length - 1].focus();
+      }
+    };
+
+    themeToggleButtons.forEach((button) => {
+      const targetMenuId = button.getAttribute("aria-controls");
+      const targetMenu = targetMenuId ? document.getElementById(targetMenuId) : null;
+
+      if (!targetMenu) {
+        return;
+      }
+
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        toggleThemeMenu(button, targetMenu);
+      });
+
+      button.addEventListener("keydown", (event) => {
+        if (!["Enter", " ", "ArrowDown"].includes(event.key)) {
+          return;
+        }
+        event.preventDefault();
+        if (button.getAttribute("aria-expanded") !== "true") {
+          toggleThemeMenu(button, targetMenu);
+        } else {
+          focusFirstMenuOption(targetMenu);
+        }
+      });
+
+      targetMenu.addEventListener("click", (event) => {
+        event.stopPropagation();
+      });
+
+      targetMenu.addEventListener("keydown", (event) => {
+        handleThemeMenuKeyboard(event, targetMenu, button);
+      });
+    });
+
+    themeOptions.forEach((option) => {
+      option.addEventListener("click", () => {
+        setThemePreference(option.dataset.themeOption || "system");
+      });
+    });
+
+    if (mobileToggleButton && mobileMenu) {
+      mobileToggleButton.addEventListener("click", () => {
+        const isOpen = mobileToggleButton.getAttribute("aria-expanded") === "true";
+        setMobileMenuState(!isOpen);
+      });
+
+      mobileMenuLinks.forEach((link) => {
+        link.addEventListener("click", () => setMobileMenuState(false));
+      });
+
+      const syncDesktopState = (event) => {
+        if (!event.matches) {
+          return;
+        }
+        setMobileMenuState(false);
+      };
+
+      if (typeof desktopNavMedia.addEventListener === "function") {
+        desktopNavMedia.addEventListener("change", syncDesktopState);
+      } else {
+        desktopNavMedia.addListener(syncDesktopState);
+      }
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+      closeThemeMenus();
+      setMobileMenuState(false);
+    });
+
+    document.addEventListener("click", (event) => {
+      const clickedInsideThemeControl =
+        event.target.closest("[data-theme-menu-root]") !== null;
+
+      if (!clickedInsideThemeControl) {
+        closeThemeMenus();
+      }
+
+      if (!mobileMenu || mobileMenu.classList.contains("hidden")) {
+        return;
+      }
+      if (mobileToggleButton?.contains(event.target) || mobileMenu.contains(event.target)) {
+        return;
+      }
+      setMobileMenuState(false);
+    });
+
+    const handleSystemThemeChange = () => {
+      if (themePreference !== "system") {
+        return;
+      }
+      applyTheme("system");
+      syncThemeMenuState();
+    };
+
+    if (typeof systemThemeMedia.addEventListener === "function") {
+      systemThemeMedia.addEventListener("change", handleSystemThemeChange);
+    } else {
+      systemThemeMedia.addListener(handleSystemThemeChange);
+    }
+
+    applyTheme(themePreference);
+    syncThemeMenuState();
+    closeThemeMenus();
+    setMobileMenuState(false);
+  })();
+</script>
