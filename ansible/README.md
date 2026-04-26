@@ -1,24 +1,24 @@
 # Cloud Resume - Ansible
 
-<img class="rounded mx-auto d-block" src="https://cdn.icon-icons.com/icons2/2699/PNG/512/ansible_logo_icon_169596.png" alt="terraform logo" width="400" /> 
+<img class="rounded mx-auto d-block" src="https://cdn.icon-icons.com/icons2/2699/PNG/512/ansible_logo_icon_169596.png" alt="ansible logo" width="400" />
 
-Welcome to the Ansible part of the project! This directory contains all the Ansible code needed to configure and manage the infrastructure for our cloud-resume app.
+This directory contains the Ansible code used to configure and operate the cloud-resume webserver. Terraform provisions the infrastructure, while Ansible prepares the host, installs required services, and deploys the application container.
 
 ## Playbooks
 
-[`install_updates.yaml`](/ansible/install_updates.yaml) - Updates all packages and reboots the server when needed. Runs periodically using Github Actions.
+[`install_updates.yaml`](/ansible/install_updates.yaml) - Updates packages and reboots the server when needed. Runs periodically using GitHub Actions.
 
-[`playbook.yaml`](/ansible/playbook.yaml) - The main playbook for configuring the webserver. See the next section for an overview of the playbooks contents.
+[`playbook.yaml`](/ansible/playbook.yaml) - Main playbook for configuring the webserver and deploying the application container. See the sections below for an overview of the playbook's responsibilities.
 
 ## Inventory
 
-We are using the [GCP Compute dynamic inventory plugin](https://docs.ansible.com/ansible/latest/collections/google/cloud/gcp_compute_inventory.html) to discover the GCP instances used in our project.
+This project uses the [GCP Compute dynamic inventory plugin](https://docs.ansible.com/ansible/latest/collections/google/cloud/gcp_compute_inventory.html) to discover the GCP instances used by the site.
 
-While a dynamic inventory may not provide much benefit with a single host, it's scalable for future growth, and allows us to not have to define the connection details statically.
+Dynamic inventory is more than this single-host deployment strictly requires, but it avoids hardcoding connection details and keeps the deployment pattern scalable.
 
 ## Webserver Configuration
 
-The ansible playbook used to setup our webserver host configures the following items:
+The Ansible playbook used to set up the webserver configures the following items:
 
 1. [Fail2Ban](#fail2ban)
 2. [Docker](#docker)
@@ -27,15 +27,15 @@ The ansible playbook used to setup our webserver host configures the following i
 
 ### Fail2Ban
 
-To protect against brute force attacks on our GCP instance's SSH access, we use Fail2Ban. It monitors authentication attempts and bans IPs with excessive failed logins.
+Fail2Ban helps protect SSH access on the GCP instance. It monitors authentication attempts and bans IPs with excessive failed logins.
 
-With the limited resources of our GCP instance, banning attackers could also significantly increase performance during brute force attacks.
+On a small instance, reducing repeated failed login traffic also helps preserve host resources during brute force attempts.
 
 ### Docker
 
-Docker is used to run our application as a container. Containers allow us to bundle our application and it's dependencies together. This simplifies the deployment of our app since we don't have to worry about potential conflicts with other software running on the server.
+Docker runs the application as a container. The container packages the application and its dependencies together, which keeps deployment consistent and limits conflicts with other host software.
 
-The Docker ansible role [in this repo](/ansible/roles/docker) handles installing Docker onto our host. Once installed, our main [playbook](/ansible/playbook.yaml#L61) will launch our application's container:
+The Docker Ansible role [in this repo](/ansible/roles/docker) installs Docker on the host. Once Docker is installed, the main [playbook](/ansible/playbook.yaml#L61) launches the application container:
 
 ```yaml
 - name: Start container
@@ -43,9 +43,15 @@ The Docker ansible role [in this repo](/ansible/roles/docker) handles installing
     name: cloud-resume
     image: "{{ webserver_image }}"
     state: started
+    recreate: true
     restart_policy: "always"
     pull: "always"
     published_ports: "8080:{{ webserver_port }}"
+    etc_hosts:
+        host.docker.internal: host-gateway
+    env:
+        DD_SERVICE: "resume-website"
+        DD_ENV: "cloud-resume-prod"
     labels:
         com.datadoghq.tags.env: cloud-resume-prod
         com.datadoghq.tags.service: resume-website
@@ -54,7 +60,7 @@ The Docker ansible role [in this repo](/ansible/roles/docker) handles installing
 
 ### Caddy
 
-Sitting in front of our application is [Caddy](https://caddyserver.com/). Caddy is a powerful, simple, and easy to use webserver.
+[Caddy](https://caddyserver.com/) runs in front of the application as the public reverse proxy.
 
 ```txt
 :80 {
@@ -65,12 +71,18 @@ resume.sbrtech.xyz:443 {
 }
 ```
 
-Those 6 lines above are all we need to configure Caddy as a reverse proxy with automatic HTTPS. No need to think about certificate management or renewals.
+Those lines configure Caddy as a reverse proxy with automatic HTTPS, keeping certificate management and renewals out of the application container.
 
-I've written an [ansible role](/ansible/roles/caddy) that installs the Caddy binary, creates a systemd service, and generates the Caddyfile needed to configure our website.
+The [Caddy Ansible role](/ansible/roles/caddy) installs the Caddy binary, creates a systemd service, and generates the Caddyfile used by the site.
 
 ### Datadog
 
-In order to monitor our application and the server running it, we need to install the Datadog agent. The agent will collect metrics, traces, and logs, then forward them to the Datadog console. To configure the agent, Datadog has created an excellent [ansible role](https://github.com/DataDog/ansible-datadog?tab=readme-ov-file).
+The Datadog agent collects host metrics, traces, and logs, then forwards them to Datadog for monitoring and troubleshooting. This project uses Datadog's published [Ansible role](https://github.com/DataDog/ansible-datadog?tab=readme-ov-file) to install and configure the agent.
 
-To use the role, we need to define the variables that'll configure the agent with the features and settings we want. These variables are defined as ansible group vars and can be seen [here](/ansible/group_vars/webserver.yaml).
+The agent settings are defined as Ansible group variables in [`group_vars/webserver.yaml`](/ansible/group_vars/webserver.yaml).
+
+## Operational Notes
+
+- The main deployment path is driven by GitHub Actions, which runs Ansible after the container image is available.
+- The playbooks assume Terraform has already created the target infrastructure and service account access.
+- Secrets and environment-specific values should stay in the configured CI/CD or Ansible variable sources rather than being committed directly to this directory.
