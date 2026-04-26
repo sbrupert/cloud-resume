@@ -1,22 +1,26 @@
 # Cloud Resume Challenge
 
-My take on the Cloud Resume Challenge. The [Cloud Resume](https://cloudresumechallenge.dev/docs/the-challenge/) challenge is a resume project that is designed to help build and demonstrate skills relevant to a career in the Cloud.
+My take on the Cloud Resume Challenge. The [Cloud Resume](https://cloudresumechallenge.dev/docs/the-challenge/) challenge is a resume project designed to build and demonstrate skills relevant to a career in cloud engineering.
 
-However, I've decided to tweak the challenge with some certain goals in mind:
+I adjusted the project around a few practical goals:
 
 1. Learn more Python.
 2. Demonstrate Front to Back monitoring using Datadog.
 3. Keep costs as low as possible.
 
-A full blog post will be coming soon describing the project in greater detail. For now, you can checkout the READMEs in each of this repo's subdirectories to learn more about each major component.
+The live site is available at [resume.sbrtech.xyz](https://resume.sbrtech.xyz). For project context, start with the high-level [project overview](https://resume.sbrtech.xyz/project_overview), then read the detailed [project write-up](https://resume.sbrtech.xyz/page/project). The subdirectory READMEs below describe the major implementation areas for engineers reviewing the repo.
 
-## Live Website [Click Here!](https://resume.sbrtech.xyz)
+## Live Website
+
+- [Resume Site](https://resume.sbrtech.xyz)
+- [Project Overview](https://resume.sbrtech.xyz/project_overview)
+- [Detailed Project Write-Up](https://resume.sbrtech.xyz/page/project)
 
 ## Project Subdirectories
 
-- [Python Application](/cloud_resume/)
-- [Terraform](/terraform/)
-- [Ansible](/ansible/)
+- [Python Application](/cloud_resume/) - Flask/Gunicorn resume site, visitor counter, local development, and containerized runtime notes.
+- [Terraform](/terraform/) - GCP and Cloudflare infrastructure provisioning managed through HCP Terraform.
+- [Ansible](/ansible/) - Host configuration, Docker deployment, Caddy reverse proxy setup, and operational automation.
 
 ## Technologies Used
 

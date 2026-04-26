@@ -1,36 +1,38 @@
-# Cloud Resume - Terraform 
-<img class="rounded mx-auto d-block" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Terraform_Logo.svg/1280px-Terraform_Logo.svg.png" alt="terraform logo" width="500" /> 
+# Cloud Resume - Terraform
+<img class="rounded mx-auto d-block" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Terraform_Logo.svg/1280px-Terraform_Logo.svg.png" alt="terraform logo" width="500" />
 
-Welcome to the Terraform part of the project! This directory contains all the Terraform code needed to create the infrastructure for our cloud-resume app.
+This directory contains the Terraform code used to provision the cloud-resume infrastructure. It creates the GCP and Cloudflare resources that support the public resume site.
+
+Terraform handles infrastructure provisioning only. Application deployment and host configuration are handled separately through Ansible and GitHub Actions.
 
 ## Providers
 
-For this project, we are using a combination of services from [Google Cloud Platform (GCP)](https://registry.terraform.io/providers/hashicorp/google/latest) and [Cloudflare](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+This project uses providers for [Google Cloud Platform (GCP)](https://registry.terraform.io/providers/hashicorp/google/latest) and [Cloudflare](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 ## Resources
 
-Our Terraform code will create the following resources:
+The Terraform code creates the following resources:
 
 - 1 Compute Engine instance.
 - 1 Firestore Database instance.
-- Various firewall and service account resources for managing access between resources.
+- Firewall and service account resources for managing access between resources.
 - 1 Cloudflare DNS record.
 
-For more details, check out the various Terraform files in this directory!
+For implementation details, review the `.tf` files in this directory.
 
 ## HCP Terraform
 
-Most engineers typically store their Terraform state file in an storage bucket (S3, Google Cloud Storage Bucket, etc.) or in their CI/CD platform if it's self managed. While Google does include up to 5GB of CLoud Storage, I wanted to give Hashicorp's "HCP Terraform" a shot.
+Many Terraform projects store state in an object storage bucket such as S3 or Google Cloud Storage, or in a self-managed CI/CD platform. This project uses HashiCorp's HCP Terraform instead.
 
-HCP Terraform is a SaaS Terraform option by Hashicorp. They handle managing your state file, Terraform version, execution environment and more. For this project, I'm using them to manage my state file, execute Terraform runs, and storing my secrets.
+HCP Terraform manages the state file, Terraform version, execution environment, and workspace variables. For this project, it is used to manage state, execute Terraform runs, and store required secrets.
 
-Terraform runs are integrated with Github Actions and are fully automated. Pull requests trigger a terraform plan and the output summary is even written as a comment for quick reference!
+Terraform runs are integrated with GitHub Actions. Pull requests trigger a Terraform plan, and the plan summary is written back as a pull request comment for review.
 
 ![Terraform PR Comment Example](/.assets/terraform_plan_pr_comment.png)
 
 ### Why GCP?
 
-GCP was selected over AWS due to their generous [free tier](https://cloud.google.com/free?hl=en) that does not expire. The two major services we are utilizing from this are:
+GCP was selected for this project because its [free tier](https://cloud.google.com/free?hl=en) includes several resources that fit a small resume site. The two major services used here are:
 
 1. One [e2-micro Compute Engine instance](https://cloud.google.com/free/docs/free-cloud-features#compute)
 2. One Firestore database with the following [limitations](https://cloud.google.com/free/docs/free-cloud-features#firestore):
@@ -39,8 +41,8 @@ GCP was selected over AWS due to their generous [free tier](https://cloud.google
 
 ### Why Cloudflare?
 
-Cloudflare hosts the domain where our website will be reachable. Cloudflare does not charge "usage" fees for DNS-related items such as record queries, hosted zones, etc.
+Cloudflare hosts the domain where the website is reachable. Cloudflare does not charge usage fees for common DNS-related items such as record queries and hosted zones.
 
-By using Cloudflare to host our domain, we can utilize their [proxy feature](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records/). This provides us with caching and DDoS protection.
+By using Cloudflare DNS, the site can use Cloudflare's [proxy feature](https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records/). This provides caching and DDoS protection in front of the origin server.
 
-Caching can help us make the most of our e2-micro instance by reducing the load from visitor traffic, outbound data transfer fees, and more.
+Caching helps make the most of the small GCP instance by reducing origin load and limiting unnecessary outbound traffic.
