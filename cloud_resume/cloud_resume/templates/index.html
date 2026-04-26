@@ -423,7 +423,7 @@
           <div class="hidden md:block h-[1px] flex-grow bg-outline-variant/30"></div>
           <span
             class="text-label text-[9px] md:text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
-            >02_ARCHITECTURE_HISTORY</span
+            >02_EXPERIENCE</span
           >
         </div>
         <div class="space-y-10 md:space-y-16">
@@ -459,47 +459,60 @@
                   <p class="leading-relaxed">
                     Designed, deployed, and operated production infrastructure
                     across AWS and on-prem environments supporting Dev, QA,
-                    Staging, and Production systems.
+                    Staging, and Production workloads.
                   </p>
                 </li>
                 <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">02</span>
                   <p class="leading-relaxed">
                     Developed and maintained Ansible automation for security
-                    agents, monitoring agents, OS updates, internal reporting,
-                    and refactored legacy automation to reduce drift.
+                    agents, monitoring agents, OS updates, and internal
+                    reporting; refactored legacy automation to reduce
+                    configuration drift.
                   </p>
                 </li>
                 <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">03</span>
                   <p class="leading-relaxed">
-                    Designed and deployed Ansible Automation Platform (AAP),
-                    integrated with Active Directory via LDAP, to centralize
-                    recurring production automation.
+                    Designed and deployed Ansible Automation Platform (AAP) with
+                    LDAP/Active Directory integration, centralizing recurring
+                    production automation previously executed from engineer
+                    workstations.
                   </p>
                 </li>
                 <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">04</span>
                   <p class="leading-relaxed">
                     Built a greenfield Terraform codebase for vSphere,
-                    automating provisioning for production workloads across two
-                    datacenters and multiple environments, and reducing delivery
+                    automating production workload provisioning across two
+                    datacenters and multiple environments and reducing delivery
                     time from days to hours.
                   </p>
                 </li>
                 <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">05</span>
                   <p class="leading-relaxed">
-                    Maintained Terraform deployments for AWS infrastructure
-                    across multiple environments using Jenkins-driven plan/apply
-                    workflows, remote state, and Git review gates.
+                    Led time-critical vSphere/VxRail infrastructure
+                    consolidation, migrating ~37–40 VMs with associated
+                    PowerStore iSCSI storage and port group dependencies in
+                    under 8 working hours with no production downtime, avoiding
+                    a six-figure annual licensing cost.
                   </p>
                 </li>
                 <li class="flex gap-3 md:gap-4">
                   <span class="text-primary font-headline font-bold">06</span>
                   <p class="leading-relaxed">
-                    Served as SME for multi-cluster vSphere 7-8 operations and
-                    participated in a 4-person on-call rotation, reducing alert
+                    Maintained Terraform-managed AWS infrastructure across Dev,
+                    QA, Staging, and Production using Jenkins-driven plan/apply
+                    workflows, remote state, and Git review gates.
+                  </p>
+                </li>
+                <li class="flex gap-3 md:gap-4">
+                  <span class="text-primary font-headline font-bold">07</span>
+                  <p class="leading-relaxed">
+                    Served as SME across virtualization, automation,
+                    observability, and storage domains; supported production
+                    systems in a 4-person on-call rotation and reduced alert
                     fatigue through Datadog monitor tuning.
                   </p>
                 </li>
@@ -523,6 +536,10 @@
                 >
                 <span
                   class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                  >Packer</span
+                >
+                <span
+                  class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
                   >Jenkins</span
                 >
                 <span
@@ -540,6 +557,160 @@
               </div>
             </div>
           </div>
+          <!-- Personal Projects -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start relative"
+          >
+            <div class="md:col-span-3">
+              <div class="sticky top-24">
+                <span
+                  class="text-label text-[10px] font-bold text-primary tracking-widest uppercase mb-2 block"
+                  >Personal</span
+                >
+                <h3
+                  class="font-headline text-2xl font-bold text-on-surface leading-tight"
+                >
+                  Open Source / Personal Projects
+                </h3>
+                <p class="text-on-surface-variant font-medium mt-1">
+                  Independent technical work
+                </p>
+              </div>
+            </div>
+            <div class="md:col-span-9 space-y-6">
+              <div class="bg-surface-container-low p-6 md:p-10 rounded-2xl relative">
+                <div
+                  class="absolute -left-3 top-10 w-6 h-6 bg-primary rotate-45 hidden md:block"
+                ></div>
+                <h4
+                  class="font-headline text-xl md:text-2xl font-bold text-on-surface mb-4"
+                >
+                  Cloud Resume Platform
+                </h4>
+                <ul class="space-y-4 md:space-y-5 text-on-surface-variant">
+                  <li class="flex gap-3 md:gap-4">
+                    <span class="text-primary font-headline font-bold">01</span>
+                    <p class="leading-relaxed">
+                      Designed and deployed this resume platform as a
+                      production-style cloud project using GCP, Terraform,
+                      Ansible, Docker, Cloudflare, and Datadog.
+                    </p>
+                  </li>
+                  <li class="flex gap-3 md:gap-4">
+                    <span class="text-primary font-headline font-bold">02</span>
+                    <p class="leading-relaxed">
+                      Implemented automated CI/CD with GitHub Actions for
+                      testing, container builds, Terraform deployment, and
+                      Ansible-based application release workflows.
+                    </p>
+                  </li>
+                  <li class="flex gap-3 md:gap-4">
+                    <span class="text-primary font-headline font-bold">03</span>
+                    <p class="leading-relaxed">
+                      Built secure ingress and observability around the platform,
+                      including Cloudflare proxying, TLS, structured logs,
+                      metrics, APM, and uptime/SLO monitoring.
+                    </p>
+                  </li>
+                </ul>
+                <div class="mt-8 flex flex-wrap gap-2">
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >GCP</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >Terraform</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >Ansible</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >Docker</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >GitHub Actions</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >Cloudflare</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >Datadog</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >Python</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >Flask</span
+                  >
+                </div>
+              </div>
+              <div class="bg-surface-container-low p-6 md:p-10 rounded-2xl">
+                <h4
+                  class="font-headline text-xl md:text-2xl font-bold text-on-surface mb-4"
+                >
+                  XCP-ng Packer Plugin Contribution
+                </h4>
+                <ul class="space-y-4 md:space-y-5 text-on-surface-variant">
+                  <li class="flex gap-3 md:gap-4">
+                    <span class="text-primary font-headline font-bold">01</span>
+                    <p class="leading-relaxed">
+                      Contributed to the
+                      <a
+                        href="https://github.com/vatesfr/packer-plugin-xenserver"
+                        class="text-primary font-bold hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >XCP-ng Packer plugin</a
+                      >
+                      by adding support for overriding existing VM templates
+                      during image builds; merged as
+                      <a
+                        href="https://github.com/vatesfr/packer-plugin-xenserver/pull/161"
+                        class="text-primary font-bold hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >PR #161</a
+                      >
+                      and included in
+                      <a
+                        href="https://github.com/vatesfr/packer-plugin-xenserver/releases/tag/v0.11.4"
+                        class="text-primary font-bold hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >v0.11.4</a
+                      >.
+                    </p>
+                  </li>
+                </ul>
+                <div class="mt-8 flex flex-wrap gap-2">
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >Open Source</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >Packer</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >XCP-ng</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-surface-container-highest text-[10px] font-bold rounded uppercase"
+                    >XenServer</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       <!-- Core Capabilities Grid -->
@@ -553,7 +724,7 @@
           <div class="hidden md:block h-[1px] flex-grow bg-outline-variant/30"></div>
           <span
             class="text-label text-[9px] md:text-[10px] font-bold text-on-surface-variant tracking-[0.3em]"
-            >03_SYSTEM_RESOURCES</span
+            >03_SKILLS</span
           >
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4">
