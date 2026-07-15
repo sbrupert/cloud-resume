@@ -2,7 +2,6 @@ import logging
 from pythonjsonlogger import jsonlogger
 import os
 import time
-from datetime import datetime, timezone
 from flask import request
 
 
@@ -28,14 +27,14 @@ class RequestLoggerMiddleware:
         self.wsgi_app = wsgi_app
 
     def __call__(self,environ, start_response):
-        request_start_time = datetime.now(timezone.utc)
+        request_start_time = time.perf_counter_ns()
 
         def log_response(status, headers, exc_info=None):
             content_length = next((value for name, value in headers if name.lower() == 'content-length'), '0')
             log_data = {
                 "network.client.ip": request.headers.get('X-Forwarded-For', request.remote_addr),
                 "network.client.ip_fallback": request.remote_addr,
-                "http.request_time": request_start_time.isoformat(timespec="milliseconds").replace("+00:00", "Z"),
+                "duration": time.perf_counter_ns() - request_start_time,
                 "http.method": request.method,
                 "http.url_details.path": request.path,
                 "http.status_code": status.split(' ')[0],

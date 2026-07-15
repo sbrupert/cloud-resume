@@ -92,6 +92,20 @@ def test_healthz(client):
     assert response.status_code == 200
     assert response.get_json() == {"status": "ok"}
 
+def test_access_log_records_request_duration_in_nanoseconds(client, test_app, mocker):
+    logger_info = mocker.patch.object(test_app.logger, "info")
+    mocker.patch(
+        "cloud_resume.logger.time.perf_counter_ns",
+        side_effect=[1_000_000_000, 1_012_345_678],
+    )
+
+    response = client.get('/healthz')
+
+    assert response.status_code == 200
+    log_data = logger_info.call_args.args[0]
+    assert log_data["duration"] == 12_345_678
+    assert "http.request_time" not in log_data
+
 def test_markdown_pages_are_auto_routable(client):
     pages_dir = Path(cloud_resume.app.root_path) / "pages"
     slugs = sorted(
