@@ -1,5 +1,6 @@
 import logging
 import os
+import time
 from pythonjsonlogger import jsonlogger
 
 bind = "0.0.0.0:8080"
@@ -22,6 +23,9 @@ formatter = jsonlogger.JsonFormatter(
     fmt="%(asctime)s %(name)s %(levelname)s %(message)s",
     rename_fields={"asctime": "timestamp", "levelname": "level"}
 )
+formatter.converter = time.gmtime
+formatter.default_time_format = "%Y-%m-%dT%H:%M:%S"
+formatter.default_msec_format = "%s.%03dZ"
 
 # Set up handlers
 logHandler = logging.StreamHandler()

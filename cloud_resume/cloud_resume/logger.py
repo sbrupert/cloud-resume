@@ -1,6 +1,7 @@
 import logging
 from pythonjsonlogger import jsonlogger
 import os
+import time
 from datetime import datetime, timezone
 from flask import request
 
@@ -12,6 +13,9 @@ def configure_logging(app):
         fmt="%(asctime)s %(name)s %(levelname)s %(message)s",
         rename_fields={"asctime": "timestamp", "levelname": "level"}
     )
+    formatter.converter = time.gmtime
+    formatter.default_time_format = "%Y-%m-%dT%H:%M:%S"
+    formatter.default_msec_format = "%s.%03dZ"
     logHandler.setFormatter(formatter)
     logger = logging.getLogger(app)
     logger.addHandler(logHandler)
@@ -31,7 +35,7 @@ class RequestLoggerMiddleware:
             log_data = {
                 "network.client.ip": request.headers.get('X-Forwarded-For', request.remote_addr),
                 "network.client.ip_fallback": request.remote_addr,
-                "http.request_time": request_start_time.strftime('%Y-%m-%d %H:%M:%S,%f')[:-3],
+                "http.request_time": request_start_time.isoformat(timespec="milliseconds").replace("+00:00", "Z"),
                 "http.method": request.method,
                 "http.url_details.path": request.path,
                 "http.status_code": status.split(' ')[0],
